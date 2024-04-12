@@ -11,12 +11,13 @@ namespace DDO_Life_Tracker.Models.Races
         public int Id { get; }
         public string Name { get; }
         public bool IsIconic { get; }
-
+        public string IconImgFileName { get; }
         public Human() 
         {
             Id = 101;
             Name = nameof(Human);
             IsIconic = false;
+            IconImgFileName = "human.png";
         }
     }
 }

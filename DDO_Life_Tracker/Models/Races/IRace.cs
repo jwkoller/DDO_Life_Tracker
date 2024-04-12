@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace DDO_Life_Tracker.Models
 {
-    public interface IRace
+    public interface IRace : IHasImg
     {
         int Id { get; }
         string Name { get; }
