@@ -9,6 +9,7 @@ namespace DDO_Life_Tracker.Models
 {
     public class Rogue : AbstractDDOClass
     {
-        public Rogue() : base(104, nameof(Rogue), "rogue.png") { }
+        public Rogue(int level) : base(104, nameof(Rogue), level, "rogue.png") { }
+        public Rogue() : this(MIN_CLASS_LEVEL) { }
     }
 }

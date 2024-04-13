@@ -8,6 +8,7 @@ namespace DDO_Life_Tracker.Models
 {
     public class Cleric : AbstractDDOClass
     {
-        public Cleric() : base(112, nameof(Cleric), "cleric.png") { }
+        public Cleric(int level) : base(112, nameof(Cleric), level, "cleric.png") { }
+        public Cleric() : this(MIN_CLASS_LEVEL) { }
     }
 }

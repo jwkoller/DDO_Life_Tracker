@@ -8,6 +8,7 @@ namespace DDO_Life_Tracker.Models
 {
     public class Ranger : AbstractDDOClass
     {
-        public Ranger() : base(116, nameof(Ranger), "ranger.png") { }
+        public Ranger(int level) : base(116, nameof(Ranger), level, "ranger.png") { }
+        public Ranger() : this(MIN_CLASS_LEVEL) { }
     }
 }

@@ -8,6 +8,7 @@ namespace DDO_Life_Tracker.Models
 {
     public class Bard : AbstractDDOClass
     {
-        public Bard() : base(110, nameof(Bard), "bard.png") { }
+        public Bard(int level) : base(110, nameof(Bard), level, "bard.png") { }
+        public Bard() : this(MIN_CLASS_LEVEL) { }
     }
 }

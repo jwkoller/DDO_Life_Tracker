@@ -8,6 +8,7 @@ namespace DDO_Life_Tracker.Models
 {
     public class Artificer : AbstractDDOClass
     {
-        public Artificer() : base(108, nameof(Artificer), "artificer.png") { }
+        public Artificer(int level) : base(108, nameof(Artificer), level, "artificer.png") { }
+        public Artificer() : this(MIN_CLASS_LEVEL) { }
     }
 }

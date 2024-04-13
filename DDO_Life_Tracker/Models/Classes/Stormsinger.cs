@@ -8,6 +8,7 @@ namespace DDO_Life_Tracker.Models
 {
     public class Stormsinger : AbstractDDOClass
     {
-        public Stormsinger() :base(119, nameof(Stormsinger), "stormsinger.png") { }
+        public Stormsinger(int level) :base(119, nameof(Stormsinger), level, "stormsinger.png") { }
+        public Stormsinger() : this(MIN_CLASS_LEVEL) { }
     }
 }

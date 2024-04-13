@@ -9,6 +9,7 @@ namespace DDO_Life_Tracker.Models
 {
     public class Monk : AbstractDDOClass
     {
-        public Monk() : base(101, nameof(Monk), "monk.png") { }
+        public Monk(int level) : base(101, nameof(Monk), level, "monk.png") { }
+        public Monk() : this(MIN_CLASS_LEVEL) { }
     }
 }

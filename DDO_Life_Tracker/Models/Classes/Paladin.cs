@@ -9,6 +9,7 @@ namespace DDO_Life_Tracker.Models
 {
     public class Paladin : AbstractDDOClass
     {
-        public Paladin() : base(106, nameof(Paladin), "paladin.png") { }
+        public Paladin(int level) : base(106, nameof(Paladin), level, "paladin.png") { }
+        public Paladin() : this(MIN_CLASS_LEVEL) { }
     }
 }

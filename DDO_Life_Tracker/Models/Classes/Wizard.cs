@@ -9,6 +9,7 @@ namespace DDO_Life_Tracker.Models
 {
     public class Wizard : AbstractDDOClass
     {
-        public Wizard() : base(103, nameof(Wizard), "wizard.png") {  }
+        public Wizard(int level) : base(103, nameof(Wizard), level, "wizard.png") {  }
+        public Wizard() : this(MIN_CLASS_LEVEL) { }
     }
 }

@@ -8,6 +8,7 @@ namespace DDO_Life_Tracker.Models
 {
     public class Sacred_Fist : AbstractDDOClass
     {
-        public Sacred_Fist() : base(117, nameof(Sacred_Fist).Replace("_", " "), "sacredfist.png") { }
+        public Sacred_Fist(int level) : base(117, nameof(Sacred_Fist).Replace("_", " "), level, "sacredfist.png") { }
+        public Sacred_Fist() : this(MIN_CLASS_LEVEL) { }
     }
 }

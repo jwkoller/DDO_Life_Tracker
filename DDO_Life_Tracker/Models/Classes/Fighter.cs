@@ -9,6 +9,7 @@ namespace DDO_Life_Tracker.Models
 {
     public class Fighter : AbstractDDOClass
     {
-        public Fighter() : base(102, nameof(Fighter), "fighter.png") { }
+        public Fighter(int level) : base(102, nameof(Fighter), level, "fighter.png") { }
+        public Fighter() : this(MIN_CLASS_LEVEL) { }
     }
 }

@@ -8,6 +8,7 @@ namespace DDO_Life_Tracker.Models
 {
     public class Alchemist : AbstractDDOClass
     {
-        public Alchemist() : base(107, nameof(Alchemist), "alchemist.png") { }
+        public Alchemist(int level) : base(107, nameof(Alchemist), level, "alchemist.png") { }
+        public Alchemist() : this(MIN_CLASS_LEVEL) { }
     }
 }

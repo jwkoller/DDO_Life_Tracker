@@ -8,6 +8,7 @@ namespace DDO_Life_Tracker.Models
 {
     public class Barbarian : AbstractDDOClass
     {
-        public Barbarian() : base(109, nameof(Barbarian), "barbarian.png") { }
+        public Barbarian(int level) : base(109, nameof(Barbarian), level, "barbarian.png") { }
+        public Barbarian() : this(MIN_CLASS_LEVEL) { }
     }
 }
