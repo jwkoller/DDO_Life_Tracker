@@ -6,8 +6,8 @@ using System.Threading.Tasks;
 
 namespace DDO_Life_Tracker.Models
 {
-    public class CLeric : AbstractDDOClass
+    public class Cleric : AbstractDDOClass
     {
-        public CLeric() : base(112, nameof(CLeric), "cleric.png") { }
+        public Cleric() : base(112, nameof(Cleric), "cleric.png") { }
     }
 }
