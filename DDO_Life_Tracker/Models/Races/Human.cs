@@ -6,18 +6,8 @@ using System.Threading.Tasks;
 
 namespace DDO_Life_Tracker.Models
 {
-    public class Human : IRace
+    public class Human : AbstractDDORace
     {
-        public int Id { get; }
-        public string Name { get; }
-        public bool IsIconic { get; }
-        public string IconImgFileName { get; }
-        public Human() 
-        {
-            Id = 101;
-            Name = nameof(Human);
-            IsIconic = false;
-            IconImgFileName = "human.png";
-        }
+        public Human() : base(101, nameof(Human), "human.png") { }
     }
 }
