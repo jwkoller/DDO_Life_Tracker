@@ -6,10 +6,8 @@ using System.Threading.Tasks;
 
 namespace DDO_Life_Tracker.Models
 {
-    public interface IClass
+    public class Dark_Hunter : AbstractDDOClass
     {
-        int Id { get; }
-        string Name { get; }
-        int Level { get; set; }
+        public Dark_Hunter() : base(114, nameof(Dark_Hunter).Replace("_",  " "), "darkhunter.png") { }
     }
 }

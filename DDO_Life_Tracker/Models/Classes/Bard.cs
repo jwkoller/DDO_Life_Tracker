@@ -6,10 +6,8 @@ using System.Threading.Tasks;
 
 namespace DDO_Life_Tracker.Models
 {
-    public interface IClass
+    public class Bard : AbstractDDOClass
     {
-        int Id { get; }
-        string Name { get; }
-        int Level { get; set; }
+        public Bard() : base(110, nameof(Bard), "bard.png") { }
     }
 }

@@ -6,10 +6,8 @@ using System.Threading.Tasks;
 
 namespace DDO_Life_Tracker.Models
 {
-    public interface IClass
+    public class Sacred_Fist : AbstractDDOClass
     {
-        int Id { get; }
-        string Name { get; }
-        int Level { get; set; }
+        public Sacred_Fist() : base(117, nameof(Sacred_Fist).Replace("_", " "), "sacredfist.png") { }
     }
 }

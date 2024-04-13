@@ -6,10 +6,8 @@ using System.Threading.Tasks;
 
 namespace DDO_Life_Tracker.Models
 {
-    public interface IClass
+    public class Ranger : AbstractDDOClass
     {
-        int Id { get; }
-        string Name { get; }
-        int Level { get; set; }
+        public Ranger() : base(116, nameof(Ranger), "ranger.png") { }
     }
 }

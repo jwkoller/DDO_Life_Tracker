@@ -6,10 +6,8 @@ using System.Threading.Tasks;
 
 namespace DDO_Life_Tracker.Models
 {
-    public interface IClass
+    public class Favored_Soul : AbstractDDOClass
     {
-        int Id { get; }
-        string Name { get; }
-        int Level { get; set; }
+        public Favored_Soul() : base(115, nameof(Favored_Soul).Replace("_", " "), "favoredsoul.png") { }
     }
 }

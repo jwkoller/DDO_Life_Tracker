@@ -6,18 +6,18 @@ using System.Threading.Tasks;
 
 namespace DDO_Life_Tracker.Models
 {
-    public class Human : IRace
+    public abstract class AbstractDDOClass : IClass, IHasImg
     {
         public int Id { get; }
         public string Name { get; }
-        public bool IsIconic { get; }
+        public int Level { get; set; } = 1;
         public string IconImgFileName { get; }
-        public Human() 
+        
+        public AbstractDDOClass(int id, string name, string iconImgFileName)
         {
-            Id = 101;
-            Name = nameof(Human);
-            IsIconic = false;
-            IconImgFileName = "human.png";
+            Id = id;
+            Name = name;
+            IconImgFileName = iconImgFileName;
         }
     }
 }

@@ -1,4 +1,4 @@
-﻿using DDO_Life_Tracker.Models;  
+﻿using DDO_Life_Tracker.Models;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -7,8 +7,8 @@ using System.Threading.Tasks;
 
 namespace DDO_Life_Tracker.Models
 {
-    public class Monk : AbstractDDOClass
+    public class Rogue : AbstractDDOClass
     {
-        public Monk() : base(101, nameof(Monk), "monk.png") { }
+        public Rogue() : base(104, nameof(Rogue), "rogue.png") { }
     }
 }
