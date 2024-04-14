@@ -24,7 +24,7 @@
 		<ApplicationTitle>DDO_Life_Tracker</ApplicationTitle>
 
 		<!-- App Identifier -->
-		<ApplicationId>com.jonwkoller.ddo_life_tracker</ApplicationId>
+		<ApplicationId>com.jonwkoller.ddolifetracker</ApplicationId>
 
 		<!-- Versions -->
 		<ApplicationDisplayVersion>1.0.0</ApplicationDisplayVersion>
@@ -36,6 +36,46 @@
 		<SupportedOSPlatformVersion Condition="$([MSBuild]::GetTargetPlatformIdentifier('$(TargetFramework)')) == 'windows'">10.0.17763.0</SupportedOSPlatformVersion>
 		<TargetPlatformMinVersion Condition="$([MSBuild]::GetTargetPlatformIdentifier('$(TargetFramework)')) == 'windows'">10.0.17763.0</TargetPlatformMinVersion>
 		<SupportedOSPlatformVersion Condition="$([MSBuild]::GetTargetPlatformIdentifier('$(TargetFramework)')) == 'tizen'">6.5</SupportedOSPlatformVersion>
+	</PropertyGroup>
+
+	<PropertyGroup Condition="'$(Configuration)|$(TargetFramework)|$(Platform)'=='Debug|net8.0-android|AnyCPU'">
+	  <ApplicationId>com.jonwkoller.ddolifetracker</ApplicationId>
+	  <ApplicationTitle>DDOLifeTracker</ApplicationTitle>
+	</PropertyGroup>
+
+	<PropertyGroup Condition="'$(Configuration)|$(TargetFramework)|$(Platform)'=='Debug|net8.0-ios|AnyCPU'">
+	  <ApplicationId>com.jonwkoller.ddolifetracker</ApplicationId>
+	  <ApplicationTitle>DDOLifeTracker</ApplicationTitle>
+	</PropertyGroup>
+
+	<PropertyGroup Condition="'$(Configuration)|$(TargetFramework)|$(Platform)'=='Debug|net8.0-maccatalyst|AnyCPU'">
+	  <ApplicationId>com.jonwkoller.ddolifetracker</ApplicationId>
+	  <ApplicationTitle>DDOLifeTracker</ApplicationTitle>
+	</PropertyGroup>
+
+	<PropertyGroup Condition="'$(Configuration)|$(TargetFramework)|$(Platform)'=='Debug|net8.0-windows10.0.19041.0|AnyCPU'">
+	  <ApplicationId>com.jonwkoller.ddolifetracker</ApplicationId>
+	  <ApplicationTitle>DDOLifeTracker</ApplicationTitle>
+	</PropertyGroup>
+
+	<PropertyGroup Condition="'$(Configuration)|$(TargetFramework)|$(Platform)'=='Release|net8.0-android|AnyCPU'">
+	  <ApplicationId>com.jonwkoller.ddolifetracker</ApplicationId>
+	  <ApplicationTitle>DDOLifeTracker</ApplicationTitle>
+	</PropertyGroup>
+
+	<PropertyGroup Condition="'$(Configuration)|$(TargetFramework)|$(Platform)'=='Release|net8.0-ios|AnyCPU'">
+	  <ApplicationId>com.jonwkoller.ddolifetracker</ApplicationId>
+	  <ApplicationTitle>DDOLifeTracker</ApplicationTitle>
+	</PropertyGroup>
+
+	<PropertyGroup Condition="'$(Configuration)|$(TargetFramework)|$(Platform)'=='Release|net8.0-maccatalyst|AnyCPU'">
+	  <ApplicationId>com.jonwkoller.ddolifetracker</ApplicationId>
+	  <ApplicationTitle>DDOLifeTracker</ApplicationTitle>
+	</PropertyGroup>
+
+	<PropertyGroup Condition="'$(Configuration)|$(TargetFramework)|$(Platform)'=='Release|net8.0-windows10.0.19041.0|AnyCPU'">
+	  <ApplicationId>com.jonwkoller.ddolifetracker</ApplicationId>
+	  <ApplicationTitle>DDOLifeTracker</ApplicationTitle>
 	</PropertyGroup>
 
 	<ItemGroup>
