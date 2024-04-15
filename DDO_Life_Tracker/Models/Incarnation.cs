@@ -23,11 +23,13 @@ namespace DDO_Life_Tracker.Models
             get
             {
                 IEnumerable<string> levels = CurrentClassDefinitions.Select(x => $"{x.Level} {x.Name}");
-                return String.Join( "/", levels);
+                return String.Join("/", levels);
             }
         }
 
-        public List<IClass> CurrentClassDefinitions { get; }
+        public IEnumerable<IClass> CurrentClassDefinitions { get { return _currentClassDefinitions.AsEnumerable(); } }
+
+        private List<IClass> _currentClassDefinitions;
 
         public Incarnation(IRace race, IClass ddoClass) : this(race, new List<IClass> { ddoClass }) { }
 
@@ -36,12 +38,12 @@ namespace DDO_Life_Tracker.Models
             //TODO set the ID
             //Id = ??
             Race = race;
-            CurrentClassDefinitions = ddoClasses;
+            _currentClassDefinitions = ddoClasses;
         }
 
         public void AddClass(IClass classToAdd)
         {
-            CurrentClassDefinitions.Add(classToAdd);
+            _currentClassDefinitions.Add(classToAdd);
         }
     }
 }

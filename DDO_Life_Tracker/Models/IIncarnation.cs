@@ -12,7 +12,7 @@ namespace DDO_Life_Tracker.Models
         IRace Race { get; }
         int Level { get; }
         string CurrentClass { get; }
-        List<IClass> CurrentClassDefinitions { get; }
+        IEnumerable<IClass> CurrentClassDefinitions { get; }
         void AddClass(IClass classDefinition);
     }
 }
