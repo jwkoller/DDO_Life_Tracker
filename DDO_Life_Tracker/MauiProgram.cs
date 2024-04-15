@@ -1,4 +1,5 @@
-﻿using Microsoft.Extensions.Logging;
+﻿using DDO_Life_Tracker.ViewModels;
+using Microsoft.Extensions.Logging;
 
 namespace DDO_Life_Tracker
 {
@@ -14,6 +15,8 @@ namespace DDO_Life_Tracker
                     fonts.AddFont("OpenSans-Regular.ttf", "OpenSansRegular");
                     fonts.AddFont("OpenSans-Semibold.ttf", "OpenSansSemibold");
                 });
+            builder.Services.AddSingleton<MainPage>();
+            builder.Services.AddSingleton<MainViewModel>();
 
 #if DEBUG
     		builder.Logging.AddDebug();

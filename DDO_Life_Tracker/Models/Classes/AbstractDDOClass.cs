@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace DDO_Life_Tracker.Models
 {
-    public abstract class AbstractDDOClass : IClass, IHasImg
+    public abstract class AbstractDDOClass : IClass
     {
         public int Id { get; }
         public string Name { get; }

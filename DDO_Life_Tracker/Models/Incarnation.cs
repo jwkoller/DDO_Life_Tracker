@@ -9,12 +9,12 @@ namespace DDO_Life_Tracker.Models
     public class Incarnation : IIncarnation
     {
         public int Id { get; }
-        public IRace Race { get; set; }
+        public IRace Race { get; }
         public int Level
         {
             get
             {
-                return CurrentClassDefinitions.Aggregate(0, (total, next) => total + next.Value.Level);
+                return CurrentClassDefinitions.Aggregate(0, (total, next) => total + next.Level);
             }
         }
 
@@ -22,16 +22,16 @@ namespace DDO_Life_Tracker.Models
         {
             get
             {
-                IEnumerable<string> levels = CurrentClassDefinitions.Select(x => $"{x.Value.Level} {x.Key}");
+                IEnumerable<string> levels = CurrentClassDefinitions.Select(x => $"{x.Level} {x.Name}");
                 return String.Join( "/", levels);
             }
         }
 
-        public Dictionary<string,IClass> CurrentClassDefinitions { get; set; }
+        public List<IClass> CurrentClassDefinitions { get; }
 
-        public Incarnation(IRace race, IClass ddoClass) : this(race, new Dictionary<string, IClass> { { nameof(ddoClass), ddoClass } }) { }
+        public Incarnation(IRace race, IClass ddoClass) : this(race, new List<IClass> { ddoClass }) { }
 
-        public Incarnation(IRace race, Dictionary<string, IClass> ddoClasses ) 
+        public Incarnation(IRace race, List<IClass> ddoClasses ) 
         {
             //TODO set the ID
             //Id = ??
@@ -39,5 +39,9 @@ namespace DDO_Life_Tracker.Models
             CurrentClassDefinitions = ddoClasses;
         }
 
+        public void AddClass(IClass classToAdd)
+        {
+            CurrentClassDefinitions.Add(classToAdd);
+        }
     }
 }

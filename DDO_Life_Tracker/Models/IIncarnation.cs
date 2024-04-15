@@ -9,9 +9,10 @@ namespace DDO_Life_Tracker.Models
     public interface IIncarnation
     {
         int Id { get; }
-        IRace Race { get; set; }
+        IRace Race { get; }
         int Level { get; }
         string CurrentClass { get; }
-        Dictionary<string,IClass> CurrentClassDefinitions { get; set; }
+        List<IClass> CurrentClassDefinitions { get; }
+        void AddClass(IClass classDefinition);
     }
 }
