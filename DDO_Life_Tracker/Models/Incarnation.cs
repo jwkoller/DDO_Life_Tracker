@@ -27,9 +27,9 @@ namespace DDO_Life_Tracker.Models
             }
         }
 
-        public IEnumerable<IClass> CurrentClassDefinitions { get { return _currentClassDefinitions.AsEnumerable(); } }
+        public IEnumerable<IClass> CurrentClassDefinitions { get { return _currentClassDefinitions.Values.AsEnumerable(); } }
 
-        private List<IClass> _currentClassDefinitions;
+        private Dictionary<string, IClass> _currentClassDefinitions;
 
         private const int MAX_CHARACTER_LEVEL = 20;
 
@@ -40,7 +40,7 @@ namespace DDO_Life_Tracker.Models
             //TODO set the ID
             //Id = ??
             Race = race;
-            _currentClassDefinitions = ddoClasses.ToList();
+            _currentClassDefinitions = ddoClasses.ToDictionary(x => x.Name);
         }
 
         public void AddClass(IClass classToAdd)
@@ -50,7 +50,15 @@ namespace DDO_Life_Tracker.Models
             {
                 throw new Exception($"New total character level {newTotal} is greater than max {MAX_CHARACTER_LEVEL}.");
             }
-            _currentClassDefinitions.Add(classToAdd);
+
+            if (_currentClassDefinitions.ContainsKey(classToAdd.Name))
+            {
+                _currentClassDefinitions[classToAdd.Name].Level += classToAdd.Level;
+            }
+            else
+            {
+                _currentClassDefinitions.Add(classToAdd.Name, classToAdd);
+            }
         }
     }
 }
