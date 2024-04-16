@@ -31,18 +31,25 @@ namespace DDO_Life_Tracker.Models
 
         private List<IClass> _currentClassDefinitions;
 
-        public Incarnation(IRace race, IClass ddoClass) : this(race, new List<IClass> { ddoClass }) { }
+        private const int MAX_CHARACTER_LEVEL = 20;
 
-        public Incarnation(IRace race, List<IClass> ddoClasses ) 
+        public Incarnation(IRace race, IClass ddoClass) : this(race, [ddoClass]) { }
+
+        public Incarnation(IRace race, IEnumerable<IClass> ddoClasses ) 
         {
             //TODO set the ID
             //Id = ??
             Race = race;
-            _currentClassDefinitions = ddoClasses;
+            _currentClassDefinitions = ddoClasses.ToList();
         }
 
         public void AddClass(IClass classToAdd)
         {
+            int newTotal = Level + classToAdd.Level;
+            if (newTotal >  MAX_CHARACTER_LEVEL)
+            {
+                throw new Exception($"New total character level {newTotal} is greater than max {MAX_CHARACTER_LEVEL}.");
+            }
             _currentClassDefinitions.Add(classToAdd);
         }
     }
