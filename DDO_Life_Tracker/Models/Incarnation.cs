@@ -9,12 +9,12 @@ namespace DDO_Life_Tracker.Models
     public class Incarnation : IIncarnation
     {
         public int Id { get; }
-        public IRace Race { get; set; }
+        public IRace Race { get; }
         public int Level
         {
             get
             {
-                return CurrentClassDefinitions.Aggregate(0, (total, next) => total + next.Value.Level);
+                return CurrentClassDefinitions.Aggregate(0, (total, next) => total + next.Level);
             }
         }
 
@@ -22,22 +22,46 @@ namespace DDO_Life_Tracker.Models
         {
             get
             {
-                IEnumerable<string> levels = CurrentClassDefinitions.Select(x => $"{x.Value.Level} {x.Key}");
-                return String.Join( "/", levels);
+                IEnumerable<string> levels = _currentClassDefinitions.Select(x => $"{x.Value.Level} {x.Key}");
+                return String.Join("/", levels);
             }
         }
 
-        public Dictionary<string,IClass> CurrentClassDefinitions { get; set; }
+        public IEnumerable<IClass> CurrentClassDefinitions { get { return _currentClassDefinitions.Values.AsEnumerable(); } }
 
-        public Incarnation(IRace race, IClass ddoClass) : this(race, new Dictionary<string, IClass> { { nameof(ddoClass), ddoClass } }) { }
+        private Dictionary<string, IClass> _currentClassDefinitions;
 
-        public Incarnation(IRace race, Dictionary<string, IClass> ddoClasses ) 
+        private const int MAX_CHARACTER_LEVEL = 20;
+
+        public Incarnation(IRace race, IClass ddoClass) : this(race, [ddoClass]) { }
+
+        public Incarnation(IRace race, IEnumerable<IClass> ddoClasses ) 
         {
             //TODO set the ID
             //Id = ??
             Race = race;
-            CurrentClassDefinitions = ddoClasses;
+            _currentClassDefinitions = ddoClasses.ToDictionary(x => x.Name);
         }
 
+        public void AddClass(IClass classToAdd)
+        {
+            int newTotal = Level + classToAdd.Level;
+            if (newTotal >  MAX_CHARACTER_LEVEL)
+            {
+                throw new Exception($"New total character level {newTotal} is greater than max {MAX_CHARACTER_LEVEL}.");
+            }
+
+            if (_currentClassDefinitions.ContainsKey(classToAdd.Name))
+            {
+                throw new Exception($"Character already has levels in {classToAdd.Name}");
+            }
+
+            _currentClassDefinitions.Add(classToAdd.Name, classToAdd);
+        }
+
+        public void IncrementClassLevel(string classNameToIncrement)
+        {
+            _currentClassDefinitions[classNameToIncrement].Level++;
+        }
     }
 }
