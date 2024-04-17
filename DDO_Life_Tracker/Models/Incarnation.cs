@@ -1,4 +1,5 @@
-﻿using System;
+﻿using DDO_Life_Tracker.Services;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -31,7 +32,8 @@ namespace DDO_Life_Tracker.Models
 
         private Dictionary<string, IClass> _currentClassDefinitions;
 
-        private const int MAX_CHARACTER_LEVEL = 20;
+        private const int MAX_CHARACTER_LEVEL = Definitions.MAX_CHARACTER_LEVEL;
+        private const int MAX_NUM_CLASSES = Definitions.MAX_NUM_CLASSES;
 
         public Incarnation(IRace race, IClass ddoClass) : this(race, [ddoClass]) { }
 
@@ -45,15 +47,20 @@ namespace DDO_Life_Tracker.Models
 
         public void AddClass(IClass classToAdd)
         {
-            int newTotal = Level + classToAdd.Level;
-            if (newTotal >  MAX_CHARACTER_LEVEL)
+            if (_currentClassDefinitions.Keys.Count == MAX_NUM_CLASSES)
             {
-                throw new Exception($"New total character level {newTotal} is greater than max {MAX_CHARACTER_LEVEL}.");
+                throw new Exception($"Character already has max number of classes ({MAX_NUM_CLASSES})");
             }
 
             if (_currentClassDefinitions.ContainsKey(classToAdd.Name))
             {
                 throw new Exception($"Character already has levels in {classToAdd.Name}");
+            }
+
+            int newTotal = Level + classToAdd.Level;
+            if (newTotal >  MAX_CHARACTER_LEVEL)
+            {
+                throw new Exception($"New total character level {newTotal} is greater than max {MAX_CHARACTER_LEVEL}.");
             }
 
             _currentClassDefinitions.Add(classToAdd.Name, classToAdd);
