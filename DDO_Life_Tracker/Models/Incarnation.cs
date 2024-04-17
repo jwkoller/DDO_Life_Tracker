@@ -22,7 +22,7 @@ namespace DDO_Life_Tracker.Models
         {
             get
             {
-                IEnumerable<string> levels = CurrentClassDefinitions.Select(x => $"{x.Level} {x.Name}");
+                IEnumerable<string> levels = _currentClassDefinitions.Select(x => $"{x.Value.Level} {x.Key}");
                 return String.Join("/", levels);
             }
         }
@@ -53,12 +53,15 @@ namespace DDO_Life_Tracker.Models
 
             if (_currentClassDefinitions.ContainsKey(classToAdd.Name))
             {
-                _currentClassDefinitions[classToAdd.Name].Level += classToAdd.Level;
+                throw new Exception($"Character already has levels in {classToAdd.Name}");
             }
-            else
-            {
-                _currentClassDefinitions.Add(classToAdd.Name, classToAdd);
-            }
+
+            _currentClassDefinitions.Add(classToAdd.Name, classToAdd);
+        }
+
+        public void IncrementClassLevel(string classNameToIncrement)
+        {
+            _currentClassDefinitions[classNameToIncrement].Level++;
         }
     }
 }
