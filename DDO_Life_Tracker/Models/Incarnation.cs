@@ -14,7 +14,7 @@ namespace DDO_Life_Tracker.Models
         {
             get
             {
-                return CurrentClassDefinitions.Aggregate(0, (total, next) => total + next.Level);
+                return _currentClassDefinitions.Aggregate(0, (total, next) => total + next.Value.Level);
             }
         }
 
