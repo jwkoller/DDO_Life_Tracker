@@ -1,5 +1,4 @@
-﻿using DDO_Life_Tracker.Services;
-using System;
+﻿using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -32,8 +31,8 @@ namespace DDO_Life_Tracker.Models
 
         private Dictionary<string, IClass> _currentClassDefinitions;
 
-        private const int MAX_CHARACTER_LEVEL = Definitions.MAX_CHARACTER_LEVEL;
-        private const int MAX_NUM_CLASSES = Definitions.MAX_NUM_CLASSES;
+        private const int MAX_CHARACTER_LEVEL = 20;
+        private const int MAX_NUM_CLASSES = 3;
 
         public Incarnation(IRace race, IClass ddoClass) : this(race, [ddoClass]) { }
 

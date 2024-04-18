@@ -1,5 +1,4 @@
-﻿using DDO_Life_Tracker.Services;
-using System;
+﻿using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -14,8 +13,8 @@ namespace DDO_Life_Tracker.Models
         public int Level { get; set; }
         public string IconImgFileName { get; }
 
-        protected const int MAX_CLASS_LEVEL = Definitions.MAX_CLASS_LEVEL;
-        protected const int MIN_CLASS_LEVEL = Definitions.MIN_CLASS_LEVEL;
+        protected const int MAX_CLASS_LEVEL = 20;
+        protected const int MIN_CLASS_LEVEL = 1;
         public AbstractDDOClass(int id, string name, int level, string iconImgFileName)
         {
             Id = id;
