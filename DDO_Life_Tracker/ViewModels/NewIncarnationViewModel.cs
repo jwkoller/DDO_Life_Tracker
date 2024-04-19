@@ -1,14 +1,24 @@
 ﻿using CommunityToolkit.Mvvm.ComponentModel;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+using Microsoft.Extensions.Logging;
 
 namespace DDO_Life_Tracker.ViewModels
 {
     public partial class NewIncarnationViewModel : ObservableObject
     {
+        [ObservableProperty]
+        private List<string> _selectableClasses;
+
+        [ObservableProperty]
+        private List<string> _selectableRaces;
+
+        private ILogger<NewIncarnationViewModel> _logger;
+        public NewIncarnationViewModel(ILogger<NewIncarnationViewModel> logger)
+        {
+            _logger = logger;
+            _selectableClasses = new List<string>();
+            _selectableRaces = new List<string>();
+        }
+
 
     }
 }

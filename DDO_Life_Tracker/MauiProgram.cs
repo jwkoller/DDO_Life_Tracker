@@ -1,6 +1,7 @@
 ﻿using DDO_Life_Tracker.ViewModels;
 using MetroLog.MicrosoftExtensions;
 using Microsoft.Extensions.Logging;
+using System.Reflection;
 
 namespace DDO_Life_Tracker
 {
@@ -24,7 +25,7 @@ namespace DDO_Life_Tracker
 
             builder.Logging.AddStreamingFileLogger(options =>
             {
-                options.FolderPath = $"{Directory.GetCurrentDirectory()}{Path.PathSeparator}Logs";
+                options.FolderPath = Path.Combine(AppContext.BaseDirectory, "Logs");
                 options.MinLevel = LogLevel.Information;
             });
 #if DEBUG
