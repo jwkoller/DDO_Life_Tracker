@@ -22,7 +22,9 @@ namespace DDO_Life_Tracker.Models
         {
             get
             {
-                IEnumerable<string> levels = _currentClassDefinitions.Select(x => $"{x.Value.Level} {x.Key}");
+                IEnumerable<string> levels = _currentClassDefinitions
+                    .OrderByDescending(x => x.Value.Level)
+                    .Select(x => $"{x.Value.Level} {x.Key}");
                 return String.Join("/", levels);
             }
         }

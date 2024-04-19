@@ -23,12 +23,13 @@ namespace DDO_Life_Tracker.ViewModels
         [RelayCommand]
         public void AddIncarnation()
         {
-            _logger.LogInformation($"Adding new incarnation");
             //TEST
             Incarnation newLife = new Incarnation(new Human(), new Monk(12));
             newLife.AddClass(new Fighter(6));
             newLife.AddClass(new Rogue(8));
             Incarnations.Add(newLife);
+
+            _logger.LogInformation($"Added new Character life: {newLife.CurrentClass}");
         }
     }
 }
