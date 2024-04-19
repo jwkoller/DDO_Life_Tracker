@@ -1,19 +1,24 @@
 ﻿using CommunityToolkit.Mvvm.ComponentModel;
 using CommunityToolkit.Mvvm.Input;
 using DDO_Life_Tracker.Models;
+using MetroLog;
+using Microsoft.Extensions.Logging;
 using System.Collections.ObjectModel;
 
 namespace DDO_Life_Tracker.ViewModels
 {
     public partial class MainViewModel : ObservableObject
     {
-        public MainViewModel() 
-        { 
-            Incarnations = new ObservableCollection<Incarnation>();
-        }
-
         [ObservableProperty]
         private ObservableCollection<Incarnation> _incarnations;
+
+        private readonly ILogger<MainViewModel> _logger;
+
+        public MainViewModel(ILogger<MainViewModel> logger) 
+        { 
+            Incarnations = new ObservableCollection<Incarnation>();
+            _logger = logger;
+        }
 
         [RelayCommand]
         public void AddIncarnation()
@@ -23,6 +28,8 @@ namespace DDO_Life_Tracker.ViewModels
             newLife.AddClass(new Fighter(6));
             newLife.AddClass(new Rogue(8));
             Incarnations.Add(newLife);
+
+            _logger.LogInformation($"Added new Character life: {newLife.CurrentClass}");
         }
     }
 }
