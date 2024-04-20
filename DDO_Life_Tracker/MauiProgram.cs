@@ -1,4 +1,5 @@
-﻿using DDO_Life_Tracker.ViewModels;
+﻿using DDO_Life_Tracker.Database;
+using DDO_Life_Tracker.ViewModels;
 using MetroLog.MicrosoftExtensions;
 using Microsoft.Extensions.Logging;
 using System.Reflection;
@@ -19,6 +20,7 @@ namespace DDO_Life_Tracker
                 });
             builder.Services.AddSingleton<MainPage>();
             builder.Services.AddSingleton<MainViewModel>();
+            builder.Services.AddSingleton<IncarnationDatabase>();
 
             builder.Services.AddTransient<NewIncarnationPage>();
             builder.Services.AddTransient<NewIncarnationViewModel>();
