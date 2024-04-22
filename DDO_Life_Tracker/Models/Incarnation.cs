@@ -8,8 +8,8 @@ namespace DDO_Life_Tracker.Models
 {
     public class Incarnation : IIncarnation
     {
-        public int Id { get; }
-        public IRace Race { get; }
+        public int Id { get; set; }
+        public IRace Race { get; set; }
         public int Level
         {
             get
@@ -37,11 +37,15 @@ namespace DDO_Life_Tracker.Models
         private const int MAX_NUM_CLASSES = 3;
 
         public Incarnation(IRace race, IClass ddoClass) : this(race, [ddoClass]) { }
+        public Incarnation(int id, IRace race, IClass ddoClass) : this(id, race, [ddoClass]) {  }
 
-        public Incarnation(IRace race, IEnumerable<IClass> ddoClasses ) 
+        public Incarnation(int id, IRace race, IEnumerable<IClass> ddoClasses) : this(race, ddoClasses)
         {
-            //TODO set the ID
-            //Id = ??
+            Id = id;
+        }
+
+        public Incarnation(IRace race, IEnumerable<IClass> ddoClasses)
+        {
             Race = race;
             _currentClassDefinitions = ddoClasses.ToDictionary(x => x.Name);
         }

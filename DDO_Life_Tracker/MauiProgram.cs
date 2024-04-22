@@ -1,4 +1,5 @@
 ﻿using DDO_Life_Tracker.Database;
+using DDO_Life_Tracker.Database.Tables;
 using DDO_Life_Tracker.ViewModels;
 using MetroLog.MicrosoftExtensions;
 using Microsoft.Extensions.Logging;
