@@ -8,8 +8,8 @@ namespace DDO_Life_Tracker.Models
 {
     public interface IIncarnation
     {
-        int Id { get; }
-        IRace Race { get; }
+        int Id { get; set; }
+        IRace Race { get; set; }
         int Level { get; }
         string CurrentClass { get; }
         IEnumerable<IClass> CurrentClassDefinitions { get; }

@@ -12,5 +12,6 @@ namespace DDO_Life_Tracker.Models
         string Name { get; set; }
         Incarnation CurrentIncarnation { get; set; }
         List<Incarnation> IncarnationHistory { get; set; }
+        public DateTime CreateDate { get; set; }
     }
 }
