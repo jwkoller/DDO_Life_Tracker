@@ -2,8 +2,8 @@
 
 namespace DDO_Life_Tracker.Database.Tables
 {
-    [Table("Characters")]
-    public class Characters : IHasId
+    [Table("CharactersDB")]
+    public class CharactersDB : IHasId
     {
         [PrimaryKey, AutoIncrement]
         public int Id { get; set; }

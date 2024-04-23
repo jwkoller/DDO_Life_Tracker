@@ -9,6 +9,7 @@ namespace DDO_Life_Tracker.Models
     public class Incarnation : IIncarnation
     {
         public int Id { get; set; }
+        public int CharacterId { get; set; }
         public IRace Race { get; set; }
         public int Level
         {
@@ -36,18 +37,35 @@ namespace DDO_Life_Tracker.Models
         private const int MAX_CHARACTER_LEVEL = 20;
         private const int MAX_NUM_CLASSES = 3;
 
-        public Incarnation(IRace race, IClass ddoClass) : this(race, [ddoClass]) { }
-        public Incarnation(int id, IRace race, IClass ddoClass) : this(id, race, [ddoClass]) {  }
+        public Incarnation(int characterId)
+        {
+            CharacterId = characterId;
+            _currentClassDefinitions = new Dictionary<string, IClass>();
+        }
 
-        public Incarnation(int id, IRace race, IEnumerable<IClass> ddoClasses) : this(race, ddoClasses)
+        public Incarnation(int characterId, IRace race, IClass ddoClass, int id) : this(characterId, race, [ddoClass], id) {  }
+
+        public Incarnation(int characterId, IRace race, IEnumerable<IClass> ddoClasses, int id) : this(characterId, race, ddoClasses)
         {
             Id = id;
         }
 
-        public Incarnation(IRace race, IEnumerable<IClass> ddoClasses)
+        public Incarnation(int characterId, IRace race, IClass ddoClass) : this(characterId, race, [ddoClass]) { }
+
+        public Incarnation(int characterId, IRace race, IEnumerable<IClass> ddoClasses)
         {
+            CharacterId = characterId;
             Race = race;
-            _currentClassDefinitions = ddoClasses.ToDictionary(x => x.Name);
+            _currentClassDefinitions = new Dictionary<string, IClass>();
+            AddClasses(ddoClasses);
+        }
+
+        public void AddClasses(IEnumerable<IClass> classes)
+        {
+            foreach (IClass c in classes) 
+            {
+                AddClass(c);
+            }
         }
 
         public void AddClass(IClass classToAdd)

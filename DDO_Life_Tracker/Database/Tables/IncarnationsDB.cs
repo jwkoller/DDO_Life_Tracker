@@ -4,8 +4,8 @@ using SQLite;
 
 namespace DDO_Life_Tracker.Database.Tables
 {
-    [Table("Incarnations")]
-    public class Incarnations : IHasId
+    [Table("IncarnationsDB")]
+    public class IncarnationsDB : IHasId
     {
         [PrimaryKey, AutoIncrement]
         public int Id { get; set; }

@@ -8,7 +8,7 @@ using System.Threading.Tasks;
 namespace DDO_Life_Tracker.Database.Tables
 {
     [Table("IncarnationClasses")]
-    public class IncarnationClasses : IHasId
+    public class IncarnationClassesDB : IHasId
     {
         [PrimaryKey,AutoIncrement]
         public int Id { get; set; }

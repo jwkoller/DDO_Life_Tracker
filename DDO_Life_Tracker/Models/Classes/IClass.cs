@@ -8,7 +8,8 @@ namespace DDO_Life_Tracker.Models
 {
     public interface IClass : IHasImg
     {
-        int Id { get; }
+        int Id { get; set; }
+        int ClassId { get; }
         string Name { get; }
         int Level { get; set; }
     }
