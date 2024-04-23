@@ -3,12 +3,13 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using static DDO_Life_Tracker.Services.Definitions;
 
 namespace DDO_Life_Tracker.Models
 {
     public class Warlock : AbstractDDOClass
     {
-        public Warlock(int level) : base(120, nameof(Warlock), level, "warlock.png") { }
+        public Warlock(int level) : base((int)DDOClasses.Warlock, nameof(Warlock), level, "warlock.png") { }
         public Warlock() : this(MIN_CLASS_LEVEL) { }
     }
 }
