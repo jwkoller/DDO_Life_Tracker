@@ -1,4 +1,6 @@
 ﻿
+using DDO_Life_Tracker.Models;
+
 namespace DDO_Life_Tracker.Services
 {
     public static class Definitions
@@ -30,11 +32,47 @@ namespace DDO_Life_Tracker.Services
         }
 
         public static string[] AllDdoClasses
-        { 
-            get 
+        {
+            get
             {
                 return Enum.GetNames<DDOClasses>();
-            } 
+            }
+        }
+
+        public enum DDORaces
+        {
+            Aasimar = 101,
+            Dragonborn = 102,
+            Drow = 103,
+            Dwarf = 104,
+            Elf = 105,
+            Gnome = 106,
+            Halfling = 107,
+            Half__Elf = 108, // double underscores replaced with hyphen
+            Half__Orc = 109,
+            Human = 110,
+            Tiefling = 111,
+            Warforged = 112,
+            Wood_Elf = 113,
+            Shifter = 114,
+            Tabaxi = 115,
+            Bladforged = 116,
+            Deep_Gnome = 117,
+            Morninglord = 118,
+            Purple_Dragon_Knight = 119,
+            Razorclaw_Shifter = 120,
+            Tiefling_Scoundrel = 121,
+            Aasimar_Scourge = 122,
+            Shadar__Kai = 123,
+            Tabaxi_Trailblazer = 124
+        }
+
+        public static string[] AllDdoRaces
+        {
+            get
+            {
+                return Enum.GetNames<DDORaces>();
+            }
         }
     }
 }

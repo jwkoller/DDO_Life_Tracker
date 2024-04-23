@@ -17,7 +17,7 @@ namespace DDO_Life_Tracker.ViewModels
         {
             _logger = logger;
             _selectableClasses = Definitions.AllDdoClasses.Select(x => x.Replace("_", " "));
-            _selectableRaces = new List<string>();
+            _selectableRaces = Definitions.AllDdoRaces.Select(x => x.Replace("__", "-").Replace("_", " "));
         }
 
 
