@@ -23,6 +23,11 @@ namespace DDO_Life_Tracker.Database
             }
 
             Database = new SQLiteAsyncConnection(DBConstants.DatabasePath, DBConstants.Flags);
+#if DEBUG
+            await Database.DropTableAsync<CharactersTable>();
+            await Database.DropTableAsync<IncarnationsTable>();
+            await Database.DropTableAsync<ClassesTable>();
+#endif
             await Database.CreateTableAsync<CharactersTable>();
             await Database.CreateTableAsync<IncarnationsTable>();
             await Database.CreateTableAsync<ClassesTable>();
@@ -43,12 +48,20 @@ namespace DDO_Life_Tracker.Database
             return await Database.GetWithChildrenAsync<CharactersTable>(id, recursive: true);
         }
 
+        public async Task<CharactersTable> GetCharacterByName(string name)
+        {
+            await Init();
+            List<CharactersTable> allCharacters = await Database.GetAllWithChildrenAsync<CharactersTable>();
+
+            return allCharacters.FirstOrDefault(x => x.Name == name) ?? throw new Exception($"Character name {name} not found");
+        }
+
         public async Task SaveCharacterAsync(CharactersTable character)
         {
             await Init();
             if(character.Id != 0)
             {
-                await Database.UpdateWithChildrenAsync(character);
+                await Database.InsertOrReplaceWithChildrenAsync(character, recursive: true);
             } else
             {
                 await Database.InsertWithChildrenAsync(character, recursive: true);
@@ -80,7 +93,7 @@ namespace DDO_Life_Tracker.Database
             await Init();
             if (incarnation.Id != 0)
             {
-                await Database.UpdateWithChildrenAsync(incarnation);
+                await Database.InsertOrReplaceWithChildrenAsync(incarnation, recursive: true);
             }
             else
             {

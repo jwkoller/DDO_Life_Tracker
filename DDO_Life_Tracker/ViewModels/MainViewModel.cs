@@ -11,10 +11,10 @@ namespace DDO_Life_Tracker.ViewModels
     {
         [ObservableProperty]
         private ObservableCollection<Incarnation> _incarnations;
-        private IncarnationsDBService _service;
+        private IncarnationDBService _service;
         private readonly ILogger<MainViewModel> _logger;
 
-        public MainViewModel(ILogger<MainViewModel> logger, IncarnationsDBService service) 
+        public MainViewModel(ILogger<MainViewModel> logger, IncarnationDBService service) 
         { 
             Incarnations = new ObservableCollection<Incarnation>();
             _logger = logger;
@@ -25,12 +25,25 @@ namespace DDO_Life_Tracker.ViewModels
         public async Task AddIncarnation()
         {
             //TEST
-            Incarnation newLife = new Incarnation(10,new Human(), new Monk(12));
-            newLife.AddClass(new Fighter(6));
-            newLife.AddClass(new Rogue(2));
+            Character effren = new Character("Effren");
+            await _service.SaveCharacterAsync(effren);
+            effren = await _service.GetCharacterByName(effren.Name);
+
+            Incarnation newLife = new Incarnation(effren.Id,new Human(), new Monk(12));
+            newLife.AddClass(new Fighter(2));
             Incarnations.Add(newLife);
 
-            List<Incarnation> saved = await _service.GetIncarnationsByCharacterIdAsync(10);
+            effren.AddIncarnation(newLife);
+
+            Incarnation secondLife = new Incarnation(effren.Id, new Tabaxi(), new Rogue(20));
+            Incarnations.Add(secondLife);
+
+            effren.AddIncarnation(secondLife);
+
+            await _service.SaveCharacterAsync(effren);
+
+            effren = await _service.GetCharacterByIdAsync(effren.Id);
+
             _logger.LogInformation($"Added new Character life: {newLife.CurrentClass}");
         }
 

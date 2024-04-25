@@ -23,7 +23,7 @@ namespace DDO_Life_Tracker
             builder.Services.AddSingleton<MainPage>();
             builder.Services.AddSingleton<MainViewModel>();
             builder.Services.AddSingleton<IncarnationDatabase>();
-            builder.Services.AddSingleton<IncarnationsDBService>();
+            builder.Services.AddSingleton<IncarnationDBService>();
 
             builder.Services.AddTransient<NewIncarnationPage>();
             builder.Services.AddTransient<NewIncarnationViewModel>();
