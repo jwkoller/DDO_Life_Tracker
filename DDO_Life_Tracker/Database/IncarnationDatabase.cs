@@ -1,21 +1,13 @@
 ﻿using DDO_Life_Tracker.Database.Tables;
-using DDO_Life_Tracker.Models;
 using Microsoft.Extensions.Logging;
 using SQLite;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+using SQLiteNetExtensionsAsync.Extensions;
 
 namespace DDO_Life_Tracker.Database
 {
-    //TODO sure would be nice genericise all the duplicate code in the queries
-    //TODO explore other options than SQLite as it has no FK implementation.
-    //Cross platform compatibility is an issue
     public class IncarnationDatabase
     {
-        public SQLiteAsyncConnection Database;
+        private SQLiteAsyncConnection Database;
         private ILogger<IncarnationDatabase> _logger;
 
         public IncarnationDatabase(ILogger<IncarnationDatabase> logger)
@@ -31,107 +23,115 @@ namespace DDO_Life_Tracker.Database
             }
 
             Database = new SQLiteAsyncConnection(DBConstants.DatabasePath, DBConstants.Flags);
-            await Database.CreateTableAsync<Characters>();
-            await Database.CreateTableAsync<Incarnations>();
-            await Database.CreateTableAsync<IncarnationClasses>();
+#if DEBUG
+            await Database.DropTableAsync<CharactersTable>();
+            await Database.DropTableAsync<IncarnationsTable>();
+            await Database.DropTableAsync<ClassesTable>();
+#endif
+            await Database.CreateTableAsync<CharactersTable>();
+            await Database.CreateTableAsync<IncarnationsTable>();
+            await Database.CreateTableAsync<ClassesTable>();
 
             _logger.LogInformation("DB intialized");
         }
 
         #region Characters Table Queries
-        public async Task<List<Characters>> GetCharactersAsync()
+        public async Task<List<CharactersTable>> GetCharactersAsync()
         {
             await Init();
-            return await Database.Table<Characters>().ToListAsync();
+            return await Database.GetAllWithChildrenAsync<CharactersTable>(recursive: true);
         }
 
-        public async Task<Characters> GetCharacterByIdAsync(int id)
+        public async Task<CharactersTable> GetCharacterByIdAsync(int id)
         {
             await Init();
-            return await Database.Table<Characters>().Where(x => x.Id == id).FirstOrDefaultAsync();
+            return await Database.GetWithChildrenAsync<CharactersTable>(id, recursive: true);
         }
 
-        public async Task<int> SaveCharacterAsync(Characters character)
+        public async Task<CharactersTable> GetCharacterByName(string name)
+        {
+            await Init();
+            List<CharactersTable> allCharacters = await Database.GetAllWithChildrenAsync<CharactersTable>();
+
+            return allCharacters.FirstOrDefault(x => x.Name == name) ?? throw new Exception($"Character name {name} not found");
+        }
+
+        public async Task SaveCharacterAsync(CharactersTable character)
         {
             await Init();
             if(character.Id != 0)
             {
-                return await Database.UpdateAsync(character);
+                await Database.InsertOrReplaceWithChildrenAsync(character, recursive: true);
             } else
             {
-                return await Database.InsertAsync(character);
+                await Database.InsertWithChildrenAsync(character, recursive: true);
             }
         }
 
-        public async Task<int> DeleteCharacterAsync(Characters character)
+        public async Task DeleteCharacterAsync(CharactersTable character)
         {
             await Init();
-            return await Database.DeleteAsync(character);
+            await Database.DeleteAsync(character, recursive: true);
         }
         #endregion
 
         #region Incarnations Table Queries
-        public async Task<List<Incarnations>> GetIncarnationsAsync()
+        public async Task<List<IncarnationsTable>> GetIncarnationsAsync()
         {
             await Init();
-            return await Database.Table<Incarnations>().ToListAsync();
+            return await Database.GetAllWithChildrenAsync<IncarnationsTable>(recursive: true);
         }
 
-        public async Task<Incarnations> GetIncarnationByCharacterIdAsync(int id)
+        public async Task<List<IncarnationsTable>> GetIncarnationByCharacterIdAsync(int id)
         {
             await Init();
-            return await Database.Table<Incarnations>().Where(x => x.CharacterId == id).FirstOrDefaultAsync();
+            return await Database.GetAllWithChildrenAsync<IncarnationsTable>(x => x.CharacterId == id, recursive: true);
         }
 
-        public async Task<int> SaveIncarnationAsync(Incarnations incarnation)
+        public async Task SaveIncarnationAsync(IncarnationsTable incarnation)
         {
             await Init();
             if (incarnation.Id != 0)
             {
-                return await Database.UpdateAsync(incarnation);
+                await Database.InsertOrReplaceWithChildrenAsync(incarnation, recursive: true);
             }
             else
             {
-                return await Database.InsertAsync(incarnation);
+                await Database.InsertWithChildrenAsync(incarnation, recursive: true);
             }
         }
 
-        public async Task<int> DeleteIncarnationAsync(Incarnations incarnation)
+        public async Task<int> DeleteIncarnationAsync(IncarnationsTable incarnation)
         {
             await Init();
             return await Database.DeleteAsync(incarnation);
         }
         #endregion
 
-        #region IncarnationsClasses Table Queries
-        public async Task<List<IncarnationClasses>> GetClassesByCharacterIdAsync(int characterId)
-        {
-            await Init();
-            return await Database.Table<IncarnationClasses>().Where(x => x.CharacterId == characterId).ToListAsync();
-        }
+        #region Classes Table Queries
 
-        public async Task<List<IncarnationClasses>> GetClassesByIncarnationIdAsync(int incarnationId)
+        public async Task<List<ClassesTable>> GetClassesByIncarnationIdAsync(int incarnationId)
         {
             await Init();
-            return await Database.Table<IncarnationClasses>().Where(x => x.IncarnationId == incarnationId).ToListAsync();
+            return await Database.GetAllWithChildrenAsync<ClassesTable>(x => x.IncarnationId == incarnationId);
         }
-        public async Task<int> SaveIncarnationClassAsync(IncarnationClasses incarnationClass)
+        public async Task SaveClassAsync(ClassesTable classItem)
         {
             await Init();
-            if (incarnationClass.Id != 0)
+            if (classItem.Id != 0)
             {
-                return await Database.UpdateAsync(incarnationClass);
+                await Database.UpdateWithChildrenAsync(classItem);
             }
             else
             {
-                return await Database.InsertAsync(incarnationClass);
+                await Database.InsertWithChildrenAsync(classItem, recursive: true);
             }
         }
 
-        public async Task<int> DeleteIncarnationClassAsync(IncarnationClasses incarnationClass)
+        public async Task<int> DeleteClassAsync(ClassesTable classItem)
         {
             await Init();
-            return await Database.DeleteAsync(incarnationClass);
+            return await Database.DeleteAsync(classItem);
         }
         #endregion
     }

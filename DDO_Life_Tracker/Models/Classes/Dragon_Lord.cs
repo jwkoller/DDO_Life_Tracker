@@ -5,7 +5,7 @@ using System.Text;
 using System.Threading.Tasks;
 using static DDO_Life_Tracker.Services.Definitions;
 
-namespace DDO_Life_Tracker.Models.Classes
+namespace DDO_Life_Tracker.Models
 {
     public class Dragon_Lord : AbstractDDOClass
     {

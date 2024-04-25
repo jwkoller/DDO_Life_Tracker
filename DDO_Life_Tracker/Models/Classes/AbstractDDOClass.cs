@@ -8,16 +8,19 @@ namespace DDO_Life_Tracker.Models
 {
     public abstract class AbstractDDOClass : IClass
     {
-        public int Id { get; }
+        public int Id { get; set; }
+        public int IncarnationId { get; set; }
+        public int ClassId { get; }
         public string Name { get; }
         public int Level { get; set; }
         public string IconImgFileName { get; }
 
         protected const int MAX_CLASS_LEVEL = 20;
         protected const int MIN_CLASS_LEVEL = 1;
-        public AbstractDDOClass(int id, string name, int level, string iconImgFileName)
+
+        protected AbstractDDOClass(int classId, string name, int level, string iconImgFileName)
         {
-            Id = id;
+            ClassId = classId;
             Name = name;
             IconImgFileName = iconImgFileName;
             Level = ValidateClassLevel(level);

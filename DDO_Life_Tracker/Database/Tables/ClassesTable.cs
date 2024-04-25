@@ -1,4 +1,5 @@
 ﻿using SQLite;
+using SQLiteNetExtensions.Attributes;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -7,18 +8,18 @@ using System.Threading.Tasks;
 
 namespace DDO_Life_Tracker.Database.Tables
 {
-    [Table("IncarnationClasses")]
-    public class IncarnationClasses : IHasId
+    [Table("Classes")]
+    public class ClassesTable : IHasId
     {
         [PrimaryKey,AutoIncrement]
         public int Id { get; set; }
-        [NotNull]
-        public int CharacterId { get; set; }
-        [NotNull]
+        [ForeignKey(typeof(IncarnationsTable))]
         public int IncarnationId { get; set; }
         [NotNull]
         public int ClassId { get; set; }
         [NotNull]
-        public int CLassLevel { get; set; }
+        public int Level { get; set; }
+        [ManyToOne]
+        public IncarnationsTable IncarnationsTable { get; set; }
     }
 }

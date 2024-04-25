@@ -18,7 +18,7 @@
         <Button Text="Add New Incarnation"
                 Grid.Row="1"
                 BackgroundColor="DarkGoldenrod"
-                Command="{Binding GoToAddIncarnationPageCommand}"/>
+                Command="{Binding AddIncarnationCommand}"/>
 
         <CollectionView Grid.Row="2"
                         ItemsSource="{Binding Incarnations}">
