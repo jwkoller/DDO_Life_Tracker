@@ -34,13 +34,13 @@ namespace DDO_Life_Tracker.Services
             }
         }
 
-        public async Task<Character> GetCharacterByIdAsync(int charcterid)
+        public async Task<Character> GetCharacterByIdAsync(int characterId)
         {
             try
             {
-                _logger.LogDebug($"Getting Character by Id {charcterid}");
+                _logger.LogDebug($"Getting Character by Id {characterId}");
 
-                CharactersTable character = await _database.GetCharacterByIdAsync(charcterid);
+                CharactersTable character = await _database.GetCharacterByIdAsync(characterId);
 
                 return DataToModel(character);
             }
@@ -73,6 +73,7 @@ namespace DDO_Life_Tracker.Services
             try
             {
                 _logger.LogDebug($"Saving character id ({(character.Id == 0 ? "new" : character.Id)})");
+
                 await _database.SaveCharacterAsync(ModelToData(character));
             }
             catch(Exception ex)
@@ -87,6 +88,7 @@ namespace DDO_Life_Tracker.Services
             try
             {
                 _logger.LogDebug($"Deleting character id {character.Id}");
+
                 await _database.DeleteCharacterAsync(ModelToData(character));
             }
             catch(Exception ex)
