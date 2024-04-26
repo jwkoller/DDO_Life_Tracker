@@ -56,7 +56,7 @@ namespace DDO_Life_Tracker.Database
             return allCharacters.FirstOrDefault(x => x.Name == name) ?? throw new Exception($"Character name {name} not found");
         }
 
-        public async Task SaveCharacterAsync(CharactersTable character)
+        public async Task<int> SaveCharacterAsync(CharactersTable character)
         {
             await Init();
             if(character.Id != 0)
@@ -66,6 +66,8 @@ namespace DDO_Life_Tracker.Database
             {
                 await Database.InsertWithChildrenAsync(character, recursive: true);
             }
+
+            return character.Id;
         }
 
         public async Task DeleteCharacterAsync(CharactersTable character)
@@ -88,7 +90,7 @@ namespace DDO_Life_Tracker.Database
             return await Database.GetAllWithChildrenAsync<IncarnationsTable>(x => x.CharacterId == id, recursive: true);
         }
 
-        public async Task SaveIncarnationAsync(IncarnationsTable incarnation)
+        public async Task<int> SaveIncarnationAsync(IncarnationsTable incarnation)
         {
             await Init();
             if (incarnation.Id != 0)
@@ -99,6 +101,8 @@ namespace DDO_Life_Tracker.Database
             {
                 await Database.InsertWithChildrenAsync(incarnation, recursive: true);
             }
+            
+            return incarnation.Id;
         }
 
         public async Task<int> DeleteIncarnationAsync(IncarnationsTable incarnation)
@@ -115,7 +119,7 @@ namespace DDO_Life_Tracker.Database
             await Init();
             return await Database.GetAllWithChildrenAsync<ClassesTable>(x => x.IncarnationId == incarnationId);
         }
-        public async Task SaveClassAsync(ClassesTable classItem)
+        public async Task<int> SaveClassAsync(ClassesTable classItem)
         {
             await Init();
             if (classItem.Id != 0)
@@ -126,6 +130,8 @@ namespace DDO_Life_Tracker.Database
             {
                 await Database.InsertWithChildrenAsync(classItem, recursive: true);
             }
+
+            return classItem.Id;
         }
 
         public async Task<int> DeleteClassAsync(ClassesTable classItem)

@@ -26,10 +26,9 @@ namespace DDO_Life_Tracker.ViewModels
         {
             //TEST
             Character effren = new Character("Effren");
-            await _service.SaveCharacterAsync(effren);
-            effren = await _service.GetCharacterByName(effren.Name);
+            effren.Id = await _service.SaveCharacterAsync(effren);
 
-            Incarnation newLife = new Incarnation(effren.Id,new Human(), new Monk(12));
+            Incarnation newLife = new Incarnation(effren.Id,new Aasimar(), new Monk(12));
             newLife.AddClass(new Fighter(2));
             Incarnations.Add(newLife);
 
