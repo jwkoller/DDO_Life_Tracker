@@ -48,14 +48,6 @@ namespace DDO_Life_Tracker.Database
             return await Database.GetWithChildrenAsync<CharactersTable>(id, recursive: true);
         }
 
-        public async Task<CharactersTable> GetCharacterByName(string name)
-        {
-            await Init();
-            List<CharactersTable> allCharacters = await Database.GetAllWithChildrenAsync<CharactersTable>();
-
-            return allCharacters.FirstOrDefault(x => x.Name == name) ?? throw new Exception($"Character name {name} not found");
-        }
-
         public async Task<int> SaveCharacterAsync(CharactersTable character)
         {
             await Init();

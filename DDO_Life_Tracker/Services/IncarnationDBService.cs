@@ -51,15 +51,17 @@ namespace DDO_Life_Tracker.Services
             }
         }
 
-        public async Task<Character> GetCharacterByName(string name)
+        public async Task<Character> GetCharacterByNameAsync(string name)
         {
             try
             {
-                _logger.LogDebug($"Getting character name {name}");
+                _logger.LogDebug($"Getting character name: {name}");
 
-                CharactersTable character =  await _database.GetCharacterByName(name);
+                List<CharactersTable> characters =  await _database.GetCharactersAsync();
+                CharactersTable found = characters.FirstOrDefault(x => x.Name == name) 
+                    ?? throw new Exception($"No character found");
 
-                return DataToModel(character);
+                return DataToModel(found);
             }
             catch(Exception ex)
             {
