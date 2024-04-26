@@ -68,13 +68,13 @@ namespace DDO_Life_Tracker.Services
             }
         }
 
-        public async Task SaveCharacterAsync(Character character)
+        public async Task<int> SaveCharacterAsync(Character character)
         {
             try
             {
                 _logger.LogDebug($"Saving character id ({(character.Id == 0 ? "new" : character.Id)})");
 
-                await _database.SaveCharacterAsync(ModelToData(character));
+                return await _database.SaveCharacterAsync(ModelToData(character));
             }
             catch(Exception ex)
             {
@@ -117,13 +117,13 @@ namespace DDO_Life_Tracker.Services
             }
         }
 
-        public async Task SaveIncarnationAsync(Incarnation incarnation)
+        public async Task<int> SaveIncarnationAsync(Incarnation incarnation)
         {
             try
             {
                 _logger.LogDebug($"Saving incarnation for Character id {incarnation.CharacterId}");
 
-                await _database.SaveIncarnationAsync(ModelToData(incarnation));
+                return await _database.SaveIncarnationAsync(ModelToData(incarnation));
             }
             catch (Exception ex)
             {
@@ -166,13 +166,13 @@ namespace DDO_Life_Tracker.Services
             }
         }
 
-        public async Task SaveClassAsync(IClass classItem)
+        public async Task<int> SaveClassAsync(IClass classItem)
         {
             try
             {
                 _logger.LogDebug($"Saving class id ({(classItem.Id == 0 ? "new" : classItem.Id)})");
 
-                await _database.SaveClassAsync(ModelToData(classItem));
+                return await _database.SaveClassAsync(ModelToData(classItem));
             }
             catch(Exception ex)
             {
