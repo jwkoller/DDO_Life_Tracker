@@ -22,10 +22,10 @@ namespace DDO_Life_Tracker.ViewModels
         }
 
         [RelayCommand]
-        public async Task AddIncarnation()
+        public async Task AddCharacter()
         {
             //TEST
-            Character effren = new Character("Effren");
+            Character effren = new Character("Bob");
             effren.Id = await _service.SaveCharacterAsync(effren);
 
             Incarnation newLife = new Incarnation(effren.Id,new Aasimar(), new Monk(12));
@@ -33,14 +33,12 @@ namespace DDO_Life_Tracker.ViewModels
 
             effren.AddIncarnation(newLife);
 
-            Incarnation secondLife = new Incarnation(effren.Id, new Tabaxi(), new Rogue(20));
+            Incarnation secondLife = new Incarnation(effren.Id, new Shifter(), new Wizard(20));
 
             effren.AddIncarnation(secondLife);
 
             await _service.SaveCharacterAsync(effren);
-
-            effren = await _service.GetCharacterByIdAsync(effren.Id);
-
+            Characters.Add(effren);
             _logger.LogInformation($"Added new Character life: {newLife.CurrentClass}");
         }
 
