@@ -9,7 +9,7 @@ namespace DDO_Life_Tracker.Models
 {
     public class Dragon_Lord : AbstractDDOClass
     {
-        public Dragon_Lord(int level) : base((int)DDOClasses.Dragon_Lord, nameof(Dragon_Lord).Replace("_", " "), level, "fighter.png") { }
+        public Dragon_Lord(int level) : base((int)DDOClasses.Dragon_Lord, nameof(Dragon_Lord).Replace("_", " "), level, "dragonlord.png") { }
         public Dragon_Lord() : this(MIN_CLASS_LEVEL) { }
     }
 }
