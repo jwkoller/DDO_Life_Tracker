@@ -1,6 +1,7 @@
 ﻿<?xml version="1.0" encoding="utf-8" ?>
 <ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             xmlns:toolkit="http://schemas.microsoft.com/dotnet/2022/maui/toolkit"
              x:Class="DDO_Life_Tracker.MainPage"
              xmlns:viewmodel="clr-namespace:DDO_Life_Tracker.ViewModels"
              x:DataType="viewmodel:MainViewModel"
@@ -13,40 +14,63 @@
           RowSpacing="10">
 
         <Image Source="dotnet_bot.png"
-               WidthRequest=".8"
                HorizontalOptions="Center"
                BackgroundColor="DarkRed"/>
 
         <Button Text="Add New Character"
                 Grid.Row="1"
                 BackgroundColor="DarkGoldenrod"
-                Command="{Binding AddCharacterCommand}"/>
+                Clicked="AddCharacterTEST"/>
         <CollectionView Grid.Row="3"
                         ItemsSource="{Binding Characters}">
             <CollectionView.ItemTemplate>
                 <DataTemplate x:DataType="models:Character">
                     <StackLayout>
-                        <Label Text="{Binding Name}"
-                               FontSize="20"
-                               FontAttributes="Bold"
-                               TextColor="AntiqueWhite"/>
-                        <StackLayout BindableLayout.ItemsSource="{Binding IncarnationHistory}">
-                            <BindableLayout.ItemTemplate>
-                                <DataTemplate x:DataType="models:Incarnation">
-                                    <HorizontalStackLayout
+                        <toolkit:Expander>
+                            <toolkit:Expander.Header>
+                                <HorizontalStackLayout
+                                    Spacing="30"
+                                    BackgroundColor="DarkOrange">
+                                    <Label Text="{Binding Name}"
+                                           FontSize="20"
+                                           FontAttributes="Bold"
+                                           TextColor="AntiqueWhite"/>
+                                    <Label Text="Total Lives: "
+                                           FontSize="20"
+                                           FontAttributes="Bold"
+                                           TextColor="AntiqueWhite"/>
+                                    <Label Text="{Binding NumberOfLives}"
+                                           FontSize="20"
+                                           FontAttributes="Bold"
+                                           TextColor="AntiqueWhite"/>
+                                    <Label Text="Created: "
+                                           FontSize="20"
+                                           FontAttributes="Bold"
+                                           TextColor="AntiqueWhite"/>
+                                    <Label Text="{Binding CreateDate}"
+                                           FontSize="20"
+                                           FontAttributes="Bold"
+                                           TextColor="AntiqueWhite"/>
+                                </HorizontalStackLayout>
+                            </toolkit:Expander.Header>
+                            <StackLayout BindableLayout.ItemsSource="{Binding IncarnationHistory}">
+                                <BindableLayout.ItemTemplate>
+                                    <DataTemplate x:DataType="models:Incarnation">
+                                        <HorizontalStackLayout
                                         Spacing="25">
-                                        <Image Source="{Binding Race.IconImgFileName}"
+                                            <Image Source="{Binding Race.IconImgFileName}"
                                            Grid.Column="0"/>
-                                        <Label Grid.Column="1"
+                                            <Label Grid.Column="1"
                                            TextColor="AntiqueWhite"
                                            Text="{Binding Race.Name}"/>
-                                        <Label Grid.Column="3"
+                                            <Label Grid.Column="3"
                                            TextColor="AntiqueWhite"
                                            Text="{Binding CurrentClass}"/>
-                                    </HorizontalStackLayout>
-                                </DataTemplate>
-                            </BindableLayout.ItemTemplate>
-                        </StackLayout>
+                                        </HorizontalStackLayout>
+                                    </DataTemplate>
+                                </BindableLayout.ItemTemplate>
+                            </StackLayout>
+                        </toolkit:Expander>
                     </StackLayout>
                 </DataTemplate>
             </CollectionView.ItemTemplate>

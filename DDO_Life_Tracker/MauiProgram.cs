@@ -1,4 +1,5 @@
-﻿using DDO_Life_Tracker.Database;
+﻿using CommunityToolkit.Maui;
+using DDO_Life_Tracker.Database;
 using DDO_Life_Tracker.Database.Tables;
 using DDO_Life_Tracker.Services;
 using DDO_Life_Tracker.ViewModels;
@@ -15,6 +16,7 @@ namespace DDO_Life_Tracker
             var builder = MauiApp.CreateBuilder();
             builder
                 .UseMauiApp<App>()
+                .UseMauiCommunityToolkit()
                 .ConfigureFonts(fonts =>
                 {
                     fonts.AddFont("OpenSans-Regular.ttf", "OpenSansRegular");

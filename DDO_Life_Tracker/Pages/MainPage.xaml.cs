@@ -1,4 +1,5 @@
-﻿using DDO_Life_Tracker.ViewModels;
+﻿using CommunityToolkit.Mvvm.Input;
+using DDO_Life_Tracker.ViewModels;
 using MetroLog;
 using Microsoft.Extensions.Logging;
 
@@ -14,28 +15,37 @@ namespace DDO_Life_Tracker
             InitializeComponent();
             BindingContext = viewModel;
             Loaded += MainPage_Loaded;
-
             _viewModel = viewModel;
             _logger = logger;
         }
 
-        protected async override void OnAppearing()
+        private async void MainPage_Loaded(object? sender, EventArgs e)
         {
-            base.OnAppearing();
             try
             {
                 await _viewModel.LoadCharacters();
             }
             catch (Exception ex)
             {
-                _logger.LogError($"Error loading characters on startup: {ex}");
+                _logger.LogError($"Error loading characters OnAppearing: {ex}");
                 await DisplayAlert("ERROR", "Error retrieving your characters", "Cancel");
             }
         }
-        private void MainPage_Loaded(object? sender, EventArgs e)
+ 
+        private async void AddCharacterTEST(object? sender, EventArgs e)
         {
-            
+            try
+            {
+                await _viewModel.AddCharacterTEST();
+            }
+            catch (SQLite.SQLiteException ex)
+            {
+                await DisplayAlert("ERROR", $"Error saving your character: {ex.Message}", "Ok");
+            }
+            catch(Exception ex)
+            {
+                await DisplayAlert("ERROR", $"The program has encountered an error: {ex.Message}", "Well shit");
+            }
         }
     }
-
 }

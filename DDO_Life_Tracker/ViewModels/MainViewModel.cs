@@ -21,35 +21,40 @@ namespace DDO_Life_Tracker.ViewModels
             _service = service;
         }
 
-        [RelayCommand]
-        public async Task AddCharacter()
+        public async Task AddCharacterTEST()
         {
+
             //TEST
-            Character effren = new Character("Bob");
+            Character effren = new Character("Effren");
             effren.Id = await _service.SaveCharacterAsync(effren);
 
-            Incarnation newLife = new Incarnation(effren.Id,new Aasimar(), new Monk(12));
-            newLife.AddClass(new Fighter(2));
-
+            Incarnation newLife = new Incarnation(effren.Id,new Aasimar(), [new Monk(12), new Fighter(8)]);
             effren.AddIncarnation(newLife);
-
             Incarnation secondLife = new Incarnation(effren.Id, new Shifter(), new Wizard(20));
-
             effren.AddIncarnation(secondLife);
 
             await _service.SaveCharacterAsync(effren);
             Characters.Add(effren);
-            _logger.LogInformation($"Added new Character life: {newLife.CurrentClass}");
+
+            Character bob = new Character("Bob");
+            bob.Id = await _service.SaveCharacterAsync(bob);
+
+            Characters.Add(bob);
+
+            Incarnation bobLife = new Incarnation(bob.Id, new Gnome(), [new Rogue(11), new Fighter(9)]);
+            bob.AddIncarnation(bobLife);
+            Incarnation bobSecond = new Incarnation(bob.Id, new Tabaxi(), [new Bard(16), new Fighter(2), new Rogue(2)]);
+            bob.AddIncarnation(bobSecond);
+            Incarnation bobThird = new Incarnation(bob.Id, new Elf(), new Cleric(20));
+            bob.AddIncarnation(bobThird);
         }
 
         public async Task LoadCharacters()
         {
             Characters.Clear();
             List<Character> chars = await _service.GetCharactersAsync();
-            foreach (Character c in chars)
-            {
-                Characters.Add(c);
-            }
+
+            chars.ForEach(c => Characters.Add(c));
         }
 
         [RelayCommand]
