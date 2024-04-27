@@ -49,6 +49,12 @@ namespace DDO_Life_Tracker.ViewModels
             bob.AddIncarnation(bobThird);
         }
 
+        public async Task DeleteCharacterTEST(Character character)
+        {
+            await _service.DeleteCharacterAsync(character);
+            await LoadCharacters();
+        }
+
         public async Task LoadCharacters()
         {
             Characters.Clear();

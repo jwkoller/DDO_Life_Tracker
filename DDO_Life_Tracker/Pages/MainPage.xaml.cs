@@ -1,4 +1,5 @@
 ﻿using CommunityToolkit.Mvvm.Input;
+using DDO_Life_Tracker.Models;
 using DDO_Life_Tracker.ViewModels;
 using MetroLog;
 using Microsoft.Extensions.Logging;
@@ -9,17 +10,19 @@ namespace DDO_Life_Tracker
     {
         private MainViewModel _viewModel;
         private readonly ILogger<MainPage> _logger;
+        private Character _focusedCharacter;
 
         public MainPage(MainViewModel viewModel, ILogger<MainPage> logger)
         {
             InitializeComponent();
             BindingContext = viewModel;
-            Loaded += MainPage_Loaded;
+
+            Loaded += OnLoaded;
             _viewModel = viewModel;
             _logger = logger;
         }
 
-        private async void MainPage_Loaded(object? sender, EventArgs e)
+        private async void OnLoaded(object? sender, EventArgs e)
         {
             try
             {
@@ -45,6 +48,31 @@ namespace DDO_Life_Tracker
             catch(Exception ex)
             {
                 await DisplayAlert("ERROR", $"The program has encountered an error: {ex.Message}", "Well shit");
+            }
+        }
+
+        private async void DeleteCharacterTEST(object? sender, EventArgs args)
+        {
+            try
+            {
+                bool confirm = await DisplayAlert("Confirm Delete", $"Are you sure you want to delete {_focusedCharacter.Name}?", "Yes", "Cancel");
+                if (confirm)
+                {
+                    await _viewModel.DeleteCharacterTEST(_focusedCharacter);
+                }
+            }
+            catch (Exception ex)
+            {
+                _logger.LogError($"Error deleting character: {ex}");
+                await DisplayAlert($"ERROR", $"Delete Character failed for {_focusedCharacter.Name}. {ex.Message}", "Shit...");
+            }
+        }
+
+        private void OnFocusCharacter(object sender, TappedEventArgs e)
+        {
+            if(e.Parameter?.GetType() == typeof(Character))
+            {
+                _focusedCharacter = (Character)e.Parameter;
             }
         }
     }
