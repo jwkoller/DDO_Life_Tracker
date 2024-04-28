@@ -1,4 +1,6 @@
-﻿namespace DDO_Life_Tracker
+﻿using DDO_Life_Tracker.Pages;
+
+namespace DDO_Life_Tracker
 {
     public partial class AppShell : Shell
     {
@@ -7,6 +9,7 @@
             InitializeComponent();
 
             Routing.RegisterRoute(nameof(NewIncarnationPage), typeof(NewIncarnationPage));
+            Routing.RegisterRoute(nameof(AddCharacterPage), typeof(AddCharacterPage));
         }
     }
 }

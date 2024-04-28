@@ -9,6 +9,7 @@ namespace DDO_Life_Tracker.Database.Tables
         [PrimaryKey, AutoIncrement]
         public int Id { get; set; }
         [NotNull]
+        [Unique]
         public string Name { get; set; }
         public DateTime CreateDate { get; set; }
         [OneToMany(CascadeOperations = CascadeOperation.All)]

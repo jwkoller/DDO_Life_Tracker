@@ -17,6 +17,15 @@ namespace DDO_Life_Tracker.Models
                 return _incarnationHistory.OrderByDescending(x => x.Id).AsEnumerable();
             } 
         }
+
+        public int NumberOfLives
+        {
+            get
+            {
+                return _incarnationHistory.Count;
+            }
+        }
+
         public DateTime CreateDate { get; set; }
 
         private List<Incarnation> _incarnationHistory;

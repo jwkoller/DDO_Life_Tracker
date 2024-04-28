@@ -1,27 +1,95 @@
 ﻿<?xml version="1.0" encoding="utf-8" ?>
 <ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             xmlns:toolkit="http://schemas.microsoft.com/dotnet/2022/maui/toolkit"
              x:Class="DDO_Life_Tracker.MainPage"
              xmlns:viewmodel="clr-namespace:DDO_Life_Tracker.ViewModels"
              x:DataType="viewmodel:MainViewModel"
              xmlns:models="clr-namespace:DDO_Life_Tracker.Models"
              BackgroundColor="Black">
 
-    <Grid RowDefinitions="100, auto, *"
-          ColumnDefinitions="*"
+    <Grid RowDefinitions="100, auto, auto, *"
+          ColumnDefinitions=".5*, .5*"
           Padding="5"
-          RowSpacing="10">
+          RowSpacing="10"
+          ColumnSpacing="25">
 
         <Image Source="dotnet_bot.png"
-               BackgroundColor="DarkRed"/>
+               HorizontalOptions="Center"
+               BackgroundColor="DarkGoldenrod"/>
 
-        <Button Text="Add New Incarnation"
+        <Button Text="Add New Character"
                 Grid.Row="1"
-                BackgroundColor="DarkGoldenrod"
-                Command="{Binding AddIncarnationCommand}"/>
+                Grid.Column="0"
+                BackgroundColor="DarkGreen"
+                Command="{Binding GoToAddCharacterPageCommand}"/>
+        <Button Text="Delete Character"
+                Grid.Row="1"
+                Grid.Column="1"
+                BackgroundColor="DarkRed"
+                Clicked="DeleteCharacterTEST"/>
+        <CollectionView Grid.Row="3"
+                        Grid.Column="0"
+                        ItemsSource="{Binding Characters}">
+            <CollectionView.ItemTemplate>
+                <DataTemplate x:DataType="models:Character">
+                    <StackLayout>
+                        <toolkit:Expander>
+                            <toolkit:Expander.Header>
+                                <HorizontalStackLayout
+                                    Spacing="30"
+                                    BackgroundColor="DarkOrange">
+                                    <HorizontalStackLayout.GestureRecognizers>
+                                        <TapGestureRecognizer Tapped="OnFocusCharacter"
+                                                              CommandParameter="{Binding .}"/>
+                                    </HorizontalStackLayout.GestureRecognizers>
+                                    <Label Text="{Binding Name}"
+                                           FontSize="20"
+                                           FontAttributes="Bold"
+                                           TextColor="AntiqueWhite"/>
+                                    <Label Text="Total Lives: "
+                                           FontSize="20"
+                                           FontAttributes="Bold"
+                                           TextColor="AntiqueWhite"/>
+                                    <Label Text="{Binding NumberOfLives}"
+                                           FontSize="20"
+                                           FontAttributes="Bold"
+                                           TextColor="AntiqueWhite"/>
+                                    <Label Text="Created: "
+                                           FontSize="20"
+                                           FontAttributes="Bold"
+                                           TextColor="AntiqueWhite"/>
+                                    <Label Text="{Binding CreateDate}"
+                                           FontSize="20"
+                                           FontAttributes="Bold"
+                                           TextColor="AntiqueWhite"/>
+                                </HorizontalStackLayout>
+                            </toolkit:Expander.Header>
+                            <StackLayout BindableLayout.ItemsSource="{Binding IncarnationHistory}">
+                                <BindableLayout.ItemTemplate>
+                                    <DataTemplate x:DataType="models:Incarnation">
+                                        <HorizontalStackLayout
+                                        Spacing="25">
+                                            <Image Source="{Binding Race.IconImgFileName}"
+                                           Grid.Column="0"/>
+                                            <Label Grid.Column="1"
+                                           TextColor="AntiqueWhite"
+                                           Text="{Binding Race.Name}"/>
+                                            <Label Grid.Column="3"
+                                           TextColor="AntiqueWhite"
+                                           Text="{Binding CurrentClass}"/>
+                                        </HorizontalStackLayout>
+                                    </DataTemplate>
+                                </BindableLayout.ItemTemplate>
+                            </StackLayout>
+                        </toolkit:Expander>
+                    </StackLayout>
+                </DataTemplate>
+            </CollectionView.ItemTemplate>
+        </CollectionView>
 
-        <CollectionView Grid.Row="2"
-                        ItemsSource="{Binding Incarnations}">
+        <!--<CollectionView Grid.Row="2"
+                        ItemsSource="{Binding Characters}">
             <CollectionView.ItemTemplate>
                 <DataTemplate x:DataType="models:Incarnation">
                     <Grid ColumnDefinitions="auto, .25*, .25*, *"
@@ -42,7 +110,7 @@
                 </DataTemplate>
             </CollectionView.ItemTemplate>
 
-        </CollectionView>
+        </CollectionView>-->
     </Grid>
 
 </ContentPage>
