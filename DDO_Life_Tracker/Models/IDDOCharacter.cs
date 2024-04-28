@@ -10,6 +10,7 @@ namespace DDO_Life_Tracker.Models
     {
         int Id { get; set; }
         string Name { get; set; }
+        int NumberOfLives { get; }
         IEnumerable<Incarnation> IncarnationHistory { get; }
         public DateTime CreateDate { get; set; }
         void AddIncarnation(Incarnation incarnation);
