@@ -22,13 +22,12 @@
                 Grid.Row="1"
                 Grid.Column="0"
                 BackgroundColor="DarkGreen"
-                Clicked="AddCharacterTEST"/>
+                Command="{Binding GoToAddCharacterPageCommand}"/>
         <Button Text="Delete Character"
                 Grid.Row="1"
                 Grid.Column="1"
                 BackgroundColor="DarkRed"
-                Clicked="DeleteCharacterTEST"
-                CommandParameter="{Binding Characters}"/>
+                Clicked="DeleteCharacterTEST"/>
         <CollectionView Grid.Row="3"
                         Grid.Column="0"
                         ItemsSource="{Binding Characters}">

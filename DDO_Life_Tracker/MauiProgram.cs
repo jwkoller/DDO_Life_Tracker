@@ -1,6 +1,7 @@
 ﻿using CommunityToolkit.Maui;
 using DDO_Life_Tracker.Database;
 using DDO_Life_Tracker.Database.Tables;
+using DDO_Life_Tracker.Pages;
 using DDO_Life_Tracker.Services;
 using DDO_Life_Tracker.ViewModels;
 using MetroLog.MicrosoftExtensions;
@@ -27,6 +28,8 @@ namespace DDO_Life_Tracker
             builder.Services.AddSingleton<IncarnationDatabase>();
             builder.Services.AddSingleton<IncarnationDBService>();
 
+            builder.Services.AddTransient<AddCharacterPage>();
+            builder.Services.AddTransient<AddCharacterViewModel>();
             builder.Services.AddTransient<NewIncarnationPage>();
             builder.Services.AddTransient<NewIncarnationViewModel>();
 

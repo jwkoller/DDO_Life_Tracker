@@ -7,7 +7,7 @@ namespace DDO_Life_Tracker.Database
 {
     public class IncarnationDatabase
     {
-        private SQLiteAsyncConnection Database;
+        private SQLiteAsyncConnection _database;
         private ILogger<IncarnationDatabase> _logger;
 
         public IncarnationDatabase(ILogger<IncarnationDatabase> logger)
@@ -17,20 +17,20 @@ namespace DDO_Life_Tracker.Database
 
         public async Task Init()
         {
-            if (Database is not null) 
+            if (_database is not null) 
             { 
                 return;
             }
 
-            Database = new SQLiteAsyncConnection(DBConstants.DatabasePath, DBConstants.Flags);
+            _database = new SQLiteAsyncConnection(DBConstants.DatabasePath, DBConstants.Flags);
 #if DEBUG
-            await Database.DropTableAsync<CharactersTable>();
-            await Database.DropTableAsync<IncarnationsTable>();
-            await Database.DropTableAsync<ClassesTable>();
+            await _database.DropTableAsync<CharactersTable>();
+            await _database.DropTableAsync<IncarnationsTable>();
+            await _database.DropTableAsync<ClassesTable>();
 #endif
-            await Database.CreateTableAsync<CharactersTable>();
-            await Database.CreateTableAsync<IncarnationsTable>();
-            await Database.CreateTableAsync<ClassesTable>();
+            await _database.CreateTableAsync<CharactersTable>();
+            await _database.CreateTableAsync<IncarnationsTable>();
+            await _database.CreateTableAsync<ClassesTable>();
 
             _logger.LogInformation("DB intialized");
         }
@@ -39,13 +39,13 @@ namespace DDO_Life_Tracker.Database
         public async Task<List<CharactersTable>> GetCharactersAsync()
         {
             await Init();
-            return await Database.GetAllWithChildrenAsync<CharactersTable>(recursive: true);
+            return await _database.GetAllWithChildrenAsync<CharactersTable>(recursive: true);
         }
 
         public async Task<CharactersTable> GetCharacterByIdAsync(int id)
         {
             await Init();
-            return await Database.GetWithChildrenAsync<CharactersTable>(id, recursive: true);
+            return await _database.GetWithChildrenAsync<CharactersTable>(id, recursive: true);
         }
 
         public async Task<int> SaveCharacterAsync(CharactersTable character)
@@ -53,10 +53,10 @@ namespace DDO_Life_Tracker.Database
             await Init();
             if(character.Id != 0)
             {
-                await Database.InsertOrReplaceWithChildrenAsync(character, recursive: true);
+                await _database.InsertOrReplaceWithChildrenAsync(character, recursive: true);
             } else
             {
-                await Database.InsertWithChildrenAsync(character, recursive: true);
+                await _database.InsertWithChildrenAsync(character, recursive: true);
             }
 
             return character.Id;
@@ -65,7 +65,7 @@ namespace DDO_Life_Tracker.Database
         public async Task DeleteCharacterAsync(CharactersTable character)
         {
             await Init();
-            await Database.DeleteAsync(character, recursive: true);
+            await _database.DeleteAsync(character, recursive: true);
         }
         #endregion
 
@@ -73,13 +73,13 @@ namespace DDO_Life_Tracker.Database
         public async Task<List<IncarnationsTable>> GetIncarnationsAsync()
         {
             await Init();
-            return await Database.GetAllWithChildrenAsync<IncarnationsTable>(recursive: true);
+            return await _database.GetAllWithChildrenAsync<IncarnationsTable>(recursive: true);
         }
 
         public async Task<List<IncarnationsTable>> GetIncarnationByCharacterIdAsync(int id)
         {
             await Init();
-            return await Database.GetAllWithChildrenAsync<IncarnationsTable>(x => x.CharacterId == id, recursive: true);
+            return await _database.GetAllWithChildrenAsync<IncarnationsTable>(x => x.CharacterId == id, recursive: true);
         }
 
         public async Task<int> SaveIncarnationAsync(IncarnationsTable incarnation)
@@ -87,11 +87,11 @@ namespace DDO_Life_Tracker.Database
             await Init();
             if (incarnation.Id != 0)
             {
-                await Database.InsertOrReplaceWithChildrenAsync(incarnation, recursive: true);
+                await _database.InsertOrReplaceWithChildrenAsync(incarnation, recursive: true);
             }
             else
             {
-                await Database.InsertWithChildrenAsync(incarnation, recursive: true);
+                await _database.InsertWithChildrenAsync(incarnation, recursive: true);
             }
             
             return incarnation.Id;
@@ -100,7 +100,7 @@ namespace DDO_Life_Tracker.Database
         public async Task<int> DeleteIncarnationAsync(IncarnationsTable incarnation)
         {
             await Init();
-            return await Database.DeleteAsync(incarnation);
+            return await _database.DeleteAsync(incarnation);
         }
         #endregion
 
@@ -109,18 +109,18 @@ namespace DDO_Life_Tracker.Database
         public async Task<List<ClassesTable>> GetClassesByIncarnationIdAsync(int incarnationId)
         {
             await Init();
-            return await Database.GetAllWithChildrenAsync<ClassesTable>(x => x.IncarnationId == incarnationId);
+            return await _database.GetAllWithChildrenAsync<ClassesTable>(x => x.IncarnationId == incarnationId);
         }
         public async Task<int> SaveClassAsync(ClassesTable classItem)
         {
             await Init();
             if (classItem.Id != 0)
             {
-                await Database.UpdateWithChildrenAsync(classItem);
+                await _database.UpdateWithChildrenAsync(classItem);
             }
             else
             {
-                await Database.InsertWithChildrenAsync(classItem, recursive: true);
+                await _database.InsertWithChildrenAsync(classItem, recursive: true);
             }
 
             return classItem.Id;
@@ -129,7 +129,7 @@ namespace DDO_Life_Tracker.Database
         public async Task<int> DeleteClassAsync(ClassesTable classItem)
         {
             await Init();
-            return await Database.DeleteAsync(classItem);
+            return await _database.DeleteAsync(classItem);
         }
         #endregion
     }

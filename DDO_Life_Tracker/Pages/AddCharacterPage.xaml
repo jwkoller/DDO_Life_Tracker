@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             x:Class="DDO_Life_Tracker.Pages.AddCharacterPage"
+             xmlns:models="clr-namespace:DDO_Life_Tracker.Models"
+             xmlns:viewmodel="clr-namespace:DDO_Life_Tracker.ViewModels"
+             x:DataType="viewmodel:AddCharacterViewModel"
+             BackgroundColor="Black"
+             Title="Add New Character"
+             HideSoftInputOnTapped="True">
+    
+    <VerticalStackLayout>
+        <Label 
+            Text="Add a new Character"
+            FontSize="30"
+            TextColor="White"
+            VerticalOptions="Center" 
+            HorizontalOptions="Center" />
+        <Entry x:Name="EnterCharacterName"
+               BackgroundColor="White"
+               Text="{Binding NameEntry}"
+               Placeholder="Enter Character's name..."
+               ClearButtonVisibility="WhileEditing"
+               Completed="OnNameEntered"/>
+
+    </VerticalStackLayout>
+</ContentPage>
