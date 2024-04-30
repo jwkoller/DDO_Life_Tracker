@@ -110,10 +110,16 @@
 	</ItemGroup>
 
 	<ItemGroup>
+	  <Compile Update="Pages\AddIncarnationPage.xaml.cs">
+	    <DependentUpon>AddIncarnationPage.xaml</DependentUpon>
+	  </Compile>
+	</ItemGroup>
+
+	<ItemGroup>
 	  <MauiXaml Update="Pages\AddCharacterPage.xaml">
 	    <Generator>MSBuild:Compile</Generator>
 	  </MauiXaml>
-	  <MauiXaml Update="Pages\NewIncarnationPage.xaml">
+	  <MauiXaml Update="Pages\AddIncarnationPage.xaml">
 	    <Generator>MSBuild:Compile</Generator>
 	  </MauiXaml>
 	</ItemGroup>

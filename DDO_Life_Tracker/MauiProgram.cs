@@ -30,8 +30,8 @@ namespace DDO_Life_Tracker
 
             builder.Services.AddTransient<AddCharacterPage>();
             builder.Services.AddTransient<AddCharacterViewModel>();
-            builder.Services.AddTransient<NewIncarnationPage>();
-            builder.Services.AddTransient<NewIncarnationViewModel>();
+            builder.Services.AddTransient<AddIncarnationPage>();
+            builder.Services.AddTransient<AddIncarnationViewModel>();
 
             builder.Logging.AddStreamingFileLogger(options =>
             {

@@ -67,7 +67,7 @@ namespace DDO_Life_Tracker.ViewModels
         [RelayCommand]
         public async Task GoToAddIncarnationPage()
         {
-            await Shell.Current.GoToAsync(nameof(NewIncarnationPage), true);
+            await Shell.Current.GoToAsync(nameof(AddIncarnationPage), true);
         }
 
         [RelayCommand]

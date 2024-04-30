@@ -31,11 +31,21 @@ namespace DDO_Life_Tracker.Services
             Druid = 122,
         }
 
-        public static string[] AllDdoClasses
+        public static DDOClasses[] AllDdoClasses
         {
             get
             {
-                return Enum.GetNames<DDOClasses>();
+                return Enum.GetValues<DDOClasses>();
+            }
+        }
+
+        public static Dictionary<int,string> AllDdoClassesFormatted
+        {
+            get
+            {
+                return AllDdoClasses
+                    .OrderBy(x => x.ToString())
+                    .ToDictionary(x => (int)x, x => x.ToString().Replace("_", " "));
             }
         }
 
@@ -67,11 +77,21 @@ namespace DDO_Life_Tracker.Services
             Tabaxi_Trailblazer = 124
         }
 
-        public static string[] AllDdoRaces
+        public static DDORaces[] AllDdoRaces
         {
             get
             {
-                return Enum.GetNames<DDORaces>();
+                return Enum.GetValues<DDORaces>();
+            }
+        }
+
+        public static Dictionary<int,string> AllDdoRacesFormatted
+        {
+            get
+            {
+                return AllDdoRaces
+                    .OrderBy(x => x.ToString())
+                    .ToDictionary(x => (int)x, x => x.ToString().Replace("__", "-").Replace("_", " "));
             }
         }
 
