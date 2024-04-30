@@ -1,0 +1,93 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             x:Class="DDO_Life_Tracker.AddIncarnationPage"
+             Title="New Character Life"
+             xmlns:toolkit="http://schemas.microsoft.com/dotnet/2022/maui/toolkit"
+             xmlns:viewmodel="clr-namespace:DDO_Life_Tracker.ViewModels"
+             xmlns:models="clr-namespace:DDO_Life_Tracker.Models"
+             x:DataType="viewmodel:AddIncarnationViewModel"
+             BackgroundColor="Black">
+    <ContentPage.Resources>
+        <Style x:Key="InvalidEntryStyle" TargetType="Entry">
+            <Setter Property="TextColor" Value="Red" />
+        </Style>
+        <Style x:Key="ValidEntryStyle" TargetType="Entry">
+            <Setter Property="TextColor" Value="Green" />
+        </Style>
+    </ContentPage.Resources>
+    
+    <VerticalStackLayout>
+        <Label 
+            Text="Add a new character life:"
+            VerticalOptions="Center" 
+            HorizontalOptions="Center" />
+        <Border Padding="10"
+                StrokeThickness="3.0"
+                HorizontalOptions="Center"
+                BackgroundColor="Goldenrod"
+                Stroke="DarkRed"
+                StrokeShape="RoundRectangle 10">
+            <HorizontalStackLayout 
+                HorizontalOptions="Center"                                 
+                Spacing="30"
+                Background="Goldenrod">
+                <Label Text="Select Race: "
+                       VerticalOptions="Center"
+                       HorizontalOptions="Center"
+                       FontSize="20"/>
+                <Picker ItemsSource="{Binding SelectableRaces}"
+                        ItemDisplayBinding="{Binding Value}"
+                        SelectedItem="{Binding SelectedRaceName}"
+                        IsEnabled="{Binding RacesPickerEnabled}"
+                        WidthRequest="200"
+                        BackgroundColor="AntiqueWhite"/>
+            </HorizontalStackLayout>
+        </Border>
+        <Border Padding="10"
+                StrokeThickness="3.0"
+                HorizontalOptions="Center"
+                BackgroundColor="Goldenrod"
+                Stroke="DarkRed"
+                StrokeShape="RoundRectangle 10">
+            <HorizontalStackLayout
+            HorizontalOptions="Center"
+            Spacing="30"
+            Background="Goldenrod">
+
+                <Picker ItemsSource="{Binding SelectableClasses}"
+                    ItemDisplayBinding="{Binding Value}"
+                    SelectedItem="{Binding SelectedClassName}"
+                    WidthRequest="200"
+                    BackgroundColor="AntiqueWhite"/>
+                <Entry Keyboard="Numeric"
+                   WidthRequest="70"
+                   FontSize="15"
+                   HorizontalTextAlignment="Center"
+                   Text="{Binding ClassLevel}"
+                   x:Name="ClassLevel"
+                   Placeholder="Level"
+                   PlaceholderColor="Black"
+                   BackgroundColor="AntiqueWhite">
+                    <Entry.Behaviors>
+                        <toolkit:NumericValidationBehavior 
+                InvalidStyle="{StaticResource InvalidEntryStyle}"
+                ValidStyle="{StaticResource ValidEntryStyle}"
+                Flags="ValidateOnValueChanged"
+                MinimumValue="1"
+                MaximumValue="20"
+                MaximumDecimalPlaces="0" />
+                    </Entry.Behaviors>
+                </Entry>
+                <Button Text="+Add Class"
+                    WidthRequest="150"
+                    Clicked="OnClickAddClass"
+                    BackgroundColor="DarkGreen"/>
+            </HorizontalStackLayout>
+        </Border>
+        <Button Text="Save Character"
+            Clicked="OnSaveCharacterClick"
+                WidthRequest="250"
+            BackgroundColor="DarkGreen"/>
+    </VerticalStackLayout>
+</ContentPage>

@@ -23,5 +23,8 @@
                ClearButtonVisibility="WhileEditing"
                Completed="OnNameEntered"/>
 
+        <Button Text="Add Incarnation"
+                Command="{Binding GoToNewIncarnationPageCommand}"/>
+
     </VerticalStackLayout>
 </ContentPage>

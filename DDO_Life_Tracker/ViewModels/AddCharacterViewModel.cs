@@ -14,7 +14,7 @@ namespace DDO_Life_Tracker.ViewModels
     public partial class AddCharacterViewModel : ObservableObject
     {
         private readonly ILogger<AddCharacterViewModel> _logger;
-        private IncarnationDBService _service;
+        private IncarnationDBService _dbService;
 
         [ObservableProperty]
         private Character _newCharacter;
@@ -25,12 +25,12 @@ namespace DDO_Life_Tracker.ViewModels
         public AddCharacterViewModel(ILogger<AddCharacterViewModel> logger, IncarnationDBService service)
         {
             _logger = logger;
-            _service = service;
+            _dbService = service;
         }
 
         public async Task<bool> CheckCharacterNameExists()
         {
-            Character? nameCheck = await _service.GetCharacterByNameAsync(NameEntry);
+            Character? nameCheck = await _dbService.GetCharacterByNameAsync(NameEntry);
             if (nameCheck != null)
             {
                 NameEntry = string.Empty;
@@ -44,9 +44,15 @@ namespace DDO_Life_Tracker.ViewModels
         public async Task SaveNewCharacter()
         {
             NewCharacter = new Character(NameEntry);
-            NewCharacter.Id = await _service.SaveCharacterAsync(NewCharacter);
+            NewCharacter.Id = await _dbService.SaveCharacterAsync(NewCharacter);
             _logger.LogInformation($"New character name: {NewCharacter.Name} with Id: {NewCharacter.Id}");
         }
 
+        [RelayCommand]
+        public async Task GoToNewIncarnationPage()
+        {
+            Dictionary<string, object> paramData = new Dictionary<string, object> { { "CurrentCharacter", NewCharacter }};
+            await Shell.Current.GoToAsync(nameof(AddIncarnationPage), true, paramData);
+        }
     }
 }

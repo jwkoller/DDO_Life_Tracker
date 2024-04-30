@@ -58,7 +58,7 @@ namespace DDO_Life_Tracker.Services
                 _logger.LogDebug($"Getting character name: {name}");
 
                 List<CharactersTable> characters =  await _database.GetCharactersAsync();
-                CharactersTable? found = characters.FirstOrDefault(x => x.Name == name);
+                CharactersTable? found = characters.FirstOrDefault(x => x.Name.Equals(name, StringComparison.CurrentCultureIgnoreCase));
 
                 if (found != default)
                 {

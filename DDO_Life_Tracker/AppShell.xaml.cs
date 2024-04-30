@@ -8,7 +8,7 @@ namespace DDO_Life_Tracker
         {
             InitializeComponent();
 
-            Routing.RegisterRoute(nameof(NewIncarnationPage), typeof(NewIncarnationPage));
+            Routing.RegisterRoute(nameof(AddIncarnationPage), typeof(AddIncarnationPage));
             Routing.RegisterRoute(nameof(AddCharacterPage), typeof(AddCharacterPage));
         }
     }
