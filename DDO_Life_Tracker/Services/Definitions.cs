@@ -97,7 +97,7 @@ namespace DDO_Life_Tracker.Services
 
         public static IClass IdToDDOClass(int id)
         {
-            IClass classType = id switch
+            return id switch
             {
                 (int)DDOClasses.Acolyte_of_the_Skin => new Acolyte_of_the_Skin(),
                 (int)DDOClasses.Alchemist => new Alchemist(),
@@ -123,12 +123,11 @@ namespace DDO_Life_Tracker.Services
                 (int)DDOClasses.Wizard => new Wizard(),
                 _ => throw new Exception($"Class ID {id} does not match any classes"),
             };
-            return classType;
         }
 
         public static IRace IdToDDORace(int id)
         {
-            IRace raceType = id switch
+            return id switch
             {
                 (int)DDORaces.Aasimar => new Aasimar(),
                 (int)DDORaces.Aasimar_Scourge => new Aasimar_Scourge(),
@@ -156,7 +155,6 @@ namespace DDO_Life_Tracker.Services
                 (int)DDORaces.Wood_Elf => new Wood_Elf(),
                 _ => throw new Exception($"Race ID {id} does not match any races"),
             };
-            return raceType;
         }
     }
 }

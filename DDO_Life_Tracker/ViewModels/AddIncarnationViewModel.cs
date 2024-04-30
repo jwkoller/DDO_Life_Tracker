@@ -18,9 +18,9 @@ namespace DDO_Life_Tracker.ViewModels
         [ObservableProperty]
         private bool _racesPickerEnabled = true;
         [ObservableProperty]
-        private KeyValuePair<int, string> _selectedClassName;
+        private KeyValuePair<int, string> _selectedClass;
         [ObservableProperty]
-        private KeyValuePair<int, string> _selectedRaceName;
+        private KeyValuePair<int, string> _selectedRace;
         [ObservableProperty]
         private Incarnation _newIncarnation;
         [ObservableProperty]
@@ -28,13 +28,11 @@ namespace DDO_Life_Tracker.ViewModels
 
         private IncarnationDBService _dbService;
         private ILogger<AddIncarnationViewModel> _logger;
-        private List<IClass> incarnationClasses;
 
         public AddIncarnationViewModel(ILogger<AddIncarnationViewModel> logger, IncarnationDBService dbService)
         {
             _dbService = dbService;
             _logger = logger;
-            incarnationClasses = new List<IClass>();
             SelectableClasses = Definitions.AllDdoClassesFormatted.ToList();
             SelectableRaces = Definitions.AllDdoRacesFormatted.ToList();
         }
@@ -59,10 +57,10 @@ namespace DDO_Life_Tracker.ViewModels
 
         public void AddClassToIncarnation()
         {
-            IClass newClass = Definitions.IdToDDOClass(SelectedClassName.Key);
+            IClass newClass = Definitions.IdToDDOClass(SelectedClass.Key);
             if (int.TryParse(ClassLevel, out int lvl))
             {
-                //TODO add validator to class level input
+                //TODO add custom validator to class level input
                 newClass.Level = lvl;
             }
             else
@@ -73,7 +71,7 @@ namespace DDO_Life_Tracker.ViewModels
 
             if (NewIncarnation == default)
             {
-                IRace newRace = Definitions.IdToDDORace(SelectedRaceName.Key);
+                IRace newRace = Definitions.IdToDDORace(SelectedRace.Key);
                 NewIncarnation = new Incarnation(CurrentCharacter.Id, newRace, newClass);
                 RacesPickerEnabled = false;
             } 
@@ -83,7 +81,7 @@ namespace DDO_Life_Tracker.ViewModels
             }
 
             ClassLevel = string.Empty;
-            SelectedClassName = default;
+            SelectedClass = default;
         }
     }
 }

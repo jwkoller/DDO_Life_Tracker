@@ -15,7 +15,7 @@ namespace DDO_Life_Tracker.Database
             _logger = logger;
         }
 
-        public async Task Init()
+        private async Task Init()
         {
             if (_database is not null) 
             { 
