@@ -17,7 +17,8 @@
         </Style>
     </ContentPage.Resources>
     
-    <VerticalStackLayout>
+    <VerticalStackLayout
+        Spacing="10">
         <Label 
             Text="Add a new character life:"
             VerticalOptions="Center" 
@@ -38,7 +39,7 @@
                        FontSize="20"/>
                 <Picker ItemsSource="{Binding SelectableRaces}"
                         ItemDisplayBinding="{Binding Value}"
-                        SelectedItem="{Binding SelectedRaceName}"
+                        SelectedItem="{Binding SelectedRace}"
                         IsEnabled="{Binding RacesPickerEnabled}"
                         WidthRequest="200"
                         BackgroundColor="AntiqueWhite"/>
@@ -57,7 +58,7 @@
 
                 <Picker ItemsSource="{Binding SelectableClasses}"
                     ItemDisplayBinding="{Binding Value}"
-                    SelectedItem="{Binding SelectedClassName}"
+                    SelectedItem="{Binding SelectedClass}"
                     WidthRequest="200"
                     BackgroundColor="AntiqueWhite"/>
                 <Entry Keyboard="Numeric"
@@ -85,8 +86,12 @@
                     BackgroundColor="DarkGreen"/>
             </HorizontalStackLayout>
         </Border>
+        <Button Text="Add character life"
+            Clicked="OnClickAddIncarntaionToCharacter"
+                WidthRequest="250"
+            BackgroundColor="Goldenrod"/>
         <Button Text="Save Character"
-            Clicked="OnSaveCharacterClick"
+            Clicked="OnClickSaveCharacter"
                 WidthRequest="250"
             BackgroundColor="DarkGreen"/>
     </VerticalStackLayout>

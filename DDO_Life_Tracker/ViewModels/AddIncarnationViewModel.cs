@@ -22,7 +22,7 @@ namespace DDO_Life_Tracker.ViewModels
         [ObservableProperty]
         private KeyValuePair<int, string> _selectedRace;
         [ObservableProperty]
-        private Incarnation _newIncarnation;
+        private Incarnation? _newIncarnation;
         [ObservableProperty]
         private string _classLevel;
 
@@ -37,22 +37,23 @@ namespace DDO_Life_Tracker.ViewModels
             SelectableRaces = Definitions.AllDdoRacesFormatted.ToList();
         }
 
-        [RelayCommand]
+        public void AddIncarnationToCharacter()
+        {
+            if (NewIncarnation == default)
+            {
+                throw new Exception("Incarnation not set.");
+            }
+
+            CurrentCharacter.AddIncarnation(NewIncarnation);
+            ResetForm();
+        }
+
         public async Task SaveCharacter()
         {
-            try
-            {
-
-                CurrentCharacter.AddIncarnation(NewIncarnation);
-
-                await _dbService.SaveCharacterAsync(CurrentCharacter);
-                CurrentCharacter = await _dbService.GetCharacterByIdAsync(CurrentCharacter.Id);
-            }
-            catch (Exception ex)
-            {
-                _logger.LogError($"Error saving incarnation: {ex}");
-                
-            }
+            await _dbService.SaveCharacterAsync(CurrentCharacter);
+            CurrentCharacter = await _dbService.GetCharacterByIdAsync(CurrentCharacter.Id);
+            _logger.LogInformation($"Character {CurrentCharacter.Name} saved with {CurrentCharacter.NumberOfLives} incarnations");
+            ResetForm();
         }
 
         public void AddClassToIncarnation()
@@ -82,6 +83,15 @@ namespace DDO_Life_Tracker.ViewModels
 
             ClassLevel = string.Empty;
             SelectedClass = default;
+        }
+
+        public void ResetForm()
+        {
+            SelectedClass = default;
+            SelectedRace = default;
+            RacesPickerEnabled = true;
+            ClassLevel = string.Empty;
+            NewIncarnation = default;        
         }
     }
 }
