@@ -37,6 +37,7 @@ namespace DDO_Life_Tracker
             {
                 options.FolderPath = Path.Combine(AppContext.BaseDirectory, "Logs");
                 options.MinLevel = LogLevel.Information;
+                options.RetainDays = 30;
             });
 #if DEBUG
             builder.Logging.AddTraceLogger(options =>
