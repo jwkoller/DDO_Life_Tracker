@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<ContentView xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             x:Class="DDO_Life_Tracker.Pages.Controls.CharacterView"
+             x:Name="this">
+
+    <Frame BindingContext="{x:Reference this}"
+           BackgroundColor="DarkGoldenrod"
+           BorderColor="DarkRed">
+        <Grid RowDefinitions="1.0*,1.0*"
+              ColumnDefinitions="0.4*,0.4*,0.2*"
+              ColumnSpacing="10">
+            <Label Text="{Binding CharacterName}"
+                   FontSize="14"/>
+            <Label Text="Number of lives: "
+                   FontSize="10"
+                   HorizontalTextAlignment="End"/>
+            <Label Text="{Binding NumberOfLives}"
+                   FontSize="14"
+                   HorizontalTextAlignment="End"/>
+            <Label Grid.Row="1"
+                   Grid.Column="0"
+                   Text="Created on: "
+                   FontSize="10"/>
+            <Label Grid.Row="1"
+                   Grid.Column="2"
+                   Text="{Binding CreateDate}"
+                   FontSize="12"
+                   HorizontalTextAlignment="End"/>
+        </Grid>
+    </Frame>
+</ContentView>

@@ -9,7 +9,9 @@
              Title="Add New Character"
              HideSoftInputOnTapped="True">
     
-    <VerticalStackLayout>
+    <VerticalStackLayout
+        WidthRequest="400"
+        HorizontalOptions="Center">
         <Label 
             Text="Add a new Character"
             FontSize="30"
@@ -19,12 +21,15 @@
         <Entry x:Name="EnterCharacterName"
                BackgroundColor="White"
                Text="{Binding NameEntry}"
-               Placeholder="Enter Character's name..."
+               Placeholder="Enter Character's name"
                ClearButtonVisibility="WhileEditing"
                Completed="OnNameEntered"/>
 
-        <Button Text="Add Incarnation"
-                Command="{Binding GoToNewIncarnationPageCommand}"/>
+        <Button Text="Add Incarnations"
+                Command="{Binding GoToNewIncarnationPageCommand}"
+                IsEnabled="{Binding AddButtonEnabled}"
+                HorizontalOptions="Center"
+                WidthRequest="200"/>
 
     </VerticalStackLayout>
 </ContentPage>

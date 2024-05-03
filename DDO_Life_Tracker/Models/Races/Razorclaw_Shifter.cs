@@ -9,6 +9,6 @@ namespace DDO_Life_Tracker.Models
 {
     public class Razorclaw_Shifter : AbstractDDORace
     {
-        public Razorclaw_Shifter() : base((int)DDORaces.Razorclaw_Shifter, nameof(Razorclaw_Shifter).Replace("_", " "), "razorclawshifter.png", true) { }
+        public Razorclaw_Shifter() : base((int)DDORaces.Razorclaw_Shifter, nameof(Razorclaw_Shifter).Replace("_", " "), "razerclawshifter.png", true) { }
     }
 }
