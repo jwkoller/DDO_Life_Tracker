@@ -58,7 +58,9 @@ namespace DDO_Life_Tracker.ViewModels
 
         public async Task LoadCharacters()
         {
-            Characters.Clear();
+            // reset list since .Clear() will keep empty elements in the CollectionsView
+            Characters = new ObservableCollection<Character>();
+
             List<Character> chars = await _service.GetCharactersAsync();
 
             chars.ForEach(c => Characters.Add(c));

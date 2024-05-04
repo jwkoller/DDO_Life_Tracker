@@ -5,34 +5,34 @@ namespace DDO_Life_Tracker.Pages.Controls;
 
 public partial class CharacterView : ContentView
 {
-	public static readonly BindableProperty ThisCharacterProp = 
+	public static readonly BindableProperty ThisCharacterProperty = 
 		BindableProperty.Create(nameof(ThisCharacter), typeof(Character), typeof(CharacterView), null);
-	public static readonly BindableProperty CharacterNameProp = 
+	public static readonly BindableProperty CharacterNameProperty = 
 		BindableProperty.Create(nameof(CharacterName), typeof(string), typeof(CharacterView), string.Empty);
-	public static readonly BindableProperty NumberOfLivesProp = 
+	public static readonly BindableProperty NumberOfLivesProperty = 
 		BindableProperty.Create(nameof(NumberOfLives), typeof(int), typeof(CharacterView), 0);
-	public static readonly BindableProperty CreateDateProp = 
+	public static readonly BindableProperty CreateDateProperty = 
 		BindableProperty.Create(nameof(CreateDate), typeof(DateTime), typeof(CharacterView), null);
 
 	public Character ThisCharacter 
 	{ 
-		get => (Character)GetValue(ThisCharacterProp);
-		set => SetValue(ThisCharacterProp, value);
+		get => (Character)GetValue(ThisCharacterProperty);
+		set => SetValue(ThisCharacterProperty, value);
 	}
     public string CharacterName 
 	{ 
-		get => ThisCharacter.Name;
-		set => SetValue(CharacterNameProp, value);
+		get => (string)GetValue(CharacterNameProperty);
+		set => SetValue(CharacterNameProperty, value);
 	}
 	public int NumberOfLives 
 	{
-		get => ThisCharacter.NumberOfLives;
-		set => SetValue(NumberOfLivesProp, value);
+		get => (int)GetValue(NumberOfLivesProperty);
+		set => SetValue(NumberOfLivesProperty, value);
 	}
 	public DateTime CreateDate 
 	{
-		get => ThisCharacter.CreateDate;
-		set => SetValue(CreateDateProp, value);
+		get => (DateTime)GetValue(CreateDateProperty);
+		set => SetValue(CreateDateProperty, value);
 	}
     public CharacterView()
 	{

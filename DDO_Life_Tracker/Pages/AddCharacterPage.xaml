@@ -7,11 +7,13 @@
              x:DataType="viewmodel:AddCharacterViewModel"
              BackgroundColor="Black"
              Title="Add New Character"
-             HideSoftInputOnTapped="True">
+             HideSoftInputOnTapped="True"
+             xmlns:controls="clr-namespace:DDO_Life_Tracker.Pages.Controls">
     
     <VerticalStackLayout
         WidthRequest="400"
-        HorizontalOptions="Center">
+        HorizontalOptions="Center"
+        Spacing="10">
         <Label 
             Text="Add a new Character"
             FontSize="30"
@@ -30,6 +32,10 @@
                 IsEnabled="{Binding AddButtonEnabled}"
                 HorizontalOptions="Center"
                 WidthRequest="200"/>
+        <controls:CharacterView ThisCharacter="{Binding NewCharacter}"
+                                CharacterName="{Binding NewCharacter.Name}"
+                                NumberOfLives="{Binding NewCharacter.NumberOfLives}"
+                                CreateDate="{Binding NewCharacter.CreateDate}"/>
 
     </VerticalStackLayout>
 </ContentPage>
