@@ -34,31 +34,15 @@ namespace DDO_Life_Tracker
                 await DisplayAlert("ERROR", "Error retrieving your characters", "Cancel");
             }
         }
- 
-        private async void AddCharacterTEST(object? sender, EventArgs e)
-        {
-            try
-            {
-                await _viewModel.AddCharacterTEST();
-            }
-            catch (SQLite.SQLiteException ex)
-            {
-                await DisplayAlert("ERROR", $"Error saving your character: {ex.Message}", "Ok");
-            }
-            catch(Exception ex)
-            {
-                await DisplayAlert("ERROR", $"The program has encountered an error: {ex.Message}", "Well shit");
-            }
-        }
 
-        private async void DeleteCharacterTEST(object? sender, EventArgs args)
+        private async void DeleteCharacter(object? sender, EventArgs args)
         {
             try
             {
                 bool confirm = await DisplayAlert("Confirm Delete", $"Are you sure you want to delete {_focusedCharacter.Name}?", "Yes", "Cancel");
                 if (confirm)
                 {
-                    await _viewModel.DeleteCharacterTEST(_focusedCharacter);
+                    await _viewModel.DeleteCharacter(_focusedCharacter);
                 }
             }
             catch (Exception ex)

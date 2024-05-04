@@ -41,7 +41,12 @@ namespace DDO_Life_Tracker.ViewModels
         {
             if (NewIncarnation == default)
             {
-                throw new Exception("Incarnation not set.");
+                AddClassToIncarnation();
+
+                if(NewIncarnation == default)
+                {
+                    throw new Exception("Incarnation not set.");
+                }
             }
 
             CurrentCharacter.AddIncarnation(NewIncarnation);
