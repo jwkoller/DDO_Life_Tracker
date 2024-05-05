@@ -22,7 +22,7 @@
         <Label 
             Text="Add a new character life:"
             VerticalOptions="Center" 
-            HorizontalOptions="Center" />
+            HorizontalOptions="Center"/>
         <Border Padding="10"
                 StrokeThickness="3.0"
                 HorizontalOptions="Center"

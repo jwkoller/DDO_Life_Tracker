@@ -1,3 +1,4 @@
+using CommunityToolkit.Maui.Alerts;
 using DDO_Life_Tracker.ViewModels;
 using MetroLog;
 using Microsoft.Extensions.Logging;
@@ -27,7 +28,7 @@ public partial class AddCharacterPage : ContentPage
 			if (!nameExists)
 			{
                 await _viewModel.SaveNewCharacter();
-                await DisplayAlert("Save Success", $"Character created", "Ok");
+                _ = Toast.Make("Character created!", CommunityToolkit.Maui.Core.ToastDuration.Short, 12).Show();
             } 
 			else
 			{

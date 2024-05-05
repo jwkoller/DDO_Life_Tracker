@@ -18,9 +18,12 @@ namespace DDO_Life_Tracker.ViewModels
 
         [ObservableProperty]
         private Character _newCharacter;
-
         [ObservableProperty]
         private string _nameEntry = string.Empty;
+        [ObservableProperty]
+        private bool _addButtonEnabled = false;
+        [ObservableProperty]
+        private bool _characterWindowVisible = false;
 
         public AddCharacterViewModel(ILogger<AddCharacterViewModel> logger, IncarnationDBService service)
         {
@@ -34,10 +37,11 @@ namespace DDO_Life_Tracker.ViewModels
             if (nameCheck != null)
             {
                 NameEntry = string.Empty;
-
+                AddButtonEnabled = false;
                 return true;
             }
 
+            AddButtonEnabled = true;
             return false;
         }
 
@@ -45,6 +49,7 @@ namespace DDO_Life_Tracker.ViewModels
         {
             NewCharacter = new Character(NameEntry);
             NewCharacter.Id = await _dbService.SaveCharacterAsync(NewCharacter);
+            CharacterWindowVisible = true;
             _logger.LogInformation($"New character name: {NewCharacter.Name} with Id: {NewCharacter.Id}");
         }
 
