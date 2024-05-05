@@ -6,7 +6,7 @@
              MinimumWidthRequest="400">
 
     <Frame BindingContext="{x:Reference this}"
-           BackgroundColor="DarkGoldenrod"
+           BackgroundColor="Goldenrod"
            BorderColor="DarkRed">
         <Grid RowDefinitions="50*,50*"
               ColumnDefinitions="60*,30*,5*"

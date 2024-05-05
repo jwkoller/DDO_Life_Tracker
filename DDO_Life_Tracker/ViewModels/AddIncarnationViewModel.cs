@@ -9,7 +9,9 @@ namespace DDO_Life_Tracker.ViewModels
     [QueryProperty("CurrentCharacter", "CurrentCharacter")]
     public partial class AddIncarnationViewModel : ObservableObject
     {
-        public Character CurrentCharacter { get; set; }
+        // QueryProperty
+        [ObservableProperty]
+        private Character _currentCharacter;
 
         [ObservableProperty]
         private List<KeyValuePair<int, string>> _selectableClasses;
@@ -51,7 +53,7 @@ namespace DDO_Life_Tracker.ViewModels
             else
             {
                 // catch if AddIncarnation btn clicked before adding 2nd+ class
-                // does rely on selector being cleared once class added
+                // does rely on selector being cleared once class added to prevent duplicates
                 if (SelectedClass.Key != default)
                 {
                     AddClassToIncarnation();
