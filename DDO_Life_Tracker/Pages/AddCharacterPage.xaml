@@ -35,7 +35,8 @@
         <controls:CharacterView ThisCharacter="{Binding NewCharacter}"
                                 CharacterName="{Binding NewCharacter.Name}"
                                 NumberOfLives="{Binding NewCharacter.NumberOfLives}"
-                                CreateDate="{Binding NewCharacter.CreateDate}"/>
+                                CreateDate="{Binding NewCharacter.CreateDate}"
+                                IsVisible="{Binding CharacterWindowVisible}"/>
 
     </VerticalStackLayout>
 </ContentPage>

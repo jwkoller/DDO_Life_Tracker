@@ -47,6 +47,14 @@ namespace DDO_Life_Tracker.ViewModels
                 {
                     throw new Exception("Incarnation not set.");
                 }
+            } 
+            else
+            {
+                // catch if AddIncarnation btn clicked before adding 2nd+ class
+                if (SelectedClass.Key != default)
+                {
+                    AddClassToIncarnation();
+                }
             }
 
             CurrentCharacter.AddIncarnation(NewIncarnation);
@@ -80,8 +88,7 @@ namespace DDO_Life_Tracker.ViewModels
                 IRace newRace = Definitions.IdToDDORace(SelectedRace.Key);
                 NewIncarnation = new Incarnation(CurrentCharacter.Id, newRace, newClass);
                 RacesPickerEnabled = false;
-            } 
-            else
+            } else
             {
                 NewIncarnation.AddClass(newClass);
             }

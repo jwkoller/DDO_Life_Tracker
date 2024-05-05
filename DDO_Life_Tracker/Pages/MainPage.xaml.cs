@@ -59,5 +59,13 @@ namespace DDO_Life_Tracker
                 _focusedCharacter = (Character)e.Parameter;
             }
         }
+
+        private void OnDoubleTapCharacter(object sender, TappedEventArgs e)
+        {
+            if (e.Parameter?.GetType() == typeof(Character))
+            {
+                _focusedCharacter = (Character)e.Parameter;
+            }
+        }
     }
 }

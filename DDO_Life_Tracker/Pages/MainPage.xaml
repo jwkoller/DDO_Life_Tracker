@@ -55,6 +55,9 @@
                                     <HorizontalStackLayout.GestureRecognizers>
                                         <TapGestureRecognizer Tapped="OnFocusCharacter"
                                                               CommandParameter="{Binding .}"/>
+                                        <TapGestureRecognizer Tapped="OnDoubleTapCharacter"
+                                                              NumberOfTapsRequired="2"
+                                                              CommandParameter="{Binding .}"/>
                                     </HorizontalStackLayout.GestureRecognizers>
                                     <controls:CharacterView ThisCharacter="{Binding .}"
                                                             CharacterName="{Binding Name}"
