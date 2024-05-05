@@ -51,6 +51,7 @@ namespace DDO_Life_Tracker.ViewModels
             else
             {
                 // catch if AddIncarnation btn clicked before adding 2nd+ class
+                // does rely on selector being cleared once class added
                 if (SelectedClass.Key != default)
                 {
                     AddClassToIncarnation();
@@ -88,7 +89,8 @@ namespace DDO_Life_Tracker.ViewModels
                 IRace newRace = Definitions.IdToDDORace(SelectedRace.Key);
                 NewIncarnation = new Incarnation(CurrentCharacter.Id, newRace, newClass);
                 RacesPickerEnabled = false;
-            } else
+            } 
+            else
             {
                 NewIncarnation.AddClass(newClass);
             }
