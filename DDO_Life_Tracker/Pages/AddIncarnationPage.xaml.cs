@@ -21,7 +21,7 @@ public partial class AddIncarnationPage : ContentPage
 	{
 		try
 		{
-			_viewModel.AddClassToIncarnation();
+			_viewModel.AddClassToList();
         }
 		catch (Exception ex)
 		{

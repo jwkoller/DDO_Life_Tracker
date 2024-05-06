@@ -32,11 +32,10 @@
                     </HorizontalStackLayout>
                 </toolkit:Expander.Header>
                 <StackLayout BindableLayout.ItemsSource="{Binding CurrentCharacter.IncarnationHistory}"
-                                         Padding="10,0,0,10">
+                                         Padding="10,0,0,0">
                     <BindableLayout.ItemTemplate>
                         <DataTemplate x:DataType="models:Incarnation">
-                            <HorizontalStackLayout Spacing="25"
-                                                Margin="0,4,0,0">
+                            <HorizontalStackLayout Spacing="10">
                                 <Image Source="{Binding Race.IconImgFileName}"
                                            Grid.Column="0"/>
                                 <Label Grid.Column="1"
@@ -122,6 +121,35 @@
                             Clicked="OnClickAddClass"
                             BackgroundColor="DarkGreen"/>
                 </HorizontalStackLayout>
+                <CollectionView ItemsSource="{Binding ClassesToAdd}"
+                                MinimumHeightRequest="20">
+                    <CollectionView.ItemsLayout>
+                        <LinearItemsLayout ItemSpacing="2"
+                                   Orientation="Vertical"/>
+                    </CollectionView.ItemsLayout>
+                    <CollectionView.ItemTemplate>
+                        <DataTemplate x:DataType="models:IClass">
+                            <Grid ColumnDefinitions="20*,20*,60*"
+                                  Padding="10,0,10,0">
+                                <Image Source="{Binding IconImgFileName}"
+                                       VerticalOptions="Center"
+                                       HorizontalOptions="Start"
+                                       HeightRequest="40"/>
+                                <Label VerticalOptions="Center"
+                                       HorizontalOptions="End"
+                                       FontSize="20"
+                                       FontAttributes="Bold"
+                                       Grid.Column="1"
+                                       Text="{Binding Level}"/>
+                                <Label VerticalOptions="Center"
+                                       HorizontalOptions="End"
+                                       FontSize="20"
+                                       Grid.Column="2"
+                                       Text="{Binding Name}"/>
+                            </Grid>
+                        </DataTemplate>
+                    </CollectionView.ItemTemplate>
+                </CollectionView>
             </VerticalStackLayout>
         </Border>
         <HorizontalStackLayout                
@@ -132,10 +160,12 @@
                 Clicked="OnClickAddIncarntaionToCharacter"
                 WidthRequest="150"
                 BackgroundColor="Goldenrod"/>
-            <Button Text="Save Character"
-                Clicked="OnClickSaveCharacter"
-                WidthRequest="150"
-                BackgroundColor="DarkGreen"/>
+            <Button Text="X"
+                    WidthRequest="50"
+                    Background="DarkRed"
+                    FontSize="16"
+                    FontAttributes="Bold"
+                    Command="{Binding ResetFormCommand}"/>
         </HorizontalStackLayout>
     </VerticalStackLayout>
 </ContentPage>

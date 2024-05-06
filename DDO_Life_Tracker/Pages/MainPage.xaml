@@ -39,7 +39,8 @@
                 Clicked="DeleteCharacter"/>
         <CollectionView Grid.Row="3"
                         Grid.Column="0"
-                        ItemsSource="{Binding Characters}">
+                        ItemsSource="{Binding Characters}"
+                        Margin="0,0,0,20">
             <CollectionView.ItemsLayout>
                 <LinearItemsLayout ItemSpacing="2"
                                    Orientation="Vertical"/>
@@ -65,24 +66,31 @@
                                                             CreateDate="{Binding CreateDate}"/>
                                 </HorizontalStackLayout>
                             </toolkit:Expander.Header>
-                            <StackLayout BindableLayout.ItemsSource="{Binding IncarnationHistory}"
-                                         Padding="10,0,0,10">
+                            <VerticalStackLayout BindableLayout.ItemsSource="{Binding IncarnationHistory}"
+                                         Padding="20,0,20,0"
+                                                 Spacing="5">
                                 <BindableLayout.ItemTemplate>
                                     <DataTemplate x:DataType="models:Incarnation">
-                                        <HorizontalStackLayout Spacing="25"
-                                                Margin="0,4,0,0">
+                                        <Grid ColumnDefinitions="10*,30*,60*"
+                                              ColumnSpacing="5">
                                             <Image Source="{Binding Race.IconImgFileName}"
-                                           Grid.Column="0"/>
+                                                   Grid.Column="0"
+                                                   VerticalOptions="Center"
+                                                   HorizontalOptions="Start"/>
                                             <Label Grid.Column="1"
-                                           TextColor="AntiqueWhite"
-                                           Text="{Binding Race.Name}"/>
-                                            <Label Grid.Column="3"
-                                           TextColor="AntiqueWhite"
-                                           Text="{Binding CurrentClass}"/>
-                                        </HorizontalStackLayout>
+                                                   TextColor="AntiqueWhite"
+                                                   VerticalOptions="Center"
+                                                   HorizontalOptions="Start"
+                                                   Text="{Binding Race.Name}"/>
+                                            <Label Grid.Column="2"
+                                                   TextColor="AntiqueWhite"
+                                                   VerticalOptions="Center"
+                                                   HorizontalOptions="End"
+                                                   Text="{Binding CurrentClass}"/>
+                                        </Grid>
                                     </DataTemplate>
                                 </BindableLayout.ItemTemplate>
-                            </StackLayout>
+                            </VerticalStackLayout>
                         </toolkit:Expander>
                     </StackLayout>
                 </DataTemplate>

@@ -3,6 +3,7 @@ using CommunityToolkit.Mvvm.Input;
 using DDO_Life_Tracker.Models;
 using DDO_Life_Tracker.Services;
 using Microsoft.Extensions.Logging;
+using System.Collections.ObjectModel;
 
 namespace DDO_Life_Tracker.ViewModels
 {
@@ -27,6 +28,8 @@ namespace DDO_Life_Tracker.ViewModels
         private Incarnation? _newIncarnation;
         [ObservableProperty]
         private string _classLevel;
+        [ObservableProperty]
+        private ObservableCollection<IClass> _classesToAdd;
 
         private IncarnationDBService _dbService;
         private ILogger<AddIncarnationViewModel> _logger;
@@ -35,15 +38,16 @@ namespace DDO_Life_Tracker.ViewModels
         {
             _dbService = dbService;
             _logger = logger;
+            ClassesToAdd = new ObservableCollection<IClass>();
             SelectableClasses = Definitions.AllDdoClassesFormatted.ToList();
             SelectableRaces = Definitions.AllDdoRacesFormatted.ToList();
         }
 
-        public void AddIncarnationToCharacter()
+        public async void AddIncarnationToCharacter()
         {
             if (NewIncarnation == default)
             {
-                AddClassToIncarnation();
+                AddClassToList();
 
                 if(NewIncarnation == default)
                 {
@@ -56,11 +60,12 @@ namespace DDO_Life_Tracker.ViewModels
                 // does rely on selector being cleared once class added to prevent duplicates
                 if (SelectedClass.Key != default)
                 {
-                    AddClassToIncarnation();
+                    AddClassToList();
                 }
             }
 
             CurrentCharacter.AddIncarnation(NewIncarnation);
+            await SaveCharacter();
             ResetForm();
         }
 
@@ -69,10 +74,9 @@ namespace DDO_Life_Tracker.ViewModels
             await _dbService.SaveCharacterAsync(CurrentCharacter);
             CurrentCharacter = await _dbService.GetCharacterByIdAsync(CurrentCharacter.Id);
             _logger.LogInformation($"Character {CurrentCharacter.Name} saved with {CurrentCharacter.NumberOfLives} incarnations");
-            ResetForm();
         }
 
-        public void AddClassToIncarnation()
+        public void AddClassToList()
         {
             IClass newClass = Definitions.IdToDDOClass(SelectedClass.Key);
             if (int.TryParse(ClassLevel, out int lvl))
@@ -91,23 +95,26 @@ namespace DDO_Life_Tracker.ViewModels
                 IRace newRace = Definitions.IdToDDORace(SelectedRace.Key);
                 NewIncarnation = new Incarnation(CurrentCharacter.Id, newRace, newClass);
                 RacesPickerEnabled = false;
-            } 
+            }
             else
             {
                 NewIncarnation.AddClass(newClass);
             }
 
+            ClassesToAdd.Add(newClass);
             ClassLevel = string.Empty;
             SelectedClass = default;
         }
 
+        [RelayCommand]
         public void ResetForm()
         {
             SelectedClass = default;
             SelectedRace = default;
             RacesPickerEnabled = true;
             ClassLevel = string.Empty;
-            NewIncarnation = default;        
+            NewIncarnation = default;
+            ClassesToAdd = new ObservableCollection<IClass>();
         }
     }
 }
