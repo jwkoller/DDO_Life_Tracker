@@ -47,7 +47,7 @@ namespace DDO_Life_Tracker.ViewModels
         {
             if (NewIncarnation == default)
             {
-                AddClassToList();
+                AddClass();
 
                 if(NewIncarnation == default)
                 {
@@ -60,7 +60,7 @@ namespace DDO_Life_Tracker.ViewModels
                 // does rely on selector being cleared once class added to prevent duplicates
                 if (SelectedClass.Key != default)
                 {
-                    AddClassToList();
+                    AddClass();
                 }
             }
 
@@ -76,7 +76,7 @@ namespace DDO_Life_Tracker.ViewModels
             _logger.LogInformation($"Character {CurrentCharacter.Name} saved with {CurrentCharacter.NumberOfLives} incarnations");
         }
 
-        public void AddClassToList()
+        public void AddClass()
         {
             IClass newClass = Definitions.IdToDDOClass(SelectedClass.Key);
             if (int.TryParse(ClassLevel, out int lvl))

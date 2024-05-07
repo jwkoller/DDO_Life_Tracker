@@ -3,7 +3,7 @@
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
              x:Class="DDO_Life_Tracker.Pages.Controls.CharacterView"
              x:Name="this"
-             HorizontalOptions="Fill">
+             MinimumWidthRequest="400">
 
     <Frame BindingContext="{x:Reference this}"
            BackgroundColor="Goldenrod"

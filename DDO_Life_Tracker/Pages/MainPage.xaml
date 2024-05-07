@@ -47,52 +47,31 @@
             </CollectionView.ItemsLayout>
             <CollectionView.ItemTemplate>
                 <DataTemplate x:DataType="models:Character">
-                    <StackLayout
+                    <HorizontalStackLayout
+                        HorizontalOptions="Fill"
                         WidthRequest="400">
-                        <toolkit:Expander>
-                            <toolkit:Expander.Header>
-                                <HorizontalStackLayout
-                                    HorizontalOptions="Fill">
-                                    <HorizontalStackLayout.GestureRecognizers>
-                                        <TapGestureRecognizer Tapped="OnFocusCharacter"
-                                                              CommandParameter="{Binding .}"/>
-                                        <TapGestureRecognizer Tapped="OnDoubleTapCharacter"
-                                                              NumberOfTapsRequired="2"
-                                                              CommandParameter="{Binding .}"/>
-                                    </HorizontalStackLayout.GestureRecognizers>
-                                    <controls:CharacterView ThisCharacter="{Binding .}"
-                                                            CharacterName="{Binding Name}"
-                                                            NumberOfLives="{Binding NumberOfLives}"
-                                                            CreateDate="{Binding CreateDate}"/>
-                                </HorizontalStackLayout>
-                            </toolkit:Expander.Header>
-                            <VerticalStackLayout BindableLayout.ItemsSource="{Binding IncarnationHistory}"
-                                         Padding="20,0,20,0"
-                                                 Spacing="5">
-                                <BindableLayout.ItemTemplate>
-                                    <DataTemplate x:DataType="models:Incarnation">
-                                        <Grid ColumnDefinitions="10*,30*,60*"
-                                              ColumnSpacing="5">
-                                            <Image Source="{Binding Race.IconImgFileName}"
-                                                   Grid.Column="0"
-                                                   VerticalOptions="Center"
-                                                   HorizontalOptions="Start"/>
-                                            <Label Grid.Column="1"
-                                                   TextColor="AntiqueWhite"
-                                                   VerticalOptions="Center"
-                                                   HorizontalOptions="Start"
-                                                   Text="{Binding Race.Name}"/>
-                                            <Label Grid.Column="2"
-                                                   TextColor="AntiqueWhite"
-                                                   VerticalOptions="Center"
-                                                   HorizontalOptions="End"
-                                                   Text="{Binding CurrentClass}"/>
-                                        </Grid>
-                                    </DataTemplate>
-                                </BindableLayout.ItemTemplate>
-                            </VerticalStackLayout>
-                        </toolkit:Expander>
-                    </StackLayout>
+                        <HorizontalStackLayout.GestureRecognizers>
+                            <TapGestureRecognizer Tapped="OnFocusCharacter"
+                                                  CommandParameter="{Binding .}"/>
+                            <TapGestureRecognizer Tapped="OnDoubleTapCharacter"
+                                                  NumberOfTapsRequired="2"
+                                                  CommandParameter="{Binding .}"/>
+                        </HorizontalStackLayout.GestureRecognizers>
+                        <HorizontalStackLayout.Behaviors>
+                            <toolkit:TouchBehavior
+                                DefaultAnimationDuration="250"
+                                DefaultAnimationEasing="{x:Static Easing.CubicInOut}"
+                                PressedOpacity="0.9"
+                                PressedScale="0.95"
+                                LongPressDuration="750"
+                                LongPressCompleted="OnCharacterviewLongPress"
+                                LongPressCommandParameter="{Binding .}"/>
+                        </HorizontalStackLayout.Behaviors>
+                        <controls:CharacterView ThisCharacter="{Binding .}"
+                                                CharacterName="{Binding Name}"
+                                                NumberOfLives="{Binding NumberOfLives}"
+                                                CreateDate="{Binding CreateDate}"/>
+                    </HorizontalStackLayout>
                 </DataTemplate>
             </CollectionView.ItemTemplate>
         </CollectionView>

@@ -24,9 +24,9 @@ namespace DDO_Life_Tracker.Database
 
             _database = new SQLiteAsyncConnection(DBConstants.DatabasePath, DBConstants.Flags);
 #if DEBUG
-            await _database.DropTableAsync<CharactersTable>();
-            await _database.DropTableAsync<IncarnationsTable>();
-            await _database.DropTableAsync<ClassesTable>();
+            //await _database.DropTableAsync<CharactersTable>();
+            //await _database.DropTableAsync<IncarnationsTable>();
+            //await _database.DropTableAsync<ClassesTable>();
 #endif
             await _database.CreateTableAsync<CharactersTable>();
             await _database.CreateTableAsync<IncarnationsTable>();
