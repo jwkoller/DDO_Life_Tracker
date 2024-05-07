@@ -7,6 +7,7 @@
              xmlns:viewmodel="clr-namespace:DDO_Life_Tracker.ViewModels"
              xmlns:models="clr-namespace:DDO_Life_Tracker.Models"
              x:DataType="viewmodel:AddIncarnationViewModel"
+             xmlns:controls="clr-namespace:DDO_Life_Tracker.Pages.Controls"
              BackgroundColor="Black">
     <ContentPage.Resources>
         <Style x:Key="InvalidEntryStyle" TargetType="Entry">
@@ -17,15 +18,48 @@
         </Style>
     </ContentPage.Resources>
     
-    <VerticalStackLayout
-        Spacing="10">
-        <Label 
-            Text="Add a new character life:"
-            VerticalOptions="Center" 
-            HorizontalOptions="Center"/>
+    <VerticalStackLayout Spacing="3"
+                         WidthRequest="400">
+        <StackLayout WidthRequest="400">
+            <toolkit:Expander>
+                <toolkit:Expander.Header>
+                    <HorizontalStackLayout
+                                    HorizontalOptions="Center">
+                        <controls:CharacterView ThisCharacter="{Binding CurrentCharacter}"
+                                                CharacterName="{Binding CurrentCharacter.Name}"
+                                                NumberOfLives="{Binding CurrentCharacter.NumberOfLives}"
+                                                CreateDate="{Binding CurrentCharacter.CreateDate}"/>
+                    </HorizontalStackLayout>
+                </toolkit:Expander.Header>
+                <VerticalStackLayout BindableLayout.ItemsSource="{Binding CurrentCharacter.IncarnationHistory}"
+                                         Padding="20,0,20,0">
+                    <BindableLayout.ItemTemplate>
+                        <DataTemplate x:DataType="models:Incarnation">
+                            <Grid ColumnDefinitions="10*,30*,60*"
+                                              ColumnSpacing="5">
+                                <Image Source="{Binding Race.IconImgFileName}"
+                                       Grid.Column="0"
+                                       VerticalOptions="Center"
+                                       HorizontalOptions="Start"/>
+                                <Label Grid.Column="1"
+                                       VerticalOptions="Center"
+                                       HorizontalOptions="Start"                                      
+                                       TextColor="AntiqueWhite"
+                                       Text="{Binding Race.Name}"/>
+                                <Label Grid.Column="2"
+                                       TextColor="AntiqueWhite"
+                                       VerticalOptions="Center"
+                                       HorizontalOptions="End" 
+                                       Text="{Binding CurrentClass}"/>
+                            </Grid>
+                        </DataTemplate>
+                    </BindableLayout.ItemTemplate>
+                </VerticalStackLayout>
+            </toolkit:Expander>
+        </StackLayout>
         <Border Padding="10"
                 StrokeThickness="3.0"
-                HorizontalOptions="Center"
+                HorizontalOptions="Fill"
                 BackgroundColor="Goldenrod"
                 Stroke="DarkRed"
                 StrokeShape="RoundRectangle 10">
@@ -47,52 +81,98 @@
         </Border>
         <Border Padding="10"
                 StrokeThickness="3.0"
-                HorizontalOptions="Center"
+                HorizontalOptions="Fill"
                 BackgroundColor="Goldenrod"
                 Stroke="DarkRed"
                 StrokeShape="RoundRectangle 10">
-            <HorizontalStackLayout
-            HorizontalOptions="Center"
-            Spacing="30"
-            Background="Goldenrod">
-
-                <Picker ItemsSource="{Binding SelectableClasses}"
-                    ItemDisplayBinding="{Binding Value}"
-                    SelectedItem="{Binding SelectedClass}"
-                    WidthRequest="200"
-                    BackgroundColor="AntiqueWhite"/>
-                <Entry Keyboard="Numeric"
-                   WidthRequest="70"
-                   FontSize="15"
-                   HorizontalTextAlignment="Center"
-                   Text="{Binding ClassLevel}"
-                   x:Name="ClassLevel"
-                   Placeholder="Level"
-                   PlaceholderColor="Black"
-                   BackgroundColor="AntiqueWhite">
-                    <Entry.Behaviors>
-                        <toolkit:NumericValidationBehavior 
-                InvalidStyle="{StaticResource InvalidEntryStyle}"
-                ValidStyle="{StaticResource ValidEntryStyle}"
-                Flags="ValidateOnValueChanged"
-                MinimumValue="1"
-                MaximumValue="20"
-                MaximumDecimalPlaces="0" />
-                    </Entry.Behaviors>
-                </Entry>
-                <Button Text="+Add Class"
-                    WidthRequest="150"
-                    Clicked="OnClickAddClass"
-                    BackgroundColor="DarkGreen"/>
-            </HorizontalStackLayout>
+            <VerticalStackLayout Spacing="10">
+                <HorizontalStackLayout
+                HorizontalOptions="Center"
+                Spacing="30"
+                Background="Goldenrod">
+                    <Label Text="Select Class: "
+                       VerticalOptions="Center"
+                       HorizontalOptions="Center"
+                       FontSize="20"/>
+                    <Picker ItemsSource="{Binding SelectableClasses}"
+                        ItemDisplayBinding="{Binding Value}"
+                        SelectedItem="{Binding SelectedClass}"
+                        WidthRequest="200"
+                        BackgroundColor="AntiqueWhite"/>
+                </HorizontalStackLayout>
+                <HorizontalStackLayout                
+                HorizontalOptions="Center"
+                Spacing="30"
+                Background="Goldenrod">
+                    <Entry Keyboard="Numeric"
+                           WidthRequest="100"
+                           FontSize="15"
+                           HorizontalTextAlignment="Center"
+                           Text="{Binding ClassLevel}"
+                           x:Name="ClassLevel"
+                           Placeholder="Level"
+                           PlaceholderColor="Black"
+                           BackgroundColor="AntiqueWhite">
+                        <Entry.Behaviors>
+                            <toolkit:NumericValidationBehavior 
+                        InvalidStyle="{StaticResource InvalidEntryStyle}"
+                        ValidStyle="{StaticResource ValidEntryStyle}"
+                        Flags="ValidateOnValueChanged"
+                        MinimumValue="1"
+                        MaximumValue="20"
+                        MaximumDecimalPlaces="0" />
+                        </Entry.Behaviors>
+                    </Entry>
+                    <Button Text="+Add Class"
+                            WidthRequest="200"
+                            Clicked="OnClickAddClass"
+                            BackgroundColor="DarkGreen"/>
+                </HorizontalStackLayout>
+                <CollectionView ItemsSource="{Binding ClassesToAdd}"
+                                MinimumHeightRequest="20">
+                    <CollectionView.ItemsLayout>
+                        <LinearItemsLayout ItemSpacing="2"
+                                   Orientation="Vertical"/>
+                    </CollectionView.ItemsLayout>
+                    <CollectionView.ItemTemplate>
+                        <DataTemplate x:DataType="models:IClass">
+                            <Grid ColumnDefinitions="20*,20*,60*"
+                                  Padding="10,0,10,0">
+                                <Image Source="{Binding IconImgFileName}"
+                                       VerticalOptions="Center"
+                                       HorizontalOptions="Start"
+                                       HeightRequest="40"/>
+                                <Label VerticalOptions="Center"
+                                       HorizontalOptions="End"
+                                       FontSize="20"
+                                       FontAttributes="Bold"
+                                       Grid.Column="1"
+                                       Text="{Binding Level}"/>
+                                <Label VerticalOptions="Center"
+                                       HorizontalOptions="End"
+                                       FontSize="20"
+                                       Grid.Column="2"
+                                       Text="{Binding Name}"/>
+                            </Grid>
+                        </DataTemplate>
+                    </CollectionView.ItemTemplate>
+                </CollectionView>
+            </VerticalStackLayout>
         </Border>
-        <Button Text="Add character life"
-            Clicked="OnClickAddIncarntaionToCharacter"
-                WidthRequest="250"
-            BackgroundColor="Goldenrod"/>
-        <Button Text="Save Character"
-            Clicked="OnClickSaveCharacter"
-                WidthRequest="250"
-            BackgroundColor="DarkGreen"/>
+        <HorizontalStackLayout                
+                HorizontalOptions="Center"
+                Spacing="30"
+            Margin="0,10,0,0">
+            <Button Text="Add character life"
+                Clicked="OnClickAddIncarntaionToCharacter"
+                WidthRequest="150"
+                BackgroundColor="Goldenrod"/>
+            <Button Text="X"
+                    WidthRequest="50"
+                    Background="DarkRed"
+                    FontSize="16"
+                    FontAttributes="Bold"
+                    Command="{Binding ResetFormCommand}"/>
+        </HorizontalStackLayout>
     </VerticalStackLayout>
 </ContentPage>

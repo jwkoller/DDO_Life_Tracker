@@ -48,10 +48,10 @@ namespace DDO_Life_Tracker.ViewModels
             LoadingSpinnerActive = false;
         }
 
-        [RelayCommand]
-        public async Task GoToAddIncarnationPage()
+        public async Task GoToAddIncarnationPage(Character selectedCharacter)
         {
-            await Shell.Current.GoToAsync(nameof(AddIncarnationPage), true);
+            Dictionary<string, object> paramData = new Dictionary<string, object> { { "CurrentCharacter", selectedCharacter } };
+            await Shell.Current.GoToAsync(nameof(AddIncarnationPage), true, paramData);
         }
 
         [RelayCommand]

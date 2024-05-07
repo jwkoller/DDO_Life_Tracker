@@ -60,12 +60,25 @@ namespace DDO_Life_Tracker
             }
         }
 
-        private void OnDoubleTapCharacter(object sender, TappedEventArgs e)
+        private async void OnDoubleTapCharacter(object sender, TappedEventArgs e)
         {
             if (e.Parameter?.GetType() == typeof(Character))
             {
                 _focusedCharacter = (Character)e.Parameter;
             }
+
+            await _viewModel.GoToAddIncarnationPage(_focusedCharacter);
         }
+
+        private void OnCharacterviewLongPress(object sender, CommunityToolkit.Maui.Core.LongPressCompletedEventArgs e)
+        {
+            if (e.LongPressCommandParameter?.GetType() == typeof(Character))
+            {
+                _focusedCharacter = (Character)e.LongPressCommandParameter;
+            }
+
+            DeleteCharacter(sender, e);
+        }
+
     }
 }
