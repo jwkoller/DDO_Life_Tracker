@@ -17,6 +17,7 @@ namespace DDO_Life_Tracker.ViewModels
 
         private IncarnationDBService _service;
         private readonly ILogger<MainViewModel> _logger;
+        private Character? _focusedCharacter;
 
         public MainViewModel(ILogger<MainViewModel> logger, IncarnationDBService service) 
         { 
@@ -48,9 +49,19 @@ namespace DDO_Life_Tracker.ViewModels
             LoadingSpinnerActive = false;
         }
 
-        public async Task GoToAddIncarnationPage(Character selectedCharacter)
+        public void SetFocusedCharacter(Character character)
         {
-            Dictionary<string, object> paramData = new Dictionary<string, object> { { "CurrentCharacter", selectedCharacter } };
+            _focusedCharacter = character;
+        }
+
+        public async Task GoToAddIncarnationPage()
+        {
+            if(_focusedCharacter == default)
+            {
+                throw new Exception("No Character selected");
+            }
+
+            Dictionary<string, object> paramData = new Dictionary<string, object> { { "CurrentCharacter", _focusedCharacter } };
             await Shell.Current.GoToAsync(nameof(AddIncarnationPage), true, paramData);
         }
 

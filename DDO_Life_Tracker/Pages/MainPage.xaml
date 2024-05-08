@@ -40,7 +40,8 @@
         <CollectionView Grid.Row="3"
                         Grid.Column="0"
                         ItemsSource="{Binding Characters}"
-                        Margin="0,0,0,20">
+                        Margin="0,0,0,20"
+                        WidthRequest="400">
             <CollectionView.ItemsLayout>
                 <LinearItemsLayout ItemSpacing="2"
                                    Orientation="Vertical"/>
@@ -48,10 +49,9 @@
             <CollectionView.ItemTemplate>
                 <DataTemplate x:DataType="models:Character">
                     <HorizontalStackLayout
-                        HorizontalOptions="Fill"
-                        WidthRequest="400">
+                        HorizontalOptions="Center">
                         <HorizontalStackLayout.GestureRecognizers>
-                            <TapGestureRecognizer Tapped="OnFocusCharacter"
+                            <TapGestureRecognizer Tapped="OnCharacterViewClick"
                                                   CommandParameter="{Binding .}"/>
                             <TapGestureRecognizer Tapped="OnDoubleTapCharacter"
                                                   NumberOfTapsRequired="2"
@@ -62,15 +62,22 @@
                                 DefaultAnimationDuration="250"
                                 DefaultAnimationEasing="{x:Static Easing.CubicInOut}"
                                 PressedOpacity="0.9"
-                                PressedScale="0.95"
-                                LongPressDuration="750"
-                                LongPressCompleted="OnCharacterviewLongPress"
-                                LongPressCommandParameter="{Binding .}"/>
+                                PressedScale="0.95"/>
                         </HorizontalStackLayout.Behaviors>
                         <controls:CharacterView ThisCharacter="{Binding .}"
                                                 CharacterName="{Binding Name}"
                                                 NumberOfLives="{Binding NumberOfLives}"
                                                 CreateDate="{Binding CreateDate}"/>
+                        <!--<Button Text="X"
+                                TextColor="AntiqueWhite"
+                                BackgroundColor="DarkRed"
+                                VerticalOptions="Start"
+                                Margin="-45,0,0,0"
+                                Clicked="DeleteCharacter"
+                                CommandParameter="{Binding .}"
+                                IsEnabled="True"
+                                IsVisible="false"/>-->
+
                     </HorizontalStackLayout>
                 </DataTemplate>
             </CollectionView.ItemTemplate>

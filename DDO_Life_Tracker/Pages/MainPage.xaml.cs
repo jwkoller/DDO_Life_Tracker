@@ -52,12 +52,14 @@ namespace DDO_Life_Tracker
             }
         }
 
-        private void OnFocusCharacter(object sender, TappedEventArgs e)
+        private async void OnCharacterViewClick(object sender, TappedEventArgs e)
         {
             if(e.Parameter?.GetType() == typeof(Character))
             {
-                _focusedCharacter = (Character)e.Parameter;
+                _viewModel.SetFocusedCharacter((Character)e.Parameter);
             }
+
+            await _viewModel.GoToAddIncarnationPage();
         }
 
         private async void OnDoubleTapCharacter(object sender, TappedEventArgs e)
@@ -67,18 +69,7 @@ namespace DDO_Life_Tracker
                 _focusedCharacter = (Character)e.Parameter;
             }
 
-            await _viewModel.GoToAddIncarnationPage(_focusedCharacter);
+            await _viewModel.GoToAddIncarnationPage();
         }
-
-        private void OnCharacterviewLongPress(object sender, CommunityToolkit.Maui.Core.LongPressCompletedEventArgs e)
-        {
-            if (e.LongPressCommandParameter?.GetType() == typeof(Character))
-            {
-                _focusedCharacter = (Character)e.LongPressCommandParameter;
-            }
-
-            DeleteCharacter(sender, e);
-        }
-
     }
 }
