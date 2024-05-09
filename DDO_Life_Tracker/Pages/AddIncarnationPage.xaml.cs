@@ -30,17 +30,17 @@ public partial class AddIncarnationPage : ContentPage
 		}
 	}
 
-	private void OnClickAddIncarntaionToCharacter(object sender, EventArgs e)
+	private async void OnClickAddIncarntaionToCharacter(object sender, EventArgs e)
 	{
 		try
 		{
-			_viewModel.AddIncarnationToCharacter();
-            Toast.Make("New character life added.", CommunityToolkit.Maui.Core.ToastDuration.Short, 12).Show();
+			await _viewModel.AddIncarnationToCharacter();
+            _ = Toast.Make("New character life added.", CommunityToolkit.Maui.Core.ToastDuration.Short, 12).Show();
         }
         catch (Exception ex)
 		{
 			_logger.LogError($"Error adding incarnation to character: {ex}");
-			DisplayAlert("Error", $"Error adding new incarnation to character: {ex.Message}", "Ok");
+			await DisplayAlert("Error", $"Error adding new incarnation to character: {ex.Message}", "Ok");
 		}
 	}
 

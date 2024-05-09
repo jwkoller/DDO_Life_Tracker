@@ -43,16 +43,11 @@ namespace DDO_Life_Tracker.ViewModels
             SelectableRaces = Definitions.AllDdoRacesFormatted.ToList();
         }
 
-        public async void AddIncarnationToCharacter()
+        public async Task AddIncarnationToCharacter()
         {
             if (NewIncarnation == default)
             {
                 AddClass();
-
-                if(NewIncarnation == default)
-                {
-                    throw new Exception("Incarnation not set.");
-                }
             } 
             else
             {
@@ -62,6 +57,11 @@ namespace DDO_Life_Tracker.ViewModels
                 {
                     AddClass();
                 }
+            }
+
+            if (NewIncarnation == default)
+            {
+                throw new Exception("Incarnation not set.");
             }
 
             CurrentCharacter.AddIncarnation(NewIncarnation);
@@ -78,6 +78,11 @@ namespace DDO_Life_Tracker.ViewModels
 
         public void AddClass()
         {
+            if(SelectedClass.Key == default || SelectedRace.Key == default) 
+            {
+                throw new Exception($"Select both class and race.");
+            }
+
             IClass newClass = Definitions.IdToDDOClass(SelectedClass.Key);
             if (int.TryParse(ClassLevel, out int lvl))
             {

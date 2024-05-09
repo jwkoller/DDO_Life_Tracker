@@ -49,6 +49,7 @@ namespace DDO_Life_Tracker.ViewModels
             LoadingSpinnerActive = false;
         }
 
+        [RelayCommand]
         public void SetFocusedCharacter(Character character)
         {
             _focusedCharacter = character;
