@@ -16,7 +16,6 @@ namespace DDO_Life_Tracker
             InitializeComponent();
             BindingContext = viewModel;
 
-            //Loaded += OnLoaded;
             _viewModel = viewModel;
             _logger = logger;
         }
@@ -39,22 +38,6 @@ namespace DDO_Life_Tracker
                 await DisplayAlert("ERROR", "Error retrieving your characters", "Cancel");
             }
         }
-        //private async void DeleteCharacter(object? sender, EventArgs args)
-        //{
-        //    try
-        //    {
-        //        bool confirm = await DisplayAlert("Confirm Delete", $"Are you sure you want to delete {_focusedCharacter.Name}?", "Yes", "Cancel");
-        //        if (confirm)
-        //        {
-        //            await _viewModel.DeleteCharacter(_focusedCharacter);
-        //        }
-        //    }
-        //    catch (Exception ex)
-        //    {
-        //        _logger.LogError($"Error deleting character: {ex}");
-        //        await DisplayAlert($"ERROR", $"Delete Character failed for {_focusedCharacter.Name}. {ex.Message}", "Shit...");
-        //    }
-        //}
 
         private async void OnCharacterViewClick(object sender, TappedEventArgs e)
         {
@@ -63,7 +46,15 @@ namespace DDO_Life_Tracker
                 _viewModel.SetFocusedCharacter((Character)e.Parameter);
             }
 
-            await _viewModel.GoToAddIncarnationPage();
+            try
+            {
+                await _viewModel.GoToAddIncarnationPage();
+            }
+            catch(Exception ex)
+            {
+                _logger.LogError($"Error going to incarnation page: {ex}");
+                await DisplayAlert("ERROR", "Select a character", "Ok");
+            }
         }
     }
 }

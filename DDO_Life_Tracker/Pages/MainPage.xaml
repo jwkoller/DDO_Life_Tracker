@@ -65,16 +65,6 @@
                                                 CharacterName="{Binding Name}"
                                                 NumberOfLives="{Binding NumberOfLives}"
                                                 CreateDate="{Binding CreateDate}"/>
-                        <!--<Button Text="X"
-                                TextColor="AntiqueWhite"
-                                BackgroundColor="DarkRed"
-                                VerticalOptions="Start"
-                                Margin="-45,0,0,0"
-                                Clicked="DeleteCharacter"
-                                CommandParameter="{Binding .}"
-                                IsEnabled="True"
-                                IsVisible="false"/>-->
-
                     </HorizontalStackLayout>
                 </DataTemplate>
             </CollectionView.ItemTemplate>
