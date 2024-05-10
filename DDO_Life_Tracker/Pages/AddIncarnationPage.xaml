@@ -75,12 +75,15 @@
                            VerticalOptions="Center"
                            HorizontalOptions="Center"
                            FontSize="20"/>
-                    <Picker ItemsSource="{Binding SelectableRaces}"
-                            ItemDisplayBinding="{Binding Value}"
-                            SelectedItem="{Binding SelectedRace}"
-                            IsEnabled="{Binding RacesPickerEnabled}"
-                            WidthRequest="200"
-                            BackgroundColor="AntiqueWhite"/>
+                    <Border Stroke="AntiqueWhite"
+                            StrokeShape="RoundRectangle 5">
+                        <Picker ItemsSource="{Binding SelectableRaces}"
+                                ItemDisplayBinding="{Binding Value}"
+                                SelectedItem="{Binding SelectedRace}"
+                                IsEnabled="{Binding RacesPickerEnabled}"
+                                WidthRequest="200"
+                                BackgroundColor="AntiqueWhite"/>
+                    </Border>
                 </HorizontalStackLayout>
             </Border>
             <Border Padding="10"
@@ -98,35 +101,41 @@
                            VerticalOptions="Center"
                            HorizontalOptions="Center"
                            FontSize="20"/>
-                        <Picker ItemsSource="{Binding SelectableClasses}"
-                            ItemDisplayBinding="{Binding Value}"
-                            SelectedItem="{Binding SelectedClass}"
-                            WidthRequest="200"
-                            BackgroundColor="AntiqueWhite"/>
+                        <Border Stroke="AntiqueWhite"
+                            StrokeShape="RoundRectangle 5">
+                            <Picker ItemsSource="{Binding SelectableClasses}"
+                                    ItemDisplayBinding="{Binding Value}"
+                                    SelectedItem="{Binding SelectedClass}"
+                                    WidthRequest="200"
+                                    BackgroundColor="AntiqueWhite"/>
+                        </Border>
                     </HorizontalStackLayout>
                     <HorizontalStackLayout                
                     HorizontalOptions="Center"
                     Spacing="30"
                     Background="Goldenrod">
-                        <Entry Keyboard="Numeric"
-                               WidthRequest="100"
-                               FontSize="15"
-                               HorizontalTextAlignment="Center"
-                               Text="{Binding ClassLevel}"
-                               x:Name="ClassLevel"
-                               Placeholder="Level"
-                               PlaceholderColor="Black"
-                               BackgroundColor="AntiqueWhite">
-                            <Entry.Behaviors>
+                        <Border Stroke="AntiqueWhite"
+                            StrokeShape="RoundRectangle 5">
+                            <Entry Keyboard="Numeric"
+                                   WidthRequest="100"
+                                   FontSize="15"
+                                   HorizontalTextAlignment="Center"
+                                   Text="{Binding ClassLevel}"
+                                   x:Name="ClassLevel"
+                                   Placeholder="Level"
+                                   PlaceholderColor="Black"
+                                   BackgroundColor="AntiqueWhite">
+                                <Entry.Behaviors>
                                 <toolkit:NumericValidationBehavior 
-                            InvalidStyle="{StaticResource InvalidEntryStyle}"
-                            ValidStyle="{StaticResource ValidEntryStyle}"
-                            Flags="ValidateOnValueChanged"
-                            MinimumValue="1"
-                            MaximumValue="20"
-                            MaximumDecimalPlaces="0" />
-                            </Entry.Behaviors>
+                                    InvalidStyle="{StaticResource InvalidEntryStyle}"
+                                    ValidStyle="{StaticResource ValidEntryStyle}"
+                                    Flags="ValidateOnValueChanged"
+                                    MinimumValue="1"
+                                    MaximumValue="20"
+                                    MaximumDecimalPlaces="0" />
+                                </Entry.Behaviors>
                         </Entry>
+                        </Border>
                         <Button Text="+Add Class"
                                 WidthRequest="200"
                                 Clicked="OnClickAddClass"
