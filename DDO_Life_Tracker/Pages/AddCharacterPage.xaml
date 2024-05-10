@@ -13,25 +13,40 @@
     <VerticalStackLayout
         WidthRequest="400"
         HorizontalOptions="Center"
-        Spacing="10">
+        Spacing="10"
+        Padding="10,0,10,0">
         <Label 
             Text="Add a new Character"
             FontSize="30"
             TextColor="White"
             VerticalOptions="Center" 
             HorizontalOptions="Center" />
-        <Entry x:Name="EnterCharacterName"
-               BackgroundColor="White"
+        <Grid ColumnDefinitions="82*,12*"
+              ColumnSpacing="6">
+            <Border StrokeShape="RoundRectangle 4"
+                    Stroke="DarkRed">
+            <Entry x:Name="EnterCharacterName"
+               BackgroundColor="DarkRed"
                Text="{Binding NameEntry}"
+               TextColor="AntiqueWhite"
                Placeholder="Enter Character's name"
+               CursorPosition="0"
                ClearButtonVisibility="WhileEditing"
                Completed="OnNameEntered"/>
-
-        <Button Text="Add Incarnations"
+            </Border>
+            <ImageButton Source="buttoncheckmark.png"
+                         Background="Black"
+                         Grid.Column="1"
+                         HeightRequest="50"
+                         Clicked="OnNameEntered"/>
+        </Grid>
+        <Button Text="Add Character Lives"
                 Command="{Binding GoToNewIncarnationPageCommand}"
                 IsEnabled="{Binding AddButtonEnabled}"
                 HorizontalOptions="Center"
-                WidthRequest="200"/>
+                BackgroundColor="{Binding ButtonBackgroundColor}"
+                WidthRequest="200"
+                Margin="0,60,0,0"/>
         <controls:CharacterView ThisCharacter="{Binding NewCharacter}"
                                 CharacterName="{Binding NewCharacter.Name}"
                                 NumberOfLives="{Binding NewCharacter.NumberOfLives}"

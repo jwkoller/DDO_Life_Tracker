@@ -17,14 +17,18 @@ namespace DDO_Life_Tracker.ViewModels
         private IncarnationDBService _dbService;
 
         [ObservableProperty]
-        private Character _newCharacter;
+        private Character? _newCharacter;
         [ObservableProperty]
         private string _nameEntry = string.Empty;
         [ObservableProperty]
         private bool _addButtonEnabled = false;
         [ObservableProperty]
         private bool _characterWindowVisible = false;
+        [ObservableProperty]
+        private Color _buttonBackgroundColor;
 
+        private readonly Color BUTTON_ENABLED_BACKGROUND = Colors.DarkGreen;
+        private readonly Color BUTTON_DISABLED_BACKGROUND = Colors.LightGray;
         public AddCharacterViewModel(ILogger<AddCharacterViewModel> logger, IncarnationDBService service)
         {
             _logger = logger;
@@ -38,10 +42,14 @@ namespace DDO_Life_Tracker.ViewModels
             {
                 NameEntry = string.Empty;
                 AddButtonEnabled = false;
+                ButtonBackgroundColor = BUTTON_DISABLED_BACKGROUND;
+
                 return true;
             }
 
             AddButtonEnabled = true;
+            ButtonBackgroundColor = BUTTON_ENABLED_BACKGROUND;
+
             return false;
         }
 
@@ -53,11 +61,26 @@ namespace DDO_Life_Tracker.ViewModels
             _logger.LogInformation($"New character name: {NewCharacter.Name} with Id: {NewCharacter.Id}");
         }
 
+        public void ResetForm()
+        {
+            NameEntry = string.Empty;
+            AddButtonEnabled = false;
+            ButtonBackgroundColor = BUTTON_DISABLED_BACKGROUND;
+            CharacterWindowVisible= false;
+            NewCharacter = default;
+        }
+
         [RelayCommand]
         public async Task GoToNewIncarnationPage()
         {
+            if(NewCharacter == default)
+            {
+                throw new Exception("New character not saved");
+            }
+
             Dictionary<string, object> paramData = new Dictionary<string, object> { { "CurrentCharacter", NewCharacter }};
             await Shell.Current.GoToAsync(nameof(AddIncarnationPage), true, paramData);
+            ResetForm();
         }
     }
 }

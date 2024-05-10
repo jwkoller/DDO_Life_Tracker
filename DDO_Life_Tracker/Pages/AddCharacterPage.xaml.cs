@@ -40,4 +40,9 @@ public partial class AddCharacterPage : ContentPage
 			_logger.LogError($"Error checking name: {ex}");
 		}
     }
+
+    private void ImageButton_Clicked(object sender, EventArgs e)
+    {
+
+    }
 }
