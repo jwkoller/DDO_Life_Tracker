@@ -26,7 +26,7 @@ public partial class AddIncarnationPage : ContentPage
 		catch (Exception ex)
 		{
 			_logger.LogError($"Error adding class to incarnation btn click: {ex}");
-			DisplayAlert("Error", $"Error adding the class: {ex.Message}", "Ok");
+			DisplayAlert("Error", $"Failed adding the class: {ex.Message}", "Ok");
 		}
 	}
 
@@ -40,7 +40,7 @@ public partial class AddIncarnationPage : ContentPage
         catch (Exception ex)
 		{
 			_logger.LogError($"Error adding incarnation to character: {ex}");
-			await DisplayAlert("Error", $"Error adding new incarnation to character: {ex.Message}", "Ok");
+			await DisplayAlert("Error", $"Unable to add new incarnation to character: {ex.Message}", "Ok");
 		}
 	}
 
@@ -54,7 +54,29 @@ public partial class AddIncarnationPage : ContentPage
 		catch (Exception ex)
 		{
 			_logger.LogError($"Error saving character: {ex}");
-			await DisplayAlert("Error", $"Error saving the character: {ex.Message}", "Ok");
+			await DisplayAlert("Error", $"Saving character failed: {ex.Message}", "Ok");
 		}
+	}
+
+	private async void OnClickDeleteCharacter(object sender, EventArgs e)
+	{
+		try
+		{
+			bool confirm = await DisplayAlert("Warning", "Are you sure you want to permanently delete this character?", "Yes", "No");
+			if (confirm)
+			{
+                bool doubleConfirm = await DisplayAlert("No really...", "Like sure, sure?", "Delete it already", "On second thought, no");
+				if (doubleConfirm)
+				{
+                    await _viewModel.DeleteCharacter();
+                    await Shell.Current.GoToAsync("..");
+                }
+            }		
+		}
+		catch (Exception ex)
+		{
+            _logger.LogError($"Error deleting character: {ex}");
+            await DisplayAlert("Error", $"Failed to delete character: {ex.Message}", "Ok");
+        }
 	}
 }

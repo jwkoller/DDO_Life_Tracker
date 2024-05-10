@@ -26,17 +26,6 @@ namespace DDO_Life_Tracker.ViewModels
             _service = service;
         }
 
-        public async Task DeleteCharacter(Character character)
-        {
-            LoadingSpinnerActive = true;
-
-            await _service.DeleteCharacterAsync(character);
-            _logger.LogInformation($"Character {character.Id} {character.Name} deleted.");
-            await LoadCharacters();
-
-            LoadingSpinnerActive = false;
-        }
-
         public async Task LoadCharacters()
         {
             LoadingSpinnerActive = true;

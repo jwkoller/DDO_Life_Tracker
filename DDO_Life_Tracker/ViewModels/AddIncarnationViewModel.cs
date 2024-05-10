@@ -111,6 +111,13 @@ namespace DDO_Life_Tracker.ViewModels
             SelectedClass = default;
         }
 
+        public async Task DeleteCharacter()
+        {
+            await _dbService.DeleteCharacterAsync(CurrentCharacter);
+            _logger.LogInformation($"Character {CurrentCharacter.Id} {CurrentCharacter.Name} deleted.");
+            ResetForm();
+        }
+
         [RelayCommand]
         public void ResetForm()
         {

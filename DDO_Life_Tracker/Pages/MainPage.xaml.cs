@@ -35,7 +35,7 @@ namespace DDO_Life_Tracker
             catch (Exception ex)
             {
                 _logger.LogError($"Error loading characters OnAppearing: {ex}");
-                await DisplayAlert("ERROR", "Error retrieving your characters", "Cancel");
+                await DisplayAlert("ERROR", "Failed to retrieve your characters", "Cancel");
             }
         }
 
