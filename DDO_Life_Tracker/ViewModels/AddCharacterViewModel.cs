@@ -13,9 +13,6 @@ namespace DDO_Life_Tracker.ViewModels
 {
     public partial class AddCharacterViewModel : ObservableObject
     {
-        private readonly ILogger<AddCharacterViewModel> _logger;
-        private IncarnationDBService _dbService;
-
         [ObservableProperty]
         private Character? _newCharacter;
         [ObservableProperty]
@@ -27,8 +24,11 @@ namespace DDO_Life_Tracker.ViewModels
         [ObservableProperty]
         private Color _buttonBackgroundColor;
 
+        private IncarnationDBService _dbService;
+        private readonly ILogger<AddCharacterViewModel> _logger;
         private readonly Color BUTTON_ENABLED_BACKGROUND = Colors.DarkGreen;
         private readonly Color BUTTON_DISABLED_BACKGROUND = Colors.LightGray;
+
         public AddCharacterViewModel(ILogger<AddCharacterViewModel> logger, IncarnationDBService service)
         {
             _logger = logger;
