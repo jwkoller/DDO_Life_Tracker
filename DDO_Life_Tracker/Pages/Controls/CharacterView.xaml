@@ -3,36 +3,46 @@
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
              x:Class="DDO_Life_Tracker.Pages.Controls.CharacterView"
              x:Name="this"
-             MinimumWidthRequest="400">
+             MinimumWidthRequest="400"
+             Padding="3,0,3,0">
 
-    <Frame BindingContext="{x:Reference this}"
-           BackgroundColor="Goldenrod"
-           BorderColor="DarkRed">
-        <Grid RowDefinitions="50*,50*"
+    <Border BindingContext="{x:Reference this}"
+            Padding="10"
+            StrokeThickness="3.0"
+            HorizontalOptions="Fill"
+            BackgroundColor="Goldenrod"
+            Stroke="DarkRed"
+            StrokeShape="RoundRectangle 10">
+        <VerticalStackLayout>
+            <Grid RowDefinitions="50*,50*"
+                  RowSpacing="5"
               ColumnDefinitions="60*,30*,5*"
               ColumnSpacing="10">
-            <Label Text="{Binding CharacterName}"
-                   FontSize="16"/>
-            <Label Text="Number of lives: "
+                <Label Text="{Binding CharacterName}"
+                   FontSize="18"
+                   FontAttributes="Bold"/>
+                <Label Text="Number of lives: "
                    Grid.Column="1"
                    FontSize="12"
                    HorizontalTextAlignment="End"
                    VerticalTextAlignment="End"/>
-            <Label Text="{Binding NumberOfLives}"
+                <Label Text="{Binding NumberOfLives}"
                    Grid.Column="2"
-                   FontSize="14"
+                   FontSize="18"
+                   FontAttributes="Bold"
                    HorizontalTextAlignment="End"
                    VerticalTextAlignment="End"/>
-            <Label Grid.Row="1"
+                <Label Grid.Row="1"
                    Grid.Column="0"
                    Text="Created on: "
                    FontSize="12"/>
-            <Label Grid.Row="1"
+                <Label Grid.Row="1"
                    Grid.Column="1"
                    Grid.ColumnSpan="2"
                    Text="{Binding CreateDate}"
                    FontSize="12"
                    HorizontalTextAlignment="End"/>
-        </Grid>
-    </Frame>
+            </Grid>
+        </VerticalStackLayout>
+    </Border>
 </ContentView>

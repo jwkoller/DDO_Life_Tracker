@@ -10,7 +10,7 @@
              BackgroundColor="Black">
 
     <Grid RowDefinitions="100, auto, auto, *"
-          ColumnDefinitions=".5*, .5*"
+          ColumnDefinitions="1.0*"
           Padding="5"
           RowSpacing="10"
           ColumnSpacing="25">
@@ -32,15 +32,16 @@
                 Grid.Column="0"
                 BackgroundColor="DarkGreen"
                 Command="{Binding GoToAddCharacterPageCommand}"/>
-        <Button Text="Delete Character"
+        <!--<Button Text="Delete Character"
                 Grid.Row="1"
                 Grid.Column="1"
                 BackgroundColor="DarkRed"
-                Clicked="DeleteCharacter"/>
+                Clicked="DeleteCharacter"/>-->
         <CollectionView Grid.Row="3"
                         Grid.Column="0"
                         ItemsSource="{Binding Characters}"
-                        Margin="0,0,0,20">
+                        Margin="0,0,0,20"
+                        WidthRequest="400">
             <CollectionView.ItemsLayout>
                 <LinearItemsLayout ItemSpacing="2"
                                    Orientation="Vertical"/>
@@ -48,13 +49,9 @@
             <CollectionView.ItemTemplate>
                 <DataTemplate x:DataType="models:Character">
                     <HorizontalStackLayout
-                        HorizontalOptions="Fill"
-                        WidthRequest="400">
+                        HorizontalOptions="Center">
                         <HorizontalStackLayout.GestureRecognizers>
-                            <TapGestureRecognizer Tapped="OnFocusCharacter"
-                                                  CommandParameter="{Binding .}"/>
-                            <TapGestureRecognizer Tapped="OnDoubleTapCharacter"
-                                                  NumberOfTapsRequired="2"
+                            <TapGestureRecognizer Tapped="OnCharacterViewClick"
                                                   CommandParameter="{Binding .}"/>
                         </HorizontalStackLayout.GestureRecognizers>
                         <HorizontalStackLayout.Behaviors>
@@ -62,10 +59,7 @@
                                 DefaultAnimationDuration="250"
                                 DefaultAnimationEasing="{x:Static Easing.CubicInOut}"
                                 PressedOpacity="0.9"
-                                PressedScale="0.95"
-                                LongPressDuration="750"
-                                LongPressCompleted="OnCharacterviewLongPress"
-                                LongPressCommandParameter="{Binding .}"/>
+                                PressedScale="0.95"/>
                         </HorizontalStackLayout.Behaviors>
                         <controls:CharacterView ThisCharacter="{Binding .}"
                                                 CharacterName="{Binding Name}"

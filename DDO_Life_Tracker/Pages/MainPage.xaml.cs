@@ -10,19 +10,23 @@ namespace DDO_Life_Tracker
     {
         private MainViewModel _viewModel;
         private readonly ILogger<MainPage> _logger;
-        private Character _focusedCharacter;
 
         public MainPage(MainViewModel viewModel, ILogger<MainPage> logger)
         {
             InitializeComponent();
             BindingContext = viewModel;
 
-            Loaded += OnLoaded;
             _viewModel = viewModel;
             _logger = logger;
         }
 
-        private async void OnLoaded(object? sender, EventArgs e)
+        protected override async void OnAppearing()
+        {
+            base.OnAppearing();
+            await LoadCharactersFromDB();
+        } 
+
+        private async Task LoadCharactersFromDB()
         {
             try
             {
@@ -31,54 +35,26 @@ namespace DDO_Life_Tracker
             catch (Exception ex)
             {
                 _logger.LogError($"Error loading characters OnAppearing: {ex}");
-                await DisplayAlert("ERROR", "Error retrieving your characters", "Cancel");
+                await DisplayAlert("ERROR", "Failed to retrieve your characters", "Cancel");
             }
         }
 
-        private async void DeleteCharacter(object? sender, EventArgs args)
-        {
-            try
-            {
-                bool confirm = await DisplayAlert("Confirm Delete", $"Are you sure you want to delete {_focusedCharacter.Name}?", "Yes", "Cancel");
-                if (confirm)
-                {
-                    await _viewModel.DeleteCharacter(_focusedCharacter);
-                }
-            }
-            catch (Exception ex)
-            {
-                _logger.LogError($"Error deleting character: {ex}");
-                await DisplayAlert($"ERROR", $"Delete Character failed for {_focusedCharacter.Name}. {ex.Message}", "Shit...");
-            }
-        }
-
-        private void OnFocusCharacter(object sender, TappedEventArgs e)
+        private async void OnCharacterViewClick(object sender, TappedEventArgs e)
         {
             if(e.Parameter?.GetType() == typeof(Character))
             {
-                _focusedCharacter = (Character)e.Parameter;
+                _viewModel.SetFocusedCharacter((Character)e.Parameter);
             }
-        }
 
-        private async void OnDoubleTapCharacter(object sender, TappedEventArgs e)
-        {
-            if (e.Parameter?.GetType() == typeof(Character))
+            try
             {
-                _focusedCharacter = (Character)e.Parameter;
+                await _viewModel.GoToAddIncarnationPage();
             }
-
-            await _viewModel.GoToAddIncarnationPage(_focusedCharacter);
-        }
-
-        private void OnCharacterviewLongPress(object sender, CommunityToolkit.Maui.Core.LongPressCompletedEventArgs e)
-        {
-            if (e.LongPressCommandParameter?.GetType() == typeof(Character))
+            catch(Exception ex)
             {
-                _focusedCharacter = (Character)e.LongPressCommandParameter;
+                _logger.LogError($"Error going to incarnation page: {ex}");
+                await DisplayAlert("ERROR", "Select a character", "Ok");
             }
-
-            DeleteCharacter(sender, e);
         }
-
     }
 }
