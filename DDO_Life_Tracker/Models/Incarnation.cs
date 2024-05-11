@@ -1,9 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-
+﻿
 namespace DDO_Life_Tracker.Models
 {
     public class Incarnation : IIncarnation
@@ -87,6 +82,11 @@ namespace DDO_Life_Tracker.Models
             }
 
             _currentClassDefinitions.Add(classToAdd.Name, classToAdd);
+        }
+
+        public bool RemoveClass(IClass classToRemove)
+        {        
+            return _currentClassDefinitions.Remove(classToRemove.Name);
         }
 
         public void IncrementClassLevel(string classNameToIncrement)

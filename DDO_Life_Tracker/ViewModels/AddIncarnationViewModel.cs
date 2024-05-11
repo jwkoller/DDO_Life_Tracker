@@ -1,9 +1,11 @@
-﻿using CommunityToolkit.Mvvm.ComponentModel;
+﻿using CommunityToolkit.Maui.Core.Extensions;
+using CommunityToolkit.Mvvm.ComponentModel;
 using CommunityToolkit.Mvvm.Input;
 using DDO_Life_Tracker.Models;
 using DDO_Life_Tracker.Services;
 using Microsoft.Extensions.Logging;
 using System.Collections.ObjectModel;
+using System.Text;
 
 namespace DDO_Life_Tracker.ViewModels
 {
@@ -25,11 +27,22 @@ namespace DDO_Life_Tracker.ViewModels
         [ObservableProperty]
         private KeyValuePair<int, string> _selectedRace;
         [ObservableProperty]
-        private Incarnation? _newIncarnation;
+        private Incarnation? _activeIncarnation;
         [ObservableProperty]
         private string _classLevel;
         [ObservableProperty]
         private ObservableCollection<IClass> _classesToAdd;
+        [ObservableProperty]
+        private string _classBtnText = ADD_CLASS_BTN_TEXT;
+        [ObservableProperty]
+        private string _incarnationBtnText = ADD_INCARNATION_BTN_TEXT;
+
+        private IClass? _classBeingEdited;
+
+        private const string ADD_CLASS_BTN_TEXT = "+Add Class";
+        private const string UPDATE_CLASS_BTN_TEXT = "Update Class";
+        private const string ADD_INCARNATION_BTN_TEXT = "Add Character life";
+        private const string UPDATE_INCARNATION_BTN_TEXT = "Update Character";
 
         private IncarnationDBService _dbService;
         private ILogger<AddIncarnationViewModel> _logger;
@@ -43,9 +56,31 @@ namespace DDO_Life_Tracker.ViewModels
             SelectableRaces = Definitions.AllDdoRacesFormatted.ToList();
         }
 
+        public void ClassButtonClick()
+        {
+            if(ClassBtnText == ADD_CLASS_BTN_TEXT)
+            {
+                AddClass();
+            } else
+            {
+                UpdateClass();
+            }
+        }
+
+        public async Task IncarnationButtonClick()
+        {
+            if(IncarnationBtnText == ADD_INCARNATION_BTN_TEXT)
+            {
+                await AddIncarnationToCharacter();
+            } else
+            {
+                await UpdateIncarnation();
+            }
+        }
+
         public async Task AddIncarnationToCharacter()
         {
-            if (NewIncarnation == default)
+            if (ActiveIncarnation == default)
             {
                 AddClass();
             } 
@@ -59,21 +94,14 @@ namespace DDO_Life_Tracker.ViewModels
                 }
             }
 
-            if (NewIncarnation == default)
+            if (ActiveIncarnation == default)
             {
                 throw new Exception("Incarnation not set.");
             }
 
-            CurrentCharacter.AddIncarnation(NewIncarnation);
+            CurrentCharacter.AddIncarnation(ActiveIncarnation);
             await SaveCharacter();
             ResetForm();
-        }
-
-        public async Task SaveCharacter()
-        {
-            await _dbService.SaveCharacterAsync(CurrentCharacter);
-            CurrentCharacter = await _dbService.GetCharacterByIdAsync(CurrentCharacter.Id);
-            _logger.LogInformation($"Character {CurrentCharacter.Name} saved with {CurrentCharacter.NumberOfLives} incarnations");
         }
 
         public void AddClass()
@@ -95,20 +123,94 @@ namespace DDO_Life_Tracker.ViewModels
                 throw new Exception("Invalid class level");
             }
 
-            if (NewIncarnation == default)
+            if (ActiveIncarnation == default)
             {
                 IRace newRace = Definitions.IdToDDORace(SelectedRace.Key);
-                NewIncarnation = new Incarnation(CurrentCharacter.Id, newRace, newClass);
+                ActiveIncarnation = new Incarnation(CurrentCharacter.Id, newRace, newClass);
                 RacesPickerEnabled = false;
             }
             else
             {
-                NewIncarnation.AddClass(newClass);
+                ActiveIncarnation.AddClass(newClass);
             }
 
             ClassesToAdd.Add(newClass);
+
             ClassLevel = string.Empty;
             SelectedClass = default;
+            ClassBtnText = ADD_CLASS_BTN_TEXT;
+        }
+
+        public void SetIncarnationToEdit(Incarnation incarnation)
+        {
+            ResetClassEditor();
+            ResetRaceEditor();
+            ActiveIncarnation = incarnation;
+            ClassesToAdd = ActiveIncarnation.CurrentClassDefinitions.ToObservableCollection();
+            SelectedRace = SelectableRaces.First(r => r.Key == ActiveIncarnation.Race.Id);
+            IncarnationBtnText = UPDATE_INCARNATION_BTN_TEXT;
+        }
+
+        public void SetClassToEdit(IClass classToEdit)
+        {
+            _classBeingEdited = classToEdit;
+            ClassLevel = classToEdit.Level.ToString();
+            SelectedClass = SelectableClasses.First(c => c.Key == classToEdit.ClassId);
+            ClassBtnText = UPDATE_CLASS_BTN_TEXT;
+        }
+
+        public bool RemoveClassFromIncarnation()
+        {
+            if(_classBeingEdited == default)
+            {
+                throw new Exception("Select a class to edit");
+            }
+
+            if (ActiveIncarnation == default)
+            {
+                throw new Exception("No incarnation selected.");
+            }
+
+            bool classRemoved = ActiveIncarnation.RemoveClass(_classBeingEdited);
+            if (classRemoved)
+            {
+                ClassesToAdd = ActiveIncarnation.CurrentClassDefinitions.ToObservableCollection();
+            }
+
+            return classRemoved;
+        }
+
+        public void UpdateClass()
+        {
+            bool oldClassRemoved = RemoveClassFromIncarnation();
+            if (oldClassRemoved)
+            {
+                AddClass();
+            }
+        }
+
+        public async Task UpdateIncarnation()
+        {
+            if (ActiveIncarnation == default)
+            {
+                throw new Exception("No incarnation selected.");
+            }
+
+            if(SelectedRace.Key != ActiveIncarnation.Race.Id)
+            {
+                ActiveIncarnation.Race = Definitions.IdToDDORace(SelectedRace.Key);
+            }
+
+            CurrentCharacter.UpdateIncarnation(ActiveIncarnation);
+            await SaveCharacter();
+            ResetForm();
+        }
+
+        public async Task SaveCharacter()
+        {
+            await _dbService.SaveCharacterAsync(CurrentCharacter);
+            CurrentCharacter = await _dbService.GetCharacterByIdAsync(CurrentCharacter.Id);
+            _logger.LogInformation($"Character {CurrentCharacter.Name} saved with {CurrentCharacter.NumberOfLives} incarnations");
         }
 
         public async Task DeleteCharacter()
@@ -121,12 +223,25 @@ namespace DDO_Life_Tracker.ViewModels
         [RelayCommand]
         public void ResetForm()
         {
+            ActiveIncarnation = default;
+            IncarnationBtnText = ADD_INCARNATION_BTN_TEXT;
+            ResetRaceEditor();
+            ResetClassEditor();
+        }
+
+        private void ResetClassEditor()
+        {
+            _classBeingEdited = default;
             SelectedClass = default;
+            ClassLevel = string.Empty;
+            ClassesToAdd = new ObservableCollection<IClass>();
+            ClassBtnText = ADD_CLASS_BTN_TEXT;
+        }
+
+        private void ResetRaceEditor()
+        {
             SelectedRace = default;
             RacesPickerEnabled = true;
-            ClassLevel = string.Empty;
-            NewIncarnation = default;
-            ClassesToAdd = new ObservableCollection<IClass>();
         }
     }
 }

@@ -15,6 +15,7 @@ namespace DDO_Life_Tracker.Models
         public DateTime CreateDate { get; set; }
         void AddIncarnation(Incarnation incarnation);
         void AddIncarnations(IEnumerable<Incarnation> incarnations);
+        void UpdateIncarnation(Incarnation newIncarnation);
 
     }
 }
