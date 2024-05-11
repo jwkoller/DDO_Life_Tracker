@@ -39,6 +39,10 @@
                             <DataTemplate x:DataType="models:Incarnation">
                                 <Grid ColumnDefinitions="10*,30*,60*"
                                                   ColumnSpacing="5">
+                                    <Grid.GestureRecognizers>
+                                        <TapGestureRecognizer Tapped="OnClickEditIncarnation"
+                                                              CommandParameter="{Binding .}"/>
+                                    </Grid.GestureRecognizers>
                                     <Image Source="{Binding Race.IconImgFileName}"
                                            Grid.Column="0"
                                            VerticalOptions="Center"
@@ -111,9 +115,9 @@
                         </Border>
                     </HorizontalStackLayout>
                     <HorizontalStackLayout                
-                    HorizontalOptions="Center"
-                    Spacing="30"
-                    Background="Goldenrod">
+                        HorizontalOptions="Center"
+                        Spacing="30"
+                        Background="Goldenrod">
                         <Border Stroke="AntiqueWhite"
                             StrokeShape="RoundRectangle 5">
                             <Entry Keyboard="Numeric"
@@ -136,9 +140,9 @@
                                 </Entry.Behaviors>
                         </Entry>
                         </Border>
-                        <Button Text="+Add Class"
-                                WidthRequest="200"
-                                Clicked="OnClickAddClass"
+                        <Button Text="{Binding ClassBtnText}"
+                                WidthRequest="150"
+                                Clicked="OnClickClassButton"
                                 BackgroundColor="DarkGreen"/>
                     </HorizontalStackLayout>
                     <CollectionView ItemsSource="{Binding ClassesToAdd}"
@@ -151,6 +155,10 @@
                             <DataTemplate x:DataType="models:IClass">
                                 <Grid ColumnDefinitions="20*,20*,60*"
                                       Padding="10,0,10,0">
+                                    <Grid.GestureRecognizers>
+                                        <TapGestureRecognizer Tapped="OnClickEditClass"
+                                                              CommandParameter="{Binding .}"/>
+                                    </Grid.GestureRecognizers>
                                     <Image Source="{Binding IconImgFileName}"
                                            VerticalOptions="Center"
                                            HorizontalOptions="Start"
@@ -176,14 +184,14 @@
                     HorizontalOptions="Center"
                     Spacing="30"
                 Margin="0,10,0,0">
-                <Button Text="Add character life"
-                    Clicked="OnClickAddIncarntaionToCharacter"
+                <Button Text="{Binding IncarnationBtnText}"
+                    Clicked="OnClickIncarnationButton"
                     WidthRequest="150"
                     BackgroundColor="Goldenrod"/>
-                <Button Text="X"
-                        WidthRequest="50"
+                <Button Text="Clear"
+                        WidthRequest="60"
                         Background="DarkRed"
-                        FontSize="16"
+                        FontSize="12"
                         FontAttributes="Bold"
                         Command="{Binding ResetFormCommand}"/>
             </HorizontalStackLayout>
@@ -191,9 +199,9 @@
         <HorizontalStackLayout
                     Grid.Row="1"
                     HorizontalOptions="Center">
-            <Button Text="Delete"
+            <Button Text="Delete Character"
                     Clicked="OnClickDeleteCharacter"
-                    WidthRequest="100"
+                    WidthRequest="120"
                     HeightRequest="25"
                     Padding="0"
                     BackgroundColor="DarkRed"/>

@@ -1,4 +1,5 @@
 using CommunityToolkit.Maui.Alerts;
+using DDO_Life_Tracker.Models;
 using DDO_Life_Tracker.ViewModels;
 using Microsoft.Extensions.Logging;
 
@@ -17,30 +18,30 @@ public partial class AddIncarnationPage : ContentPage
 		_viewModel = viewModel;
 	}
 
-	private void OnClickAddClass(object sender, EventArgs e)
+	private void OnClickClassButton(object sender, EventArgs e)
 	{
 		try
 		{
-			_viewModel.AddClass();
+			_viewModel.ClassButtonClick();
         }
 		catch (Exception ex)
 		{
-			_logger.LogError($"Error adding class to incarnation btn click: {ex}");
-			DisplayAlert("Error", $"Failed adding the class: {ex.Message}", "Ok");
+			_logger.LogError($"Error adding/updating class to incarnation btn click: {ex}");
+			DisplayAlert("Error", $"Character update failed: {ex.Message}", "Ok");
 		}
 	}
 
-	private async void OnClickAddIncarntaionToCharacter(object sender, EventArgs e)
+	private async void OnClickIncarnationButton(object sender, EventArgs e)
 	{
 		try
 		{
-			await _viewModel.AddIncarnationToCharacter();
-            _ = Toast.Make("New character life added.", CommunityToolkit.Maui.Core.ToastDuration.Short, 12).Show();
+			await _viewModel.IncarnationButtonClick();
+            _ = Toast.Make("Character updated.", CommunityToolkit.Maui.Core.ToastDuration.Short, 12).Show();
         }
         catch (Exception ex)
 		{
-			_logger.LogError($"Error adding incarnation to character: {ex}");
-			await DisplayAlert("Error", $"Unable to add new incarnation to character: {ex.Message}", "Ok");
+			_logger.LogError($"Error adding/updating incarnation to character: {ex}");
+			await DisplayAlert("Error", $"Character update failed: {ex.Message}", "Ok");
 		}
 	}
 
@@ -57,6 +58,38 @@ public partial class AddIncarnationPage : ContentPage
 			await DisplayAlert("Error", $"Saving character failed: {ex.Message}", "Ok");
 		}
 	}
+
+	private async void OnClickEditIncarnation(object sender, TappedEventArgs e)
+	{
+		try
+		{
+			if(e.Parameter?.GetType() == typeof(Incarnation))
+			{
+				_viewModel.SetIncarnationToEdit((Incarnation)e.Parameter);
+			}
+		}
+		catch(Exception ex)
+		{
+            _logger.LogError($"Error selecting incarnation from list to edit: {ex}");
+            await DisplayAlert("Error", $"Failed to select incarnation: {ex.Message}", "Ok");
+        }
+	}
+
+	private async void OnClickEditClass(object sender, TappedEventArgs e)
+	{
+        try
+        {
+            if (e.Parameter != default)
+            {
+                _viewModel.SetClassToEdit((IClass)e.Parameter);
+            }
+        }
+        catch (Exception ex)
+        {
+            _logger.LogError($"Error selecting class from list to edit: {ex}");
+            await DisplayAlert("Error", $"Failed to select class: {ex.Message}", "Ok");
+        }
+    }
 
 	private async void OnClickDeleteCharacter(object sender, EventArgs e)
 	{

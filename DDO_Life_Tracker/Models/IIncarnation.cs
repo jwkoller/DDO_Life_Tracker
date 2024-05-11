@@ -16,6 +16,7 @@ namespace DDO_Life_Tracker.Models
         IEnumerable<IClass> CurrentClassDefinitions { get; }
         void AddClass(IClass classDefinition);
         void AddClasses(IEnumerable<IClass> classes);
+        bool RemoveClass(IClass classDefinition);
         void IncrementClassLevel(string classNameToIncrement);
     }
 }
