@@ -22,7 +22,7 @@ public partial class AddIncarnationPage : ContentPage
 	{
 		try
 		{
-			_viewModel.ClassButtonClick();
+			_viewModel.ClassButtonHandler();
         }
 		catch (Exception ex)
 		{
@@ -35,7 +35,7 @@ public partial class AddIncarnationPage : ContentPage
 	{
 		try
 		{
-			await _viewModel.IncarnationButtonClick();
+			await _viewModel.IncarnationButtonHandler();
             _ = Toast.Make("Character updated.", CommunityToolkit.Maui.Core.ToastDuration.Short, 12).Show();
         }
         catch (Exception ex)
@@ -90,6 +90,22 @@ public partial class AddIncarnationPage : ContentPage
             await DisplayAlert("Error", $"Failed to select class: {ex.Message}", "Ok");
         }
     }
+
+	private async void OnClickDeleteClass(object sender, TappedEventArgs e)
+	{
+		try
+		{
+            if (e.Parameter != default)
+            {
+                _viewModel.DeleteClassButtonHandler((IClass)e.Parameter);
+            }
+        }
+		catch(Exception ex) 
+		{
+            _logger.LogError($"Error deleting class from list to edit: {ex}");
+            await DisplayAlert("Error", $"Unable to delete class: {ex.Message}", "Ok");
+        }
+	}
 
 	private async void OnClickDeleteCharacter(object sender, EventArgs e)
 	{

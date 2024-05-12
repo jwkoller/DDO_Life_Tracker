@@ -153,26 +153,43 @@
                         </CollectionView.ItemsLayout>
                         <CollectionView.ItemTemplate>
                             <DataTemplate x:DataType="models:IClass">
-                                <Grid ColumnDefinitions="20*,20*,60*"
-                                      Padding="10,0,10,0">
+                                <Grid ColumnDefinitions="10*,20*,20*,60*"
+                                      Padding="0,0,0,0">
                                     <Grid.GestureRecognizers>
                                         <TapGestureRecognizer Tapped="OnClickEditClass"
                                                               CommandParameter="{Binding .}"/>
                                     </Grid.GestureRecognizers>
+                                    <Border StrokeShape="RoundRectangle 80"
+                                            StrokeThickness="0"
+                                            WidthRequest="30"
+                                            HeightRequest="30"
+                                            HorizontalOptions="Start"
+                                            VerticalOptions="Center"
+                                            BackgroundColor="DarkRed">
+                                        <Border.GestureRecognizers>
+                                            <TapGestureRecognizer Tapped="OnClickDeleteClass"
+                                                                  CommandParameter="{Binding .}"/>
+                                        </Border.GestureRecognizers>
+                                        <Label Text="X"
+                                               VerticalOptions="Center"
+                                               HorizontalOptions="Center"
+                                               TextColor="AntiqueWhite"/>
+                                    </Border>
                                     <Image Source="{Binding IconImgFileName}"
                                            VerticalOptions="Center"
-                                           HorizontalOptions="Start"
-                                           HeightRequest="40"/>
+                                           HorizontalOptions="Center"
+                                           HeightRequest="40"
+                                           Grid.Column="1"/>
                                     <Label VerticalOptions="Center"
-                                           HorizontalOptions="End"
+                                           HorizontalOptions="Center"
                                            FontSize="20"
                                            FontAttributes="Bold"
-                                           Grid.Column="1"
+                                           Grid.Column="2"
                                            Text="{Binding Level}"/>
                                     <Label VerticalOptions="Center"
                                            HorizontalOptions="End"
                                            FontSize="20"
-                                           Grid.Column="2"
+                                           Grid.Column="3"
                                            Text="{Binding Name}"/>
                                 </Grid>
                             </DataTemplate>

@@ -56,26 +56,35 @@ namespace DDO_Life_Tracker.ViewModels
             SelectableRaces = Definitions.AllDdoRacesFormatted.ToList();
         }
 
-        public void ClassButtonClick()
+        public void ClassButtonHandler()
         {
             if(ClassBtnText == ADD_CLASS_BTN_TEXT)
             {
                 AddClass();
-            } else
+            } 
+            else
             {
                 UpdateClass();
             }
         }
 
-        public async Task IncarnationButtonClick()
+        public async Task IncarnationButtonHandler()
         {
             if(IncarnationBtnText == ADD_INCARNATION_BTN_TEXT)
             {
                 await AddIncarnationToCharacter();
-            } else
+            } 
+            else
             {
                 await UpdateIncarnation();
             }
+        }
+
+        public void DeleteClassButtonHandler(IClass classToDelete)
+        {
+            _classBeingEdited = classToDelete;
+            RemoveClassFromIncarnation();
+            ResetClassEditor();
         }
 
         public async Task AddIncarnationToCharacter()
@@ -145,7 +154,7 @@ namespace DDO_Life_Tracker.ViewModels
         {
             ResetClassEditor();
             ResetRaceEditor();
-            ActiveIncarnation = incarnation;
+            ActiveIncarnation = (Incarnation)incarnation.Clone();
             ClassesToAdd = ActiveIncarnation.CurrentClassDefinitions.ToObservableCollection();
             SelectedRace = SelectableRaces.First(r => r.Key == ActiveIncarnation.Race.Id);
             IncarnationBtnText = UPDATE_INCARNATION_BTN_TEXT;
@@ -225,6 +234,7 @@ namespace DDO_Life_Tracker.ViewModels
         {
             ActiveIncarnation = default;
             IncarnationBtnText = ADD_INCARNATION_BTN_TEXT;
+            ClassesToAdd = new ObservableCollection<IClass>();
             ResetRaceEditor();
             ResetClassEditor();
         }
@@ -234,7 +244,6 @@ namespace DDO_Life_Tracker.ViewModels
             _classBeingEdited = default;
             SelectedClass = default;
             ClassLevel = string.Empty;
-            ClassesToAdd = new ObservableCollection<IClass>();
             ClassBtnText = ADD_CLASS_BTN_TEXT;
         }
 
