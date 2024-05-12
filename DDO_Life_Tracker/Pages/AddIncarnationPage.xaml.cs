@@ -91,6 +91,22 @@ public partial class AddIncarnationPage : ContentPage
         }
     }
 
+	private async void OnClickDeleteClass(object sender, TappedEventArgs e)
+	{
+		try
+		{
+            if (e.Parameter != default)
+            {
+                _viewModel.DeleteClassClick((IClass)e.Parameter);
+            }
+        }
+		catch(Exception ex) 
+		{
+            _logger.LogError($"Error deleting class from list to edit: {ex}");
+            await DisplayAlert("Error", $"Unable to delete class: {ex.Message}", "Ok");
+        }
+	}
+
 	private async void OnClickDeleteCharacter(object sender, EventArgs e)
 	{
 		try

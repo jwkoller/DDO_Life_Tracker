@@ -1,7 +1,9 @@
 ﻿
+using DDO_Life_Tracker.Services;
+
 namespace DDO_Life_Tracker.Models
 {
-    public class Incarnation : IIncarnation
+    public class Incarnation : IIncarnation, ICloneable
     {
         public int Id { get; set; }
         public int CharacterId { get; set; }
@@ -92,6 +94,22 @@ namespace DDO_Life_Tracker.Models
         public void IncrementClassLevel(string classNameToIncrement)
         {
             _currentClassDefinitions[classNameToIncrement].Level++;
+        }
+
+        public object Clone()
+        {
+            IRace copiedRace = Definitions.IdToDDORace(Race.Id);
+            List<IClass> copiedClasses = new List<IClass>();
+            foreach (IClass item in CurrentClassDefinitions)
+            {
+                IClass copy = Definitions.IdToDDOClass(item.ClassId);
+                copy.IncarnationId = item.IncarnationId;
+                copy.Level = item.Level;
+                copy.Id = item.Id;
+                copiedClasses.Add(copy);
+            }
+
+            return new Incarnation(CharacterId, copiedRace, copiedClasses, Id);
         }
     }
 }

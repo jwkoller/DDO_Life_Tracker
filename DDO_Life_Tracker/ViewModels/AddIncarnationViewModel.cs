@@ -78,6 +78,12 @@ namespace DDO_Life_Tracker.ViewModels
             }
         }
 
+        public void DeleteClassClick(IClass classToDelete)
+        {
+            _classBeingEdited = classToDelete;
+            RemoveClassFromIncarnation();
+        }
+
         public async Task AddIncarnationToCharacter()
         {
             if (ActiveIncarnation == default)
@@ -145,7 +151,7 @@ namespace DDO_Life_Tracker.ViewModels
         {
             ResetClassEditor();
             ResetRaceEditor();
-            ActiveIncarnation = incarnation;
+            ActiveIncarnation = (Incarnation)incarnation.Clone();
             ClassesToAdd = ActiveIncarnation.CurrentClassDefinitions.ToObservableCollection();
             SelectedRace = SelectableRaces.First(r => r.Key == ActiveIncarnation.Race.Id);
             IncarnationBtnText = UPDATE_INCARNATION_BTN_TEXT;
