@@ -22,7 +22,7 @@ public partial class AddIncarnationPage : ContentPage
 	{
 		try
 		{
-			_viewModel.ClassButtonClick();
+			_viewModel.ClassButtonHandler();
         }
 		catch (Exception ex)
 		{
@@ -35,7 +35,7 @@ public partial class AddIncarnationPage : ContentPage
 	{
 		try
 		{
-			await _viewModel.IncarnationButtonClick();
+			await _viewModel.IncarnationButtonHandler();
             _ = Toast.Make("Character updated.", CommunityToolkit.Maui.Core.ToastDuration.Short, 12).Show();
         }
         catch (Exception ex)
@@ -97,7 +97,7 @@ public partial class AddIncarnationPage : ContentPage
 		{
             if (e.Parameter != default)
             {
-                _viewModel.DeleteClassClick((IClass)e.Parameter);
+                _viewModel.DeleteClassButtonHandler((IClass)e.Parameter);
             }
         }
 		catch(Exception ex) 

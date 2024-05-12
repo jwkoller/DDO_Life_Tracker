@@ -168,7 +168,7 @@
                                             BackgroundColor="DarkRed">
                                         <Border.GestureRecognizers>
                                             <TapGestureRecognizer Tapped="OnClickDeleteClass"
-                                                                      CommandParameter="{Binding .}"/>
+                                                                  CommandParameter="{Binding .}"/>
                                         </Border.GestureRecognizers>
                                         <Label Text="X"
                                                VerticalOptions="Center"
