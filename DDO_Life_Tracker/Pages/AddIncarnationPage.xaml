@@ -8,7 +8,8 @@
              xmlns:models="clr-namespace:DDO_Life_Tracker.Models"
              x:DataType="viewmodel:AddIncarnationViewModel"
              xmlns:controls="clr-namespace:DDO_Life_Tracker.Pages.Controls"
-             BackgroundColor="Black">
+             BackgroundColor="Black"
+             HideSoftInputOnTapped="True">
     <ContentPage.Resources>
         <Style x:Key="InvalidEntryStyle" TargetType="Entry">
             <Setter Property="TextColor" Value="Red" />
@@ -141,7 +142,7 @@
                         </Entry>
                         </Border>
                         <Button Text="{Binding ClassBtnText}"
-                                WidthRequest="150"
+                                WidthRequest="120"
                                 Clicked="OnClickClassButton"
                                 BackgroundColor="DarkGreen"/>
                     </HorizontalStackLayout>
@@ -160,7 +161,8 @@
                                                               CommandParameter="{Binding .}"/>
                                     </Grid.GestureRecognizers>
                                     <Border StrokeShape="RoundRectangle 80"
-                                            StrokeThickness="0"
+                                            StrokeThickness="2"
+                                            Stroke="Black"
                                             WidthRequest="30"
                                             HeightRequest="30"
                                             HorizontalOptions="Start"
@@ -197,21 +199,34 @@
                     </CollectionView>
                 </VerticalStackLayout>
             </Border>
-            <HorizontalStackLayout                
-                    HorizontalOptions="Center"
-                    Spacing="30"
-                Margin="0,10,0,0">
+            <Grid ColumnDefinitions="30*,30*,30*"           
+                Margin="0,10,0,0"
+                Padding="20,0,20,0">
                 <Button Text="{Binding IncarnationBtnText}"
                     Clicked="OnClickIncarnationButton"
-                    WidthRequest="150"
-                    BackgroundColor="Goldenrod"/>
+                    WidthRequest="70"
+                    BackgroundColor="Goldenrod"
+                    Grid.Column="0"
+                    FontSize="12"
+                    HorizontalOptions="Start"/>
+                <Button Text="Delete"
+                        Grid.Column="1"
+                        WidthRequest="70"
+                        HorizontalOptions="Center"
+                        FontSize="12"
+                        IsEnabled="{Binding DeleteIncarnationButtonEnabled}"
+                        IsVisible="{Binding DeleteIncarnationButtonEnabled}"
+                        Clicked="OnClickDeleteIncarnation"
+                        BackgroundColor="DarkRed"/>
                 <Button Text="Clear"
-                        WidthRequest="60"
-                        Background="DarkRed"
+                        WidthRequest="70"
+                        Background="DarkGray"
                         FontSize="12"
                         FontAttributes="Bold"
+                        Grid.Column="2"
+                        HorizontalOptions="End"
                         Command="{Binding ResetFormCommand}"/>
-            </HorizontalStackLayout>
+            </Grid>
         </VerticalStackLayout>
         <HorizontalStackLayout
                     Grid.Row="1"

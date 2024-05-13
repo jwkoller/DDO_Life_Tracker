@@ -107,6 +107,23 @@ public partial class AddIncarnationPage : ContentPage
         }
 	}
 
+	private async void OnClickDeleteIncarnation(object sender, EventArgs e)
+	{
+		try
+		{
+            bool confirm = await DisplayAlert("Delete Character Life", "Delete the selected incarnation from the character?", "Yes", "No");
+            if (confirm)
+            {
+                await _viewModel.DeleteIncarnationButtonHandler();
+            }
+        }
+		catch(Exception ex)
+		{
+            _logger.LogError($"Error deleting incarnation from character: {ex}");
+            await DisplayAlert("Error", $"Failed to remove selected character life: {ex.Message}", "Ok");
+        }
+	}
+
 	private async void OnClickDeleteCharacter(object sender, EventArgs e)
 	{
 		try
