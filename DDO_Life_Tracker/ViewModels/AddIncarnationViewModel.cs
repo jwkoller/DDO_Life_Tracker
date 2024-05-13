@@ -36,13 +36,15 @@ namespace DDO_Life_Tracker.ViewModels
         private string _classBtnText = ADD_CLASS_BTN_TEXT;
         [ObservableProperty]
         private string _incarnationBtnText = ADD_INCARNATION_BTN_TEXT;
+        [ObservableProperty]
+        private bool _deleteIncarnationButtonEnabled = false;
 
         private IClass? _classBeingEdited;
 
         private const string ADD_CLASS_BTN_TEXT = "+Add Class";
         private const string UPDATE_CLASS_BTN_TEXT = "Update Class";
-        private const string ADD_INCARNATION_BTN_TEXT = "Add Character life";
-        private const string UPDATE_INCARNATION_BTN_TEXT = "Update Character";
+        private const string ADD_INCARNATION_BTN_TEXT = "+Add";
+        private const string UPDATE_INCARNATION_BTN_TEXT = "Update";
 
         private IncarnationDBService _dbService;
         private ILogger<AddIncarnationViewModel> _logger;
@@ -85,6 +87,19 @@ namespace DDO_Life_Tracker.ViewModels
             _classBeingEdited = classToDelete;
             RemoveClassFromIncarnation();
             ResetClassEditor();
+        }
+
+        public async Task DeleteIncarnationButtonHandler()
+        {
+            if(ActiveIncarnation == default)
+            {
+                throw new Exception("No incarnation selected.");
+            }
+
+            CurrentCharacter.RemoveIncarnation(ActiveIncarnation);
+            await _dbService.DeleteIncarnation(ActiveIncarnation);
+            await SaveCharacter();
+            ResetForm();
         }
 
         public async Task AddIncarnationToCharacter()
@@ -158,6 +173,7 @@ namespace DDO_Life_Tracker.ViewModels
             ClassesToAdd = ActiveIncarnation.CurrentClassDefinitions.ToObservableCollection();
             SelectedRace = SelectableRaces.First(r => r.Key == ActiveIncarnation.Race.Id);
             IncarnationBtnText = UPDATE_INCARNATION_BTN_TEXT;
+            DeleteIncarnationButtonEnabled = true;
         }
 
         public void SetClassToEdit(IClass classToEdit)
@@ -235,6 +251,7 @@ namespace DDO_Life_Tracker.ViewModels
             ActiveIncarnation = default;
             IncarnationBtnText = ADD_INCARNATION_BTN_TEXT;
             ClassesToAdd = new ObservableCollection<IClass>();
+            DeleteIncarnationButtonEnabled = false;
             ResetRaceEditor();
             ResetClassEditor();
         }

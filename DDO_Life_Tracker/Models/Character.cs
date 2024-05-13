@@ -65,5 +65,14 @@ namespace DDO_Life_Tracker.Models
                 _incarnationHistory[foundIdx] = updated;
             }
         }
+
+        public void RemoveIncarnation(Incarnation toBeRemoved)
+        {
+            int foundIdx = _incarnationHistory.FindIndex(x => x.Id == toBeRemoved.Id);
+            if(foundIdx > -1)
+            {
+                _incarnationHistory.RemoveAt(foundIdx);
+            }
+        }
     }
 }

@@ -16,6 +16,6 @@ namespace DDO_Life_Tracker.Models
         void AddIncarnation(Incarnation incarnation);
         void AddIncarnations(IEnumerable<Incarnation> incarnations);
         void UpdateIncarnation(Incarnation newIncarnation);
-
+        void RemoveIncarnation(Incarnation incarnation);
     }
 }
