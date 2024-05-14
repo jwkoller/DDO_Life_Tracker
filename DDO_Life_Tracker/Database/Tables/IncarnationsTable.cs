@@ -17,7 +17,7 @@ namespace DDO_Life_Tracker.Database.Tables
         public int RaceId { get; set; }
         [OneToMany(CascadeOperations = CascadeOperation.All)]
         public List<ClassesTable> Classes { get; set; }
-        [ManyToOne]
+        [ManyToOne(CascadeOperations = CascadeOperation.All)]
         public CharactersTable CharactersTable { get; set; }
     }
 }

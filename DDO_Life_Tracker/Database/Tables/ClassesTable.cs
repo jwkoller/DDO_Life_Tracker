@@ -19,7 +19,7 @@ namespace DDO_Life_Tracker.Database.Tables
         public int ClassId { get; set; }
         [NotNull]
         public int Level { get; set; }
-        [ManyToOne]
+        [ManyToOne(CascadeOperations = CascadeOperation.All)]
         public IncarnationsTable IncarnationsTable { get; set; }
     }
 }
