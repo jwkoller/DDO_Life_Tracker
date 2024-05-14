@@ -40,6 +40,7 @@ namespace DDO_Life_Tracker.ViewModels
         private bool _deleteIncarnationButtonEnabled = false;
 
         private IClass? _classBeingEdited;
+        private List<IClass> _classesToDeleteFromDB;
 
         private const string ADD_CLASS_BTN_TEXT = "+Add Class";
         private const string UPDATE_CLASS_BTN_TEXT = "Update Class";
@@ -53,6 +54,7 @@ namespace DDO_Life_Tracker.ViewModels
         {
             _dbService = dbService;
             _logger = logger;
+            _classesToDeleteFromDB = new List<IClass>();
             ClassesToAdd = new ObservableCollection<IClass>();
             SelectableClasses = Definitions.AllDdoClassesFormatted.ToList();
             SelectableRaces = Definitions.AllDdoRacesFormatted.ToList();
@@ -85,7 +87,11 @@ namespace DDO_Life_Tracker.ViewModels
         public void DeleteClassButtonHandler(IClass classToDelete)
         {
             _classBeingEdited = classToDelete;
-            RemoveClassFromIncarnation();
+            bool removed = RemoveClassFromIncarnation();
+            if (removed)
+            {
+                _classesToDeleteFromDB.Add(_classBeingEdited);
+            }
             ResetClassEditor();
         }
 
@@ -130,7 +136,7 @@ namespace DDO_Life_Tracker.ViewModels
 
         public void AddClass()
         {
-            if(SelectedClass.Key == default || SelectedRace.Key == default) 
+            if (SelectedClass.Key == default || SelectedRace.Key == default)
             {
                 throw new Exception($"Select both class and race.");
             }
@@ -160,15 +166,12 @@ namespace DDO_Life_Tracker.ViewModels
 
             ClassesToAdd.Add(newClass);
 
-            ClassLevel = string.Empty;
-            SelectedClass = default;
-            ClassBtnText = ADD_CLASS_BTN_TEXT;
+            ResetClassEditor();
         }
 
         public void SetIncarnationToEdit(Incarnation incarnation)
         {
-            ResetClassEditor();
-            ResetRaceEditor();
+            ResetForm();
             ActiveIncarnation = (Incarnation)incarnation.Clone();
             ClassesToAdd = ActiveIncarnation.CurrentClassDefinitions.ToObservableCollection();
             SelectedRace = SelectableRaces.First(r => r.Key == ActiveIncarnation.Race.Id);
@@ -210,7 +213,24 @@ namespace DDO_Life_Tracker.ViewModels
             bool oldClassRemoved = RemoveClassFromIncarnation();
             if (oldClassRemoved)
             {
-                AddClass();
+                IClass newClass = Definitions.IdToDDOClass(SelectedClass.Key);
+                if (int.TryParse(ClassLevel, out int lvl))
+                {
+                    newClass.Level = lvl;
+#pragma warning disable CS8602 // Dereference of a possibly null reference.
+                    newClass.Id = _classBeingEdited.Id; // exception thrown above if null
+                    newClass.IncarnationId = _classBeingEdited.IncarnationId;
+                }
+                else
+                {
+                    ClassLevel = string.Empty;
+                    throw new Exception("Invalid class level");
+                }
+
+                ActiveIncarnation.AddClass(newClass); // exception thrown above if null
+#pragma warning restore CS8602 // Dereference of a possibly null reference.
+                ClassesToAdd.Add(newClass);
+                ResetClassEditor();
             }
         }
 
@@ -224,6 +244,11 @@ namespace DDO_Life_Tracker.ViewModels
             if(SelectedRace.Key != ActiveIncarnation.Race.Id)
             {
                 ActiveIncarnation.Race = Definitions.IdToDDORace(SelectedRace.Key);
+            }
+
+            foreach (IClass item in _classesToDeleteFromDB)
+            {
+                await _dbService.DeleteClassAsync(item);
             }
 
             CurrentCharacter.UpdateIncarnation(ActiveIncarnation);
@@ -251,6 +276,7 @@ namespace DDO_Life_Tracker.ViewModels
             ActiveIncarnation = default;
             IncarnationBtnText = ADD_INCARNATION_BTN_TEXT;
             ClassesToAdd = new ObservableCollection<IClass>();
+            _classesToDeleteFromDB = new List<IClass>();
             DeleteIncarnationButtonEnabled = false;
             ResetRaceEditor();
             ResetClassEditor();

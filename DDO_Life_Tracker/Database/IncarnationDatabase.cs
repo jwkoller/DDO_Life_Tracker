@@ -97,10 +97,10 @@ namespace DDO_Life_Tracker.Database
             return incarnation.Id;
         }
 
-        public async Task<int> DeleteIncarnationAsync(IncarnationsTable incarnation)
+        public async Task DeleteIncarnationAsync(IncarnationsTable incarnation)
         {
             await Init();
-            return await _database.DeleteAsync(incarnation);
+            await _database.DeleteAsync(incarnation, recursive: true);
         }
         #endregion
 
@@ -126,10 +126,10 @@ namespace DDO_Life_Tracker.Database
             return classItem.Id;
         }
 
-        public async Task<int> DeleteClassAsync(ClassesTable classItem)
+        public async Task DeleteClassAsync(ClassesTable classItem)
         {
             await Init();
-            return await _database.DeleteAsync(classItem);
+            await _database.DeleteAsync(classItem, recursive: true);
         }
         #endregion
     }
