@@ -32,11 +32,6 @@
                 Grid.Column="0"
                 BackgroundColor="DarkGreen"
                 Command="{Binding GoToAddCharacterPageCommand}"/>
-        <!--<Button Text="Delete Character"
-                Grid.Row="1"
-                Grid.Column="1"
-                BackgroundColor="DarkRed"
-                Clicked="DeleteCharacter"/>-->
         <CollectionView Grid.Row="3"
                         Grid.Column="0"
                         ItemsSource="{Binding Characters}"

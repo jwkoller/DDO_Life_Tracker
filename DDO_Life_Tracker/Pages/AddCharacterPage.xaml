@@ -4,6 +4,7 @@
              x:Class="DDO_Life_Tracker.Pages.AddCharacterPage"
              xmlns:models="clr-namespace:DDO_Life_Tracker.Models"
              xmlns:viewmodel="clr-namespace:DDO_Life_Tracker.ViewModels"
+             xmlns:toolkit="http://schemas.microsoft.com/dotnet/2022/maui/toolkit"
              x:DataType="viewmodel:AddCharacterViewModel"
              BackgroundColor="Black"
              Title="Add New Character"
@@ -13,26 +14,28 @@
     <VerticalStackLayout
         WidthRequest="400"
         HorizontalOptions="Center"
-        Spacing="10"
-        Padding="10,0,10,0">
+        Spacing="20">
         <Label 
-            Text="Add a new Character"
+            Text="New Character"
             FontSize="30"
-            TextColor="White"
+            FontAttributes="Bold"
+            TextColor="Goldenrod"
             VerticalOptions="Center" 
             HorizontalOptions="Center" />
         <Grid ColumnDefinitions="82*,12*"
-              ColumnSpacing="6">
+              ColumnSpacing="6"
+              Padding="10,0,10,0">
             <Border StrokeShape="RoundRectangle 4"
                     Stroke="DarkRed">
-            <Entry x:Name="EnterCharacterName"
-               BackgroundColor="DarkRed"
-               Text="{Binding NameEntry}"
-               TextColor="AntiqueWhite"
-               Placeholder="Enter Character's name"
-               CursorPosition="0"
-               ClearButtonVisibility="WhileEditing"
-               Completed="OnNameEntered"/>
+                <Entry x:Name="EnterCharacterName"
+                   BackgroundColor="DarkRed"
+                   Text="{Binding NameEntry}"
+                   TextColor="AntiqueWhite"
+                   FontSize="18"
+                   Placeholder="Character's name..."
+                   CursorPosition="0"
+                   ClearButtonVisibility="WhileEditing"
+                   Completed="OnNameEntered"/>
             </Border>
             <ImageButton Source="buttoncheckmark.png"
                          Background="Black"
