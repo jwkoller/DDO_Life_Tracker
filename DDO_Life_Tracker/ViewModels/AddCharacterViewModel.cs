@@ -37,6 +37,12 @@ namespace DDO_Life_Tracker.ViewModels
 
         public async Task<bool> CheckCharacterNameExists()
         {
+            if(string.IsNullOrWhiteSpace(NameEntry))
+            {
+                NameEntry = string.Empty;
+                throw new Exception("Enter a name.");
+            }
+
             Character? nameCheck = await _dbService.GetCharacterByNameAsync(NameEntry);
             if (nameCheck != null)
             {
@@ -59,6 +65,8 @@ namespace DDO_Life_Tracker.ViewModels
             NewCharacter.Id = await _dbService.SaveCharacterAsync(NewCharacter);
             CharacterWindowVisible = true;
             _logger.LogInformation($"New character name: {NewCharacter.Name} with Id: {NewCharacter.Id}");
+
+            NameEntry = string.Empty;
         }
 
         public void ResetForm()

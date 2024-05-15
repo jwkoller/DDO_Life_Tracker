@@ -38,6 +38,7 @@ public partial class AddCharacterPage : ContentPage
 		catch(Exception ex)
 		{
 			_logger.LogError($"Error checking name: {ex}");
+			await DisplayAlert("Error", $"Character not created: {ex.Message}", "Ok");
 		}
     }
 }
