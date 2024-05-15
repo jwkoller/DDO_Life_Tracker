@@ -19,12 +19,14 @@
         </Style>
     </ContentPage.Resources>
 
-    <Grid RowDefinitions="*,auto">
-        <VerticalStackLayout Grid.Row="0"
-                             Spacing="1"
-                             WidthRequest="400">
+    <Grid RowDefinitions="*,auto"
+          WidthRequest="400">
+        <ScrollView Margin="0,0,0,10"
+                    VerticalScrollBarVisibility="Always">
+            <VerticalStackLayout Grid.Row="0"
+                             Spacing="1">
             <StackLayout WidthRequest="400">
-                <toolkit:Expander IsExpanded="True">
+                <toolkit:Expander IsExpanded="false">
                     <toolkit:Expander.Header>
                         <HorizontalStackLayout
                                         HorizontalOptions="Center">
@@ -228,15 +230,29 @@
                         Command="{Binding ResetFormCommand}"/>
             </Grid>
         </VerticalStackLayout>
-        <HorizontalStackLayout
-                    Grid.Row="1"
-                    HorizontalOptions="Center">
-            <Button Text="Delete Character"
-                    Clicked="OnClickDeleteCharacter"
-                    WidthRequest="120"
+        </ScrollView>
+        <Grid
+            ColumnDefinitions="50*,50*"
+            Grid.Row="1"
+            HorizontalOptions="Fill"
+            Padding="2,10,2,2">
+            <Button Text="Back"
+                    Grid.Column="0"
+                    Clicked="OnClickGoBack"
+                    WidthRequest="110"
                     HeightRequest="25"
+                    HorizontalOptions="Start"
+                    Padding="0"
+                    BackgroundColor="DarkGray"/>
+            <Button Text="Delete Character"
+                    Grid.Column="1"
+                    FontSize="12"
+                    Clicked="OnClickDeleteCharacter"
+                    WidthRequest="110"
+                    HeightRequest="25"
+                    HorizontalOptions="End"
                     Padding="0"
                     BackgroundColor="DarkRed"/>
-        </HorizontalStackLayout>
+        </Grid>
     </Grid>
 </ContentPage>
