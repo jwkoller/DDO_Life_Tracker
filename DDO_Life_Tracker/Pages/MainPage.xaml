@@ -6,10 +6,12 @@
              xmlns:viewmodel="clr-namespace:DDO_Life_Tracker.ViewModels"
              x:DataType="viewmodel:MainViewModel"
              xmlns:models="clr-namespace:DDO_Life_Tracker.Models"
-             xmlns:controls="clr-namespace:DDO_Life_Tracker.Pages.Controls"
-             BackgroundColor="Black">
-
-    <Grid RowDefinitions="100, auto, auto, *"
+             xmlns:controls="clr-namespace:DDO_Life_Tracker.Pages.Controls">
+    <Grid>
+        <Image Aspect="AspectFill"
+               HorizontalOptions="Center"
+               Source="dragonwalking.jpg"/>
+        <Grid RowDefinitions="100, auto, auto, *"
           ColumnDefinitions="1.0*"
           Padding="5"
           RowSpacing="10"
@@ -63,5 +65,5 @@
             </CollectionView.ItemTemplate>
         </CollectionView>
     </Grid>
-
+</Grid>
 </ContentPage>
