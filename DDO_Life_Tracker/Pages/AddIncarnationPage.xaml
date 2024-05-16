@@ -46,6 +46,13 @@
                                         <TapGestureRecognizer Tapped="OnClickEditIncarnation"
                                                               CommandParameter="{Binding .}"/>
                                     </Grid.GestureRecognizers>
+                                    <Grid.Behaviors>
+                                        <toolkit:TouchBehavior
+                                            DefaultAnimationDuration="250"
+                                            DefaultAnimationEasing="{x:Static Easing.CubicInOut}"
+                                            PressedOpacity="0.9"
+                                            PressedScale="0.95"/>
+                                    </Grid.Behaviors>
                                     <Image Source="{Binding Race.IconImgFileName}"
                                            Grid.Column="0"
                                            VerticalOptions="Center"
