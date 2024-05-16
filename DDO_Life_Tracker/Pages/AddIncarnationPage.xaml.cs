@@ -145,4 +145,9 @@ public partial class AddIncarnationPage : ContentPage
             await DisplayAlert("Error", $"Failed to delete character: {ex.Message}", "Ok");
         }
 	}
+
+	private async void OnClickGoBack(object sender, EventArgs e)
+	{
+        await Shell.Current.GoToAsync("..");
+    }
 }

@@ -19,27 +19,29 @@
         </Style>
     </ContentPage.Resources>
 
-    <Grid RowDefinitions="*,auto">
-        <VerticalStackLayout Grid.Row="0"
-                             Spacing="1"
-                             WidthRequest="400">
-            <StackLayout WidthRequest="400">
-                <toolkit:Expander IsExpanded="True">
+    <Grid RowDefinitions="*,auto"
+          MaximumWidthRequest="700">
+        <ScrollView Margin="0,0,0,10"
+                    VerticalScrollBarVisibility="Always">
+            <VerticalStackLayout Grid.Row="0"
+                             Spacing="1">
+            <StackLayout>
+                <toolkit:Expander IsExpanded="false">
                     <toolkit:Expander.Header>
-                        <HorizontalStackLayout
-                                        HorizontalOptions="Center">
+
                             <controls:CharacterView ThisCharacter="{Binding CurrentCharacter}"
                                                     CharacterName="{Binding CurrentCharacter.Name}"
                                                     NumberOfLives="{Binding CurrentCharacter.NumberOfLives}"
                                                     CreateDate="{Binding CurrentCharacter.CreateDate}"/>
-                        </HorizontalStackLayout>
+
                     </toolkit:Expander.Header>
                     <VerticalStackLayout BindableLayout.ItemsSource="{Binding CurrentCharacter.IncarnationHistory}"
                                              Padding="20,0,20,0">
                         <BindableLayout.ItemTemplate>
                             <DataTemplate x:DataType="models:Incarnation">
                                 <Grid ColumnDefinitions="10*,30*,60*"
-                                                  ColumnSpacing="5">
+                                      ColumnSpacing="5"
+                                      MaximumHeightRequest="40">
                                     <Grid.GestureRecognizers>
                                         <TapGestureRecognizer Tapped="OnClickEditIncarnation"
                                                               CommandParameter="{Binding .}"/>
@@ -228,15 +230,30 @@
                         Command="{Binding ResetFormCommand}"/>
             </Grid>
         </VerticalStackLayout>
-        <HorizontalStackLayout
-                    Grid.Row="1"
-                    HorizontalOptions="Center">
-            <Button Text="Delete Character"
-                    Clicked="OnClickDeleteCharacter"
-                    WidthRequest="120"
+        </ScrollView>
+        <Grid
+            ColumnDefinitions="50*,50*"
+            Grid.Row="1"
+            HorizontalOptions="Fill"
+            Padding="2,10,2,2">
+            <!--<Button Text="Back"
+                    Grid.Column="0"
+                    Clicked="OnClickGoBack"
+                    WidthRequest="110"
                     HeightRequest="25"
+                    HorizontalOptions="Start"
+                    Padding="0"
+                    BackgroundColor="DarkGray"/>-->
+            <Button Text="Delete Character"
+                    Grid.Column="0"
+                    Grid.ColumnSpan="2"
+                    FontSize="12"
+                    Clicked="OnClickDeleteCharacter"
+                    WidthRequest="110"
+                    HeightRequest="25"
+                    HorizontalOptions="Center"
                     Padding="0"
                     BackgroundColor="DarkRed"/>
-        </HorizontalStackLayout>
+        </Grid>
     </Grid>
 </ContentPage>
