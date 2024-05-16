@@ -13,7 +13,8 @@
           ColumnDefinitions="1.0*"
           Padding="5"
           RowSpacing="10"
-          ColumnSpacing="25">
+          ColumnSpacing="25"
+          MaximumWidthRequest="700">
         <ActivityIndicator IsRunning="{Binding LoadingSpinnerActive}"
                            IsVisible="{Binding LoadingSpinnerActive}"
                            Color="DarkRed"
@@ -35,32 +36,29 @@
         <CollectionView Grid.Row="3"
                         Grid.Column="0"
                         ItemsSource="{Binding Characters}"
-                        Margin="0,0,0,20"
-                        WidthRequest="400">
+                        Margin="0,0,0,20">
             <CollectionView.ItemsLayout>
                 <LinearItemsLayout ItemSpacing="2"
                                    Orientation="Vertical"/>
             </CollectionView.ItemsLayout>
             <CollectionView.ItemTemplate>
                 <DataTemplate x:DataType="models:Character">
-                    <HorizontalStackLayout
-                        HorizontalOptions="Center">
-                        <HorizontalStackLayout.GestureRecognizers>
+                    <controls:CharacterView ThisCharacter="{Binding .}"
+                                            CharacterName="{Binding Name}"
+                                            NumberOfLives="{Binding NumberOfLives}"
+                                            CreateDate="{Binding CreateDate}">
+                        <controls:CharacterView.GestureRecognizers>
                             <TapGestureRecognizer Tapped="OnCharacterViewClick"
-                                                  CommandParameter="{Binding .}"/>
-                        </HorizontalStackLayout.GestureRecognizers>
-                        <HorizontalStackLayout.Behaviors>
+                                                CommandParameter="{Binding .}"/>
+                        </controls:CharacterView.GestureRecognizers>
+                        <controls:CharacterView.Behaviors>
                             <toolkit:TouchBehavior
-                                DefaultAnimationDuration="250"
-                                DefaultAnimationEasing="{x:Static Easing.CubicInOut}"
-                                PressedOpacity="0.9"
-                                PressedScale="0.95"/>
-                        </HorizontalStackLayout.Behaviors>
-                        <controls:CharacterView ThisCharacter="{Binding .}"
-                                                CharacterName="{Binding Name}"
-                                                NumberOfLives="{Binding NumberOfLives}"
-                                                CreateDate="{Binding CreateDate}"/>
-                    </HorizontalStackLayout>
+                            DefaultAnimationDuration="250"
+                            DefaultAnimationEasing="{x:Static Easing.CubicInOut}"
+                            PressedOpacity="0.9"
+                            PressedScale="0.95"/>
+                        </controls:CharacterView.Behaviors>
+                        </controls:CharacterView>
                 </DataTemplate>
             </CollectionView.ItemTemplate>
         </CollectionView>
