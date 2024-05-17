@@ -2,14 +2,15 @@
 <ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
              x:Class="DDO_Life_Tracker.AddIncarnationPage"
-             Title="New Character Life"
              xmlns:toolkit="http://schemas.microsoft.com/dotnet/2022/maui/toolkit"
              xmlns:viewmodel="clr-namespace:DDO_Life_Tracker.ViewModels"
              xmlns:models="clr-namespace:DDO_Life_Tracker.Models"
              x:DataType="viewmodel:AddIncarnationViewModel"
              xmlns:controls="clr-namespace:DDO_Life_Tracker.Pages.Controls"
              BackgroundColor="Black"
-             HideSoftInputOnTapped="True">
+             HideSoftInputOnTapped="True"
+             Title=""
+             Shell.NavBarIsVisible="False">
     <ContentPage.Resources>
         <Style x:Key="InvalidEntryStyle" TargetType="Entry">
             <Setter Property="TextColor" Value="Red" />
@@ -18,158 +19,160 @@
             <Setter Property="TextColor" Value="Green" />
         </Style>
     </ContentPage.Resources>
-
-    <Grid RowDefinitions="*,auto"
+    <Grid>
+        <Image Aspect="AspectFill"
+               Source="reddragonfight.jpg"
+               Opacity=".5"/>
+        <Grid RowDefinitions="*,auto"
           MaximumWidthRequest="700">
-        <ScrollView Margin="0,0,0,10"
+            <ScrollView Margin="0,0,0,10"
                     VerticalScrollBarVisibility="Always">
-            <VerticalStackLayout Grid.Row="0"
-                             Spacing="1">
-            <StackLayout>
-                <toolkit:Expander IsExpanded="false">
-                    <toolkit:Expander.Header>
-
-                            <controls:CharacterView ThisCharacter="{Binding CurrentCharacter}"
+                <VerticalStackLayout Grid.Row="0"
+                                     Spacing="1">
+                    <StackLayout>
+                        <toolkit:Expander IsExpanded="false">
+                            <toolkit:Expander.Header>
+                                <controls:CharacterView ThisCharacter="{Binding CurrentCharacter}"
                                                     CharacterName="{Binding CurrentCharacter.Name}"
                                                     NumberOfLives="{Binding CurrentCharacter.NumberOfLives}"
                                                     CreateDate="{Binding CurrentCharacter.CreateDate}"/>
 
-                    </toolkit:Expander.Header>
-                    <VerticalStackLayout BindableLayout.ItemsSource="{Binding CurrentCharacter.IncarnationHistory}"
-                                             Padding="20,0,20,0">
-                        <BindableLayout.ItemTemplate>
-                            <DataTemplate x:DataType="models:Incarnation">
-                                <Grid ColumnDefinitions="10*,30*,60*"
-                                      ColumnSpacing="5"
-                                      MaximumHeightRequest="40">
-                                    <Grid.GestureRecognizers>
-                                        <TapGestureRecognizer Tapped="OnClickEditIncarnation"
+                            </toolkit:Expander.Header>
+                            <VerticalStackLayout 
+                                BindableLayout.ItemsSource="{Binding CurrentCharacter.IncarnationHistory}">
+                                <BindableLayout.ItemTemplate>
+                                    <DataTemplate x:DataType="models:Incarnation">
+                                        <Grid ColumnDefinitions="10*,30*,60*"
+                                              ColumnSpacing="5"
+                                              MaximumHeightRequest="40"                                             
+                                              Padding="10,0,10,0">
+                                            <Grid.GestureRecognizers>
+                                                <TapGestureRecognizer Tapped="OnClickEditIncarnation"
                                                               CommandParameter="{Binding .}"/>
-                                    </Grid.GestureRecognizers>
-                                    <Grid.Behaviors>
-                                        <toolkit:TouchBehavior
-                                            DefaultAnimationDuration="250"
-                                            DefaultAnimationEasing="{x:Static Easing.CubicInOut}"
-                                            PressedOpacity="0.9"
-                                            PressedScale="0.95"/>
-                                    </Grid.Behaviors>
-                                    <Image Source="{Binding Race.IconImgFileName}"
-                                           Grid.Column="0"
-                                           VerticalOptions="Center"
-                                           HorizontalOptions="Start"/>
-                                    <Label Grid.Column="1"
-                                           VerticalOptions="Center"
-                                           HorizontalOptions="Start"                                      
-                                           TextColor="AntiqueWhite"
-                                           Text="{Binding Race.Name}"/>
-                                    <Label Grid.Column="2"
-                                           TextColor="AntiqueWhite"
-                                           VerticalOptions="Center"
-                                           HorizontalOptions="End"
-                                           FontSize="14"
-                                           LineBreakMode="TailTruncation"
-                                           Text="{Binding CurrentClass}"/>
-                                </Grid>
-                            </DataTemplate>
-                        </BindableLayout.ItemTemplate>
-                    </VerticalStackLayout>
-                </toolkit:Expander>
-            </StackLayout>
-            <Border Padding="10"
+                                            </Grid.GestureRecognizers>
+                                            <Grid.Behaviors>
+                                                <toolkit:TouchBehavior
+                                                    DefaultAnimationDuration="250"
+                                                    DefaultAnimationEasing="{x:Static Easing.CubicInOut}"
+                                                    PressedOpacity="0.9"
+                                                    PressedScale="0.95"/>
+                                            </Grid.Behaviors>
+                                            <Image Source="{Binding Race.IconImgFileName}"
+                                               Grid.Column="0"
+                                               VerticalOptions="Center"
+                                               HorizontalOptions="Start"/>
+                                            <Label Grid.Column="1"
+                                               VerticalOptions="Center"
+                                               HorizontalOptions="Start"                                      
+                                               TextColor="AntiqueWhite"
+                                               Text="{Binding Race.Name}"/>
+                                            <Label Grid.Column="2"
+                                               TextColor="AntiqueWhite"
+                                               VerticalOptions="Center"
+                                               HorizontalOptions="End"
+                                               FontSize="14"
+                                               LineBreakMode="TailTruncation"
+                                               Text="{Binding CurrentClass}"/>
+                                        </Grid>
+                                    </DataTemplate>
+                                </BindableLayout.ItemTemplate>
+                            </VerticalStackLayout>
+                        </toolkit:Expander>
+                    </StackLayout>
+                    <Border Padding="10"
                     StrokeThickness="3.0"
                     HorizontalOptions="Fill"
                     BackgroundColor="Goldenrod"
                     Stroke="DarkRed"
                     StrokeShape="RoundRectangle 10">
-                <HorizontalStackLayout 
+                        <HorizontalStackLayout 
                     HorizontalOptions="Center"                                 
                     Spacing="30"
                     Background="Goldenrod">
-                    <Label Text="Select Race: "
+                            <Label Text="Select Race: "
                            VerticalOptions="Center"
                            HorizontalOptions="Center"
                            FontSize="20"/>
-                    <Border Stroke="AntiqueWhite"
+                            <Border Stroke="AntiqueWhite"
                             StrokeShape="RoundRectangle 5">
-                        <Picker ItemsSource="{Binding SelectableRaces}"
+                                <Picker ItemsSource="{Binding SelectableRaces}"
                                 ItemDisplayBinding="{Binding Value}"
                                 SelectedItem="{Binding SelectedRace}"
                                 IsEnabled="{Binding RacesPickerEnabled}"
                                 WidthRequest="200"
                                 BackgroundColor="AntiqueWhite"/>
+                            </Border>
+                        </HorizontalStackLayout>
                     </Border>
-                </HorizontalStackLayout>
-            </Border>
-            <Border Padding="10"
+                    <Border Padding="10"
                     StrokeThickness="3.0"
                     HorizontalOptions="Fill"
                     BackgroundColor="Goldenrod"
                     Stroke="DarkRed"
                     StrokeShape="RoundRectangle 10">
-                <VerticalStackLayout Spacing="10">
-                    <HorizontalStackLayout
+                        <VerticalStackLayout Spacing="10">
+                            <HorizontalStackLayout
                     HorizontalOptions="Center"
                     Spacing="30"
                     Background="Goldenrod">
-                        <Label Text="Select Class: "
+                                <Label Text="Select Class: "
                            VerticalOptions="Center"
                            HorizontalOptions="Center"
                            FontSize="20"/>
-                        <Border Stroke="AntiqueWhite"
+                                <Border Stroke="AntiqueWhite"
                             StrokeShape="RoundRectangle 5">
-                            <Picker ItemsSource="{Binding SelectableClasses}"
+                                    <Picker ItemsSource="{Binding SelectableClasses}"
                                     ItemDisplayBinding="{Binding Value}"
                                     SelectedItem="{Binding SelectedClass}"
                                     WidthRequest="200"
                                     BackgroundColor="AntiqueWhite"/>
-                        </Border>
-                    </HorizontalStackLayout>
-                    <HorizontalStackLayout                
+                                </Border>
+                            </HorizontalStackLayout>
+                            <HorizontalStackLayout                
                         HorizontalOptions="Center"
                         Spacing="30"
                         Background="Goldenrod">
-                        <Border Stroke="AntiqueWhite"
+                                <Border Stroke="AntiqueWhite"
                             StrokeShape="RoundRectangle 5">
-                            <Entry Keyboard="Numeric"
-                                   WidthRequest="100"
-                                   FontSize="15"
-                                   HorizontalTextAlignment="Center"
-                                   Text="{Binding ClassLevel}"
-                                   x:Name="ClassLevel"
-                                   Placeholder="Level"
-                                   PlaceholderColor="Black"
-                                   BackgroundColor="AntiqueWhite">
-                                <Entry.Behaviors>
-                                <toolkit:NumericValidationBehavior 
-                                    InvalidStyle="{StaticResource InvalidEntryStyle}"
-                                    ValidStyle="{StaticResource ValidEntryStyle}"
-                                    Flags="ValidateOnValueChanged"
-                                    MinimumValue="1"
-                                    MaximumValue="20"
-                                    MaximumDecimalPlaces="0" />
-                                </Entry.Behaviors>
-                        </Entry>
-                        </Border>
-                        <Button Text="{Binding ClassBtnText}"
+                                    <Entry Keyboard="Numeric"
+                                       WidthRequest="100"
+                                       FontSize="15"
+                                       HorizontalTextAlignment="Center"
+                                       Text="{Binding ClassLevel}"
+                                       x:Name="ClassLevel"
+                                       Placeholder="Level"
+                                       PlaceholderColor="Black"
+                                       BackgroundColor="AntiqueWhite">
+                                            <Entry.Behaviors>
+                                                <toolkit:NumericValidationBehavior 
+                                        InvalidStyle="{StaticResource InvalidEntryStyle}"
+                                        ValidStyle="{StaticResource ValidEntryStyle}"
+                                        Flags="ValidateOnValueChanged"
+                                        MinimumValue="1"
+                                        MaximumValue="20"
+                                        MaximumDecimalPlaces="0" />
+                                        </Entry.Behaviors>
+                                    </Entry>
+                                </Border>
+                                <Button Text="{Binding ClassBtnText}"
                                 WidthRequest="120"
                                 Clicked="OnClickClassButton"
                                 BackgroundColor="DarkGreen"/>
-                    </HorizontalStackLayout>
-                    <CollectionView ItemsSource="{Binding ClassesToAdd}"
+                            </HorizontalStackLayout>
+                            <CollectionView ItemsSource="{Binding ClassesToAdd}"
                                     MinimumHeightRequest="20">
-                        <CollectionView.ItemsLayout>
-                            <LinearItemsLayout ItemSpacing="2"
+                                <CollectionView.ItemsLayout>
+                                    <LinearItemsLayout ItemSpacing="2"
                                        Orientation="Vertical"/>
-                        </CollectionView.ItemsLayout>
-                        <CollectionView.ItemTemplate>
-                            <DataTemplate x:DataType="models:IClass">
-                                <Grid ColumnDefinitions="10*,20*,20*,60*"
-                                      Padding="0,0,0,0">
-                                    <Grid.GestureRecognizers>
-                                        <TapGestureRecognizer Tapped="OnClickEditClass"
+                                </CollectionView.ItemsLayout>
+                                <CollectionView.ItemTemplate>
+                                    <DataTemplate x:DataType="models:IClass">
+                                        <Grid ColumnDefinitions="10*,20*,20*,60*">
+                                            <Grid.GestureRecognizers>
+                                                <TapGestureRecognizer Tapped="OnClickEditClass"
                                                               CommandParameter="{Binding .}"/>
-                                    </Grid.GestureRecognizers>
-                                    <Border StrokeShape="RoundRectangle 80"
+                                            </Grid.GestureRecognizers>
+                                            <Border StrokeShape="RoundRectangle 80"
                                             StrokeThickness="2"
                                             Stroke="Black"
                                             WidthRequest="30"
@@ -177,48 +180,48 @@
                                             HorizontalOptions="Start"
                                             VerticalOptions="Center"
                                             BackgroundColor="DarkRed">
-                                        <Border.GestureRecognizers>
-                                            <TapGestureRecognizer Tapped="OnClickDeleteClass"
+                                                <Border.GestureRecognizers>
+                                                    <TapGestureRecognizer Tapped="OnClickDeleteClass"
                                                                   CommandParameter="{Binding .}"/>
-                                        </Border.GestureRecognizers>
-                                        <Label Text="X"
+                                                </Border.GestureRecognizers>
+                                                <Label Text="X"
+                                                   VerticalOptions="Center"
+                                                   HorizontalOptions="Center"
+                                                   TextColor="AntiqueWhite"/>
+                                            </Border>
+                                            <Image Source="{Binding IconImgFileName}"
                                                VerticalOptions="Center"
                                                HorizontalOptions="Center"
-                                               TextColor="AntiqueWhite"/>
-                                    </Border>
-                                    <Image Source="{Binding IconImgFileName}"
-                                           VerticalOptions="Center"
-                                           HorizontalOptions="Center"
-                                           HeightRequest="40"
-                                           Grid.Column="1"/>
-                                    <Label VerticalOptions="Center"
-                                           HorizontalOptions="Center"
-                                           FontSize="20"
-                                           FontAttributes="Bold"
-                                           Grid.Column="2"
-                                           Text="{Binding Level}"/>
-                                    <Label VerticalOptions="Center"
-                                           HorizontalOptions="End"
-                                           FontSize="20"
-                                           Grid.Column="3"
-                                           Text="{Binding Name}"/>
-                                </Grid>
-                            </DataTemplate>
-                        </CollectionView.ItemTemplate>
-                    </CollectionView>
-                </VerticalStackLayout>
-            </Border>
-            <Grid ColumnDefinitions="30*,30*,30*"           
+                                               HeightRequest="40"
+                                               Grid.Column="1"/>
+                                            <Label VerticalOptions="Center"
+                                               HorizontalOptions="Center"
+                                               FontSize="20"
+                                               FontAttributes="Bold"
+                                               Grid.Column="2"
+                                               Text="{Binding Level}"/>
+                                            <Label VerticalOptions="Center"
+                                               HorizontalOptions="End"
+                                               FontSize="20"
+                                               Grid.Column="3"
+                                               Text="{Binding Name}"/>
+                                        </Grid>
+                                    </DataTemplate>
+                                </CollectionView.ItemTemplate>
+                            </CollectionView>
+                        </VerticalStackLayout>
+                    </Border>
+                    <Grid ColumnDefinitions="30*,30*,30*"           
                 Margin="0,10,0,0"
                 Padding="20,0,20,0">
-                <Button Text="{Binding IncarnationBtnText}"
+                        <Button Text="{Binding IncarnationBtnText}"
                     Clicked="OnClickIncarnationButton"
                     WidthRequest="70"
                     BackgroundColor="Goldenrod"
                     Grid.Column="0"
                     FontSize="12"
                     HorizontalOptions="Start"/>
-                <Button Text="Delete"
+                        <Button Text="Delete"
                         Grid.Column="1"
                         WidthRequest="70"
                         HorizontalOptions="Center"
@@ -227,7 +230,7 @@
                         IsVisible="{Binding DeleteIncarnationButtonEnabled}"
                         Clicked="OnClickDeleteIncarnation"
                         BackgroundColor="DarkRed"/>
-                <Button Text="Clear"
+                        <Button Text="Clear"
                         WidthRequest="70"
                         Background="DarkGray"
                         FontSize="12"
@@ -235,23 +238,15 @@
                         Grid.Column="2"
                         HorizontalOptions="End"
                         Command="{Binding ResetFormCommand}"/>
-            </Grid>
-        </VerticalStackLayout>
-        </ScrollView>
-        <Grid
+                    </Grid>
+                </VerticalStackLayout>
+            </ScrollView>
+            <Grid
             ColumnDefinitions="50*,50*"
             Grid.Row="1"
             HorizontalOptions="Fill"
             Padding="2,10,2,2">
-            <!--<Button Text="Back"
-                    Grid.Column="0"
-                    Clicked="OnClickGoBack"
-                    WidthRequest="110"
-                    HeightRequest="25"
-                    HorizontalOptions="Start"
-                    Padding="0"
-                    BackgroundColor="DarkGray"/>-->
-            <Button Text="Delete Character"
+                <Button Text="Delete Character"
                     Grid.Column="0"
                     Grid.ColumnSpan="2"
                     FontSize="12"
@@ -261,6 +256,7 @@
                     HorizontalOptions="Center"
                     Padding="0"
                     BackgroundColor="DarkRed"/>
+            </Grid>
         </Grid>
     </Grid>
 </ContentPage>
