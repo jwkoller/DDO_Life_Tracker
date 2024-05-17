@@ -7,27 +7,30 @@
              xmlns:toolkit="http://schemas.microsoft.com/dotnet/2022/maui/toolkit"
              x:DataType="viewmodel:AddCharacterViewModel"
              BackgroundColor="Black"
-             Title="Add New Character"
+             Title=""
+             Shell.NavBarIsVisible="False"
              HideSoftInputOnTapped="True"
              xmlns:controls="clr-namespace:DDO_Life_Tracker.Pages.Controls">
-    
-    <VerticalStackLayout
-        WidthRequest="400"
-        HorizontalOptions="Center"
+    <Grid>
+        <Image Aspect="AspectFill"
+               Source="dragonvsparty.jpg"
+               Opacity=".6"/>
+        <VerticalStackLayout
+        HorizontalOptions="Fill"
         Spacing="20">
-        <Label 
+            <Label 
             Text="New Character"
             FontSize="30"
             FontAttributes="Bold"
             TextColor="Goldenrod"
             VerticalOptions="Center" 
             HorizontalOptions="Center" />
-        <Grid ColumnDefinitions="82*,12*"
+            <Grid ColumnDefinitions="82*,12*"
               ColumnSpacing="6"
               Padding="10,0,10,0">
-            <Border StrokeShape="RoundRectangle 4"
+                <Border StrokeShape="RoundRectangle 4"
                     Stroke="DarkRed">
-                <Entry x:Name="EnterCharacterName"
+                    <Entry x:Name="EnterCharacterName"
                    BackgroundColor="DarkRed"
                    Text="{Binding NameEntry}"
                    TextColor="AntiqueWhite"
@@ -36,25 +39,26 @@
                    CursorPosition="0"
                    ClearButtonVisibility="WhileEditing"
                    Completed="OnNameEntered"/>
-            </Border>
-            <ImageButton Source="buttoncheckmark.png"
-                         Background="Black"
+                </Border>
+                <ImageButton Source="buttoncheckmark.png"
+                         Background="Transparent"
                          Grid.Column="1"
                          HeightRequest="50"
                          Clicked="OnNameEntered"/>
-        </Grid>
-        <Button Text="Add Character Lives"
+            </Grid>
+            <Button Text="Add Character Lives"
                 Command="{Binding GoToNewIncarnationPageCommand}"
                 IsEnabled="{Binding AddButtonEnabled}"
                 HorizontalOptions="Center"
                 BackgroundColor="{Binding ButtonBackgroundColor}"
                 WidthRequest="200"
                 Margin="0,60,0,0"/>
-        <controls:CharacterView ThisCharacter="{Binding NewCharacter}"
+            <controls:CharacterView ThisCharacter="{Binding NewCharacter}"
                                 CharacterName="{Binding NewCharacter.Name}"
                                 NumberOfLives="{Binding NewCharacter.NumberOfLives}"
                                 CreateDate="{Binding NewCharacter.CreateDate}"
                                 IsVisible="{Binding CharacterWindowVisible}"/>
 
-    </VerticalStackLayout>
+        </VerticalStackLayout>
+    </Grid>
 </ContentPage>
