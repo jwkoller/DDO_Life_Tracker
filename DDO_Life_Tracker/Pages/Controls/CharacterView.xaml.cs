@@ -13,8 +13,12 @@ public partial class CharacterView : ContentView
 		BindableProperty.Create(nameof(NumberOfLives), typeof(int), typeof(CharacterView), 0);
 	public static readonly BindableProperty CreateDateProperty = 
 		BindableProperty.Create(nameof(CreateDate), typeof(DateTime), typeof(CharacterView), null);
+	public static readonly BindableProperty TextColorProperty =
+		BindableProperty.Create(nameof(TextColor), typeof(Color), typeof(CharacterView), Colors.White);
+	public static readonly BindableProperty BorderColorProperty =
+		BindableProperty.Create(nameof(BorderColor), typeof(Color), typeof(CharacterView), Colors.Transparent);
 
-	public Character ThisCharacter 
+    public Character ThisCharacter 
 	{ 
 		get => (Character)GetValue(ThisCharacterProperty);
 		set => SetValue(ThisCharacterProperty, value);
@@ -34,6 +38,19 @@ public partial class CharacterView : ContentView
 		get => (DateTime)GetValue(CreateDateProperty);
 		set => SetValue(CreateDateProperty, value);
 	}
+
+	public Color TextColor
+	{
+		get => (Color)GetValue(TextColorProperty);
+		set => SetValue(TextColorProperty, value);
+	}
+
+	public Color BorderColor
+	{
+		get => (Color)GetValue(BorderColorProperty);
+		set => SetValue(BorderColorProperty, value);
+	}
+
     public CharacterView()
 	{
 		InitializeComponent(); 
