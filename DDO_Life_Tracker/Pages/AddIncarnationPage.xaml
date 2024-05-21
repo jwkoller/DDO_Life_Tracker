@@ -34,26 +34,13 @@
                                         Stroke="Black"
                                         StrokeShape="RoundRectangle 10">
                                     <Border.Background>
-                                        <!--<LinearGradientBrush StartPoint="0,0.5"
-                                                             EndPoint="1,0.5">
-                                            <GradientStop Color="Black"
-                                                 Offset="0.1" />
-                                            <GradientStop Color="DarkRed"
-                                                 Offset="0.3" />
-                                            <GradientStop Color="DarkGoldenrod"
-                                                 Offset="0.5" />
-                                            <GradientStop Color="DarkRed"
-                                                 Offset="0.7" />
-                                            <GradientStop Color="Black"
-                                                 Offset="1.0" />
-                                        </LinearGradientBrush>-->
                                         <RadialGradientBrush Center="0.5,0.9"
                                                  Radius="0.7">
-                                            <GradientStop Color="DarkGoldenrod"
+                                            <GradientStop Color="#a8a49d"
                                                  Offset="0.1" />
-                                            <GradientStop Color="DarkRed"
+                                            <GradientStop Color="#807d79"
                                                  Offset="0.5" />
-                                            <GradientStop Color="Black"
+                                            <GradientStop Color="#3b3937"
                                                  Offset="1.0" />
                                         </RadialGradientBrush>
                                     </Border.Background>
@@ -66,29 +53,26 @@
                                                     Padding="30,0,30,0"/>
                                 </Border>
                             </toolkit:Expander.Header>
-                            <Grid Margin="18,0,20,0">
+                            <Grid Margin="10,0,10,0">
                                 <Border Stroke="Black"
                                         StrokeThickness="1">
-                                    <Border.Background>
-                                        <LinearGradientBrush StartPoint="0,0.5"
-                                                             EndPoint="1,0.5">
-                                            <GradientStop Color="Black"
-                                                 Offset="0.1" />
-                                            <GradientStop Color="DarkRed"
-                                                 Offset="0.3" />
-                                            <GradientStop Color="DarkGoldenrod"
-                                                 Offset="0.5" />
-                                            <GradientStop Color="DarkRed"
-                                                 Offset="0.7" />
-                                            <GradientStop Color="Black"
-                                                 Offset="1.0" />
-                                        </LinearGradientBrush>
-                                    </Border.Background>
                                     <VerticalStackLayout
                                     BindableLayout.ItemsSource="{Binding CurrentCharacter.IncarnationHistory}">
                                         <BindableLayout.ItemTemplate>
                                             <DataTemplate x:DataType="models:Incarnation">
-                                                <Grid ColumnDefinitions="10*,30*,60*"
+                                                <Border StrokeThickness="0">
+                                                    <Border.Background>
+                                                        <RadialGradientBrush Center="0.3,0.5"
+                                                                             Radius="0.7">
+                                                            <GradientStop Color="#a8a49d"
+                                                                          Offset="0.1" />
+                                                            <GradientStop Color="#807d79"
+                                                                          Offset="0.5" />
+                                                            <GradientStop Color="#3b3937"
+                                                                          Offset="1.0" />
+                                                        </RadialGradientBrush>
+                                                    </Border.Background>
+                                                    <Grid ColumnDefinitions="10*,30*,60*"
                                               ColumnSpacing="5"
                                               MaximumHeightRequest="40"
                                               Padding="10,0,10,0">
@@ -123,6 +107,7 @@
                                                LineBreakMode="TailTruncation"
                                                Text="{Binding CurrentClass}"/>
                                                 </Grid>
+                                                </Border>
                                             </DataTemplate>
                                         </BindableLayout.ItemTemplate>
                                     </VerticalStackLayout>
@@ -138,11 +123,11 @@
                         <Border.Background>
                             <RadialGradientBrush Center="0.5,0.1"
                                                  Radius="0.7">
-                                <GradientStop Color="DarkGoldenrod"
+                                <GradientStop Color="#a8a49d"
                                                  Offset="0.1" />
-                                <GradientStop Color="DarkRed"
+                                <GradientStop Color="#807d79"
                                                  Offset="0.5" />
-                                <GradientStop Color="Black"
+                                <GradientStop Color="#3b3937"
                                                  Offset="1.0" />
                             </RadialGradientBrush>
                         </Border.Background>
@@ -173,13 +158,13 @@
                         <Border.Background>
                             <RadialGradientBrush Center="0.5,0.9"
                                                  Radius="0.7">
-                            <GradientStop Color="DarkGoldenrod"
+                                <GradientStop Color="#a8a49d"
                                                  Offset="0.1" />
-                            <GradientStop Color="DarkRed"
+                                <GradientStop Color="#807d79"
                                                  Offset="0.5" />
-                            <GradientStop Color="Black"
+                                <GradientStop Color="#3b3937"
                                                  Offset="1.0" />
-                        </RadialGradientBrush>
+                            </RadialGradientBrush>
                         </Border.Background>
                         <VerticalStackLayout Spacing="10">
                             <HorizontalStackLayout
