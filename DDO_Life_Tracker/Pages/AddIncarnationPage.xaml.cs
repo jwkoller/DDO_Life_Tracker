@@ -150,4 +150,9 @@ public partial class AddIncarnationPage : ContentPage
 	{
         await Shell.Current.GoToAsync("..");
     }
+
+    private void OnExpandedCharacterView(object sender, CommunityToolkit.Maui.Core.ExpandedChangedEventArgs e)
+    {
+		_viewModel.RotateCharacterViewExpanderArrow();
+    }
 }

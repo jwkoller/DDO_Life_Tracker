@@ -38,6 +38,8 @@ namespace DDO_Life_Tracker.ViewModels
         private string _incarnationBtnText = ADD_INCARNATION_BTN_TEXT;
         [ObservableProperty]
         private bool _deleteIncarnationButtonEnabled = false;
+        [ObservableProperty]
+        private double _characterViewArrowRotation = 0;
 
         private IClass? _classBeingEdited;
         private List<IClass> _classesToDeleteFromDB;
@@ -268,6 +270,11 @@ namespace DDO_Life_Tracker.ViewModels
             await _dbService.DeleteCharacterAsync(CurrentCharacter);
             _logger.LogInformation($"Character {CurrentCharacter.Id} {CurrentCharacter.Name} deleted.");
             ResetForm();
+        }
+
+        public void RotateCharacterViewExpanderArrow()
+        {
+            CharacterViewArrowRotation = CharacterViewArrowRotation == 0 ? 180 : 0;
         }
 
         [RelayCommand]
