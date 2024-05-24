@@ -28,26 +28,29 @@
                     VerticalScrollBarVisibility="Always">
                 <VerticalStackLayout Grid.Row="0">
                     <StackLayout>
-                        <toolkit:Expander IsExpanded="false">
+                        <toolkit:Expander IsExpanded="false"
+                                          ExpandedChanged="OnExpandedCharacterView">
                             <toolkit:Expander.Header>
                                 <Border StrokeThickness="1"
                                         Stroke="Black"
                                         StrokeShape="RoundRectangle 10">
                                     <Border.Background>
-                                        <RadialGradientBrush Center="0.5,0.9"
+                                        <RadialGradientBrush Center="0.5,1"
                                                  Radius="0.7">
                                             <GradientStop Color="#a8a49d"
-                                                 Offset="0.1" />
+                                                                          Offset="0.1" />
                                             <GradientStop Color="#807d79"
-                                                 Offset="0.5" />
+                                                                          Offset="0.5" />
                                             <GradientStop Color="#3b3937"
-                                                 Offset="1.0" />
+                                                                          Offset="1.0" />
                                         </RadialGradientBrush>
                                     </Border.Background>
                                     <controls:CharacterView ThisCharacter="{Binding CurrentCharacter}"
                                                     CharacterName="{Binding CurrentCharacter.Name}"
                                                     NumberOfLives="{Binding CurrentCharacter.NumberOfLives}"
                                                     CreateDate="{Binding CurrentCharacter.CreateDate}"
+                                                    ExpandArrowVisible="True"
+                                                    ExpandArrowRotation="{Binding CharacterViewArrowRotation}"
                                                     TextColor="AntiqueWhite"
                                                     VerticalOptions="Center"
                                                     Padding="30,0,30,0"/>

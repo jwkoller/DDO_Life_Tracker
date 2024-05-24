@@ -5,13 +5,13 @@
              x:Name="this">
 
     <Border BindingContext="{x:Reference this}"
-            Padding="10"
+            Padding="10,10,10,0"
             StrokeThickness="3.0"
             HorizontalOptions="Fill"
             Stroke="{Binding BorderColor}"
             StrokeShape="RoundRectangle 10"
             BackgroundColor="Transparent">
-        <Grid RowDefinitions="50*,50*"
+        <Grid RowDefinitions="50*,50*,5*"
                   RowSpacing="5"
                   ColumnDefinitions="50*,30*,10*"
                   ColumnSpacing="10">
@@ -48,6 +48,14 @@
                    FontAttributes="Bold"
                    HorizontalTextAlignment="End"
                    TextColor="{Binding TextColor}"/>
+            <Image Source="icons8trianglearrow24.png"
+                   Aspect="AspectFit"
+                   MaximumWidthRequest="20"
+                   Grid.Row="2"
+                   Grid.ColumnSpan="3"
+                   RotationX="{Binding ExpandArrowRotation}"
+                   IsVisible="{Binding ExpandArrowVisible}"
+                   HorizontalOptions="Center"/>
         </Grid>
     </Border>
 </ContentView>

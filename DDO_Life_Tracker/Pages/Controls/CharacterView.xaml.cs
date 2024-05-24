@@ -1,5 +1,7 @@
 using CommunityToolkit.Mvvm.ComponentModel;
+using CommunityToolkit.Mvvm.Input;
 using DDO_Life_Tracker.Models;
+using System.Text;
 
 namespace DDO_Life_Tracker.Pages.Controls;
 
@@ -17,6 +19,10 @@ public partial class CharacterView : ContentView
 		BindableProperty.Create(nameof(TextColor), typeof(Color), typeof(CharacterView), Colors.White);
 	public static readonly BindableProperty BorderColorProperty =
 		BindableProperty.Create(nameof(BorderColor), typeof(Color), typeof(CharacterView), Colors.Transparent);
+	public static readonly BindableProperty ExpandArrowVisibleProperty = 
+		BindableProperty.Create(nameof(ExpandArrowVisible), typeof(bool), typeof(CharacterView), false);
+    public static readonly BindableProperty ExpandArrowRotationProperty =
+    BindableProperty.Create(nameof(ExpandArrowRotation), typeof(double), typeof(CharacterView), 0.0);
 
     public Character ThisCharacter 
 	{ 
@@ -49,6 +55,18 @@ public partial class CharacterView : ContentView
 	{
 		get => (Color)GetValue(BorderColorProperty);
 		set => SetValue(BorderColorProperty, value);
+	}
+
+	public bool ExpandArrowVisible
+	{
+		get => (bool)GetValue(ExpandArrowVisibleProperty);
+		set => SetValue (ExpandArrowVisibleProperty, value);
+	}
+
+	public double ExpandArrowRotation
+	{
+		get => (double)GetValue(ExpandArrowRotationProperty);
+		set => SetValue(ExpandArrowRotationProperty, value);
 	}
 
     public CharacterView()
