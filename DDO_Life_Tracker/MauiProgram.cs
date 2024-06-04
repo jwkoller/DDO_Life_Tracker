@@ -5,6 +5,7 @@ using DDO_Life_Tracker.Pages;
 using DDO_Life_Tracker.Services;
 using DDO_Life_Tracker.ViewModels;
 using MetroLog.MicrosoftExtensions;
+using Microcharts.Maui;
 using Microsoft.Extensions.Logging;
 using System.Reflection;
 
@@ -18,6 +19,7 @@ namespace DDO_Life_Tracker
             builder
                 .UseMauiApp<App>()
                 .UseMauiCommunityToolkit()
+                .UseMicrocharts()
                 .ConfigureFonts(fonts =>
                 {
                     fonts.AddFont("OpenSans-Regular.ttf", "OpenSansRegular");
@@ -32,6 +34,8 @@ namespace DDO_Life_Tracker
             builder.Services.AddTransient<AddCharacterViewModel>();
             builder.Services.AddTransient<AddIncarnationPage>();
             builder.Services.AddTransient<AddIncarnationViewModel>();
+            builder.Services.AddTransient<CharacterDetailsPage>();
+            builder.Services.AddTransient<CharacterDetailsViewModel>();
 
             builder.Logging.AddStreamingFileLogger(options =>
             {

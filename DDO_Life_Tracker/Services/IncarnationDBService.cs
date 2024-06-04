@@ -240,11 +240,11 @@ namespace DDO_Life_Tracker.Services
 
         private IClass DataToModel(ClassesTable data)
         {
-            IClass current = Definitions.IdToDDOClass(data.ClassId);
-            current.Id = data.Id;
-            current.Level = data.Level;
-            current.IncarnationId = data.IncarnationId;
-            return current;
+            IClass model = Definitions.IdToDDOClass(data.ClassId);
+            model.Id = data.Id;
+            model.Level = data.Level;
+            model.IncarnationId = data.IncarnationId;
+            return model;
         }
 
         private ClassesTable ModelToData(IClass model)

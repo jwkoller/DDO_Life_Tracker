@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             xmlns:microCharts="clr-namespace:Microcharts.Maui;assembly=Microcharts.Maui"
+             xmlns:viewmodel="clr-namespace:DDO_Life_Tracker.ViewModels"
+             xmlns:models="clr-namespace:DDO_Life_Tracker.Models"
+             x:Class="DDO_Life_Tracker.Pages.CharacterDetailsPage"
+             x:DataType="viewmodel:CharacterDetailsViewModel"
+             HideSoftInputOnTapped="True"
+             Title=""
+             Shell.NavBarIsVisible="False">
+    
+    <microCharts:ChartView x:Name="chartView" 
+                           Chart="{Binding Chart}"
+                           />
+
+
+</ContentPage>
